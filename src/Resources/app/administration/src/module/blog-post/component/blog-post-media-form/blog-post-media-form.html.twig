@@ -36,8 +36,8 @@
             <sw-field
                     v-model="post.featuredImgAlt"
                     type="text"
-                    :allow-edit="acl.can('post.editor')"
                     :label="$tc('blog-post.detail.labelImageAlt')"
+                    :disabled="!acl.can('blog_post.editor')"
                     :placeholder="$tc('blog-post.detail.placeholderImageAlt')"
 
             >

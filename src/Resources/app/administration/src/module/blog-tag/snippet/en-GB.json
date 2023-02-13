@@ -62,5 +62,13 @@
     "tooltip": {
       "warning": "Warning"
     }
+  },
+
+  "sw-privileges": {
+    "permissions": {
+      "blog_tag": {
+        "label": "Blog Tag"
+      }
+    }
   }
 }

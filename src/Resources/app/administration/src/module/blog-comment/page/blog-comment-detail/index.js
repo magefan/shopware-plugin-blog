@@ -23,7 +23,7 @@ Component.register('blog-comment-detail', {
     shortcuts: {
         'SYSTEMKEY+S': {
             active() {
-                return this.acl.can('comment.editor');
+                return this.acl.can('blog_comment.editor');
             },
             method: 'onSave',
         },
@@ -79,10 +79,10 @@ Component.register('blog-comment-detail', {
         },
 
         tooltipSave() {
-            if (!this.acl.can('comment.editor')) {
+            if (!this.acl.can('blog_comment.editor')) {
                 return {
                     message: this.$tc('sw-privileges.tooltip.warning'),
-                    disabled: this.acl.can('category.editor'),
+                    disabled: this.acl.can('blog_comment.editor'),
                     showOnDisabledElements: true,
                 };
             }

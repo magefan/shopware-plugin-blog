@@ -13,7 +13,7 @@
             <sw-text-editor
                     v-model="post.contentHeading"
                     sanitize-input
-                    :allow-edit="acl.can('post.editor')"
+                    :allow-edit="acl.can('blog_post.editor')"
                     :label="$tc('blog-post.detail.labelShortContent')"
                     :placeholder="$tc('blog-post.detail.placeholderShortContent')"
             />

@@ -34,7 +34,7 @@
                             class="blog-post-detail__save-action"
                             :is-loading="isLoading"
                             :process-success="isSaveSuccessful"
-                            :disabled="isLoading || !acl.can('property.editor')"
+                            :disabled="isLoading || !acl.can('blog_post.editor')"
                             variant="primary"
                             @process-finish="saveFinish"
                             @click.prevent="onSave"
@@ -59,7 +59,7 @@
                                 v-if="post"
                                 :post="post"
                                 @categories="getCategories"
-                                :allow-edit="acl.can('post.editor')"
+                                :allow-edit="acl.can('blog_post.editor')"
                         />
                     {% endblock %}
 
@@ -67,7 +67,7 @@
                         <blog-post-short-content
                                 v-if="post"
                                 :post="post"
-                                :allow-edit="acl.can('post.editor')"
+                                :allow-edit="acl.can('blog_post.editor')"
                         />
                     {% endblock %}
 
@@ -76,7 +76,7 @@
                                 v-if="post"
                                 :post="post"
                                 @tags="getTags"
-                                :allow-edit="acl.can('post.editor')"
+                                :allow-edit="acl.can('blog_post.editor')"
                         />
                     {% endblock %}
 
@@ -84,7 +84,7 @@
                         <blog-post-media-form
                                 v-if="post"
                                 :post="post"
-                                :allow-edit="acl.can('post.editor')"
+                                :allow-edit="acl.can('blog_post.editor')"
                         />
                     {% endblock %}
 
@@ -92,7 +92,7 @@
                         <blog-post-seo
                                 v-if="post"
                                 :post="post"
-                                :allow-edit="acl.can('post.editor')"
+                                :allow-edit="acl.can('blog_post.editor')"
                         />
                     {% endblock %}
 

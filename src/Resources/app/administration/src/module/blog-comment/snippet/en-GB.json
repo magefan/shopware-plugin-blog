@@ -45,5 +45,13 @@
       "cardTitle": "Setting",
       "buttonAddComment": "Add Comment"
     }
+  },
+
+  "sw-privileges": {
+    "permissions": {
+      "blog_comment": {
+        "label": "Blog Comment"
+      }
+    }
   }
 }

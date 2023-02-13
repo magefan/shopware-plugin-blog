@@ -25,7 +25,7 @@ Component.register('blog-tag-detail', {
     shortcuts: {
         'SYSTEMKEY+S': {
             active() {
-                return this.acl.can('product.editor');
+                return this.acl.can('blog_tag.editor');
             },
             method: 'onSave',
         },

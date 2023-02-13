@@ -26,7 +26,7 @@ Component.register('blog-post-detail', {
     shortcuts: {
         'SYSTEMKEY+S': {
             active() {
-                return this.acl.can('product.editor');
+                return this.acl.can('blog_post.editor');
             },
             method: 'onSave',
         },
@@ -83,10 +83,10 @@ Component.register('blog-post-detail', {
         },
 
         tooltipSave() {
-            if (!this.acl.can('property.editor')) {
+            if (!this.acl.can('blog_post.editor')) {
                 return {
                     message: this.$tc('blog-post.tooltip.warning'),
-                    disabled: this.acl.can('property.editor'),
+                    disabled: this.acl.can('blog_post.editor'),
                     showOnDisabledElements: true,
                 };
             }

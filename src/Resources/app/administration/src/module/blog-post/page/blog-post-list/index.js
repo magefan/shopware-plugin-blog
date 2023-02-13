@@ -32,21 +32,18 @@ Component.register('blog-post-list', {
             total: 0,
             limit: 10,
             page: 1,
+            showDeleteModal: false,
             searchConfigEntity: 'magefanblog_post',
         };
     },
 
     metaInfo() {
         return {
-            title: this.$createTitle(this.identifier),
+            title: this.$createTitle(),
         };
     },
 
     computed: {
-       identifier() {
-            return this.placeholder(this.post, 'position');
-        },
-
         postRepository() {
             return this.repositoryFactory.create('magefanblog_post');
         },
@@ -127,6 +124,31 @@ Component.register('blog-post-list', {
 
     methods: {
 
+        onDelete(id) {
+            this.showDeleteModal = id;
+        },
+
+        onCloseDeleteModal() {
+            this.showDeleteModal = false;
+        },
+
+        onConfirmDelete(id) {
+            this.showDeleteModal = false;
+
+            const criteria = new Criteria();
+            criteria.addFilter(Criteria.equals('postId', id));
+            this.commentRepository.search(criteria).then((comments) => {
+                if (comments) {
+                    for (const comment of comments) {
+                        this.commentRepository.delete(comment.id,  Shopware.Context.api).then(() => {})
+                    }
+                }
+            })
+            this.postRepository.delete(id, Shopware.Context.api).then(() => {
+                this.getList();
+            })
+        },
+
         onPageChange({page, limit}) {
             this.page = page;
             this.limit = limit;
@@ -164,18 +186,6 @@ Component.register('blog-post-list', {
             this.$nextTick(() => {
                 this.$router.push({name: 'blog.post.detail', params: {postId: duplicate.id}});
             });
-        },
-        onDelete(id) {
-            const criteria = new Criteria();
-            criteria.addFilter(Criteria.equals('postId', id));
-            this.commentRepository.search(criteria).then((comments) => {
-                if (comments) {
-                    for (const comment of comments) {
-                            this.commentRepository.delete(comment.id,  Shopware.Context.api).then(() => {})
-                    }
-                }
-            })
-            this.postRepository.delete(id, Shopware.Context.api).then(() => {})
         },
     }
 });

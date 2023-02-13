@@ -15,6 +15,7 @@
                 v-model="post.isActive"
                 class="magefan-blog-detail__active"
                 :label="$tc('blog-post.detail.labelActive')"
+                :disabled="!acl.can('blog_post.editor')"
         />
         {% endblock %}
 
@@ -26,6 +27,7 @@
                     required
                     :error="postTitleError"
                     :label="$tc('blog-post.detail.labelTitle')"
+                    :disabled="!acl.can('blog_post.editor')"
                     :placeholder="$tc('blog-post.detail.placeholderTitle')"
             >
             </sw-field>
@@ -37,6 +39,7 @@
                     :value="categoriesSelected"
                     @change="updateSelectedCategories"
                     :label="$tc('blog-post.detail.labelCategories')"
+                    :disabled="!acl.can('blog_post.editor')"
                     :placeholder="$tc('blog-post.detail.placeholderCategories')"
             >
             </sw-multi-select>
@@ -48,6 +51,7 @@
                     :label="$tc('blog-post.detail.labelContent')"
                     name="description"
                     sanitize-input
+                    :disabled="!acl.can('blog_post.editor')"
                     :placeholder="$tc('blog-post.detail.placeholderContent')"
             />
         {% endblock %}

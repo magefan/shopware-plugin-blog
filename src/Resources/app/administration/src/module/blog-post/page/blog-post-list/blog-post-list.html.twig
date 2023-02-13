@@ -28,12 +28,13 @@
                 {% block blog_post_list_smart_bar_actions %}
                     <sw-button
                             v-tooltip.bottom="{
-                message: $tc('blog-post.tooltip.warning'),
+                message: $tc('sw-privileges.tooltip.warning'),
                 showOnDisabledElements: true
             }"
                             :router-link="{ name: 'blog.post.create' }"
                             class="blog-post-list__add-post"
                             variant="primary"
+                            :disabled="!acl.can('blog_post.creator')"
                     >
                         {{ $tc('blog-post.list.addPostButton') }}
                     </sw-button>
@@ -58,7 +59,6 @@
                                 :show-selections="acl.can('blog_post.deleter')"
                         >
                             {% block blog_post_list_grid_columns_actions %}
-
                                 <template #actions="{ item }">
                                     <sw-context-menu-item
                                             class="blog-post-list__edit-action"
@@ -77,6 +77,50 @@
                                         {{ $tc('blog-post.list.deleteOption') }}
                                     </sw-context-menu-item>
                                 </template>
+                            {% endblock %}
+                            {% block blog_post_list_grid_action_modals %}
+                            <template #action-modals="{ item }">
+
+                                {% block blog_post_list_delete_modal %}
+                                <sw-modal
+                                        v-if="showDeleteModal === item.id"
+                                        :title="$tc('global.default.warning')"
+                                        variant="small"
+                                        @modal-close="onCloseDeleteModal"
+                                >
+
+                                    {% block blog_post_list_delete_modal_confirm_delete_text %}
+                                    <p class="blog-post-list__confirm-delete-text">
+                                    {{ $tc('blog-post.list.textDeleteConfirm', 0, { name: `${item.title}` }) }}
+                                </p>
+                                {% endblock %}
+
+                                {% block blog_post_list_delete_modal_footer %}
+                                    <template #modal-footer>
+
+                                        {% block blog_post_list_delete_modal_cancel %}
+                                        <sw-button
+                                                size="small"
+                                                @click="onCloseDeleteModal"
+                                        >
+                                            {{ $tc('blog-post.list.buttonCancel') }}
+                                            </sw-button>
+                                            {% endblock %}
+
+                                            {% block blog_post_list_delete_modal_confirm %}
+                                            <sw-button
+                                            variant="danger"
+                                            size="small"
+                                            @click="onConfirmDelete(item.id)"
+                                            >
+                                            {{ $tc('blog-post.list.buttonDelete') }}
+                                        </sw-button>
+                                        {% endblock %}
+                                    </template>
+                                    {% endblock %}
+                                </sw-modal>
+                                {% endblock %}
+                            </template>
                             {% endblock %}
                             <template #more-actions="{ item }">
                                 {#                               {% block blog_post_list_grid_columns_actions_duplicate %}

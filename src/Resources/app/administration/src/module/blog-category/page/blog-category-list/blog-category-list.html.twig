@@ -34,6 +34,7 @@
                             :router-link="{ name: 'blog.category.create' }"
                             class="blog-category-list__add-category"
                             variant="primary"
+                            :disabled="!acl.can('blog_category.creator')"
                     >
                         {{ $tc('blog-category.list.addCategoryButton') }}
                     </sw-button>

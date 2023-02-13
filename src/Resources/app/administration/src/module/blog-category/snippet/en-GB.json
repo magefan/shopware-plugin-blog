@@ -65,5 +65,13 @@
       "positionSort": "Position",
       "titleSort": "Title"
     }
+  },
+
+  "sw-privileges": {
+    "permissions": {
+      "blog_category": {
+        "label": "Blog Category"
+      }
+    }
   }
 }
