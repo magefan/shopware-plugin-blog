@@ -1,4 +1,4 @@
-# Shopware Blog Extension] by Magefan
+# Shopware Blog Extension by Magefan
 
 [![Total Downloads](https://poser.pugx.org/magefan/shopware-plugin-blog/downloads)](https://packagist.org/packages/magefan/shopware-plugin-blog)
 [![Latest Stable Version](https://poser.pugx.org/magefan/shopware-plugin-blog/v/stable)](https://packagist.org/packages/magefan/shopware-plugin-blog)
