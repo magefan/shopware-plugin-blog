@@ -1,0 +1,1 @@
+# shopware-plugin-blog
