@@ -1,0 +1,16 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% block blog_post_create %}
+
+    {% block blog_post_create_content_option_list %}
+        <sw-card
+                class="blog-post-create__option-list-empty-state"
+                position-identifier="blog-post-create-empty-state"
+                :title="$tc('blog-post.detail.cardTitle')"
+        >
+        </sw-card>
+    {% endblock %}
+{% endblock %}

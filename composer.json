@@ -1,0 +1,36 @@
+{
+    "name": "magefan/shopware-plugin-blog",
+    "description": "Blog by Magefan",
+    "version": "1.0.0",
+    "type": "shopware-platform-plugin",
+    "autoload": {
+        "psr-4": {
+            "Magefan\\Blog\\": "src/"
+        }
+    },
+    "extra": {
+        "shopware-plugin-class": "Magefan\\Blog\\MagefanBlog",
+        "label": {
+            "de-DE": "Blog by Magefan",
+            "en-GB": "Blog by Magefan"
+        },
+        "description": {
+            "de-DE": "Magefan Plugin Blog",
+            "en-GB": "Magefan Plugin Blog"
+        },
+        "manufacturerLink": {
+            "de-DE": "https://magefan.com",
+            "en-GB": "https://magefan.com"
+        },
+        "supportLink": {
+            "de-DE": "https://magefan.com",
+            "en-GB": "https://magefan.com"
+        }
+    },
+    "repositories": {
+        "platform-packages": {
+            "type": "path",
+            "url": "../../../src/*"
+        }
+    }
+}

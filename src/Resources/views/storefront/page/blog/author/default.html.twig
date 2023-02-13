@@ -1,0 +1,45 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% sw_extends '@Storefront/storefront/base.html.twig' %}
+
+{% block base_content %}
+    <h1 class="blog-page__title">{{ author.firstname ~ ' ' ~ author.lastname }}</h1>
+    <div class="main-wrapper">
+        {# Main Content #}
+        <div class="main-content">
+            {% for post in authorPosts %}
+                {% block article %}
+                    {% sw_include '@Storefront/storefront/layout/article.html.twig' with {
+                        context: context,
+                        post: post,
+                        author: author,
+                        categories: categories,
+                        sidebar: false
+                    } only %}
+                {% endblock %}
+            {% endfor %}
+        </div>
+        {# END Main Content #}
+
+        {# Sidebar #}
+        {% block sidebar %}
+            {% sw_include '@Storefront/storefront/layout/sidebar.html.twig' with {
+                context: context,
+                sidebar: sidebar,
+            } only %}
+        {% endblock %}
+        {# END Sidebar #}
+
+        {# Pagination #}
+        {% block blog_items_list_pagination %}
+            {% sw_include '@Storefront/storefront/layout/pagination.html.twig' with {
+                context: context,
+                paginationPages: paginationPages,
+            } only %}
+        {% endblock %}
+        {# END Pagination #}
+    </div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% sw_extends '@Storefront/storefront/base.html.twig' %}
+
+{% block base_content %}
+    <div class="main-wrapper">
+        {# Main Content #}
+        <div class="main-content">
+            <div class="page-title-wrapper mf-initial">
+                <h1 class="page-title">
+                    <span class="base">{{ "Monthly Archives:"|trans ~ ' ' ~ app.request.pathInfo | split('/')[3] }}</span>
+                </h1>
+            </div>
+            {% if posts.elements|length > 0 %}
+                {% for post in posts.elements %}
+                    {% block article %}
+                        {% sw_include '@Storefront/storefront/layout/article.html.twig' with {
+                            context: context,
+                            post: post,
+                            author: author,
+                            categories: categories,
+                            sidebar: false
+                        } only %}
+                    {% endblock %}
+                {% endfor %}
+            {% else %}
+                <span>{{ "Unfortunately we can`t find any article"|trans }}</span>
+            {% endif %}
+        </div>
+        {# END Main Content #}
+
+        {# Sidebar #}
+        {% block sidebar %}
+            {% sw_include '@Storefront/storefront/layout/sidebar.html.twig' with {
+                context: context,
+                sidebar: sidebar,
+            } only %}
+        {% endblock %}
+        {# END Sidebar #}
+
+        {# Pagination #}
+        {% block blog_items_list_pagination %}
+            {% sw_include '@Storefront/storefront/layout/pagination.html.twig' with {
+                context: context,
+                paginationPages: paginationPages,
+            } only %}
+        {% endblock %}
+        {# END Pagination #}
+    </div>
+{% endblock %}

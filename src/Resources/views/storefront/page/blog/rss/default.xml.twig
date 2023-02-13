@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+-->
+
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+     version="2.0" >
+    <channel>
+        <title>{{ config.title }}</title>
+        <atom:link href="{{ app.request.uri }}" rel="self" type="application/rss+xml"/>
+        <link>{{ app.request.uri }}</link>
+        <description>{{ config.description }}</description>
+        {% for post in posts.elements %}
+            <item>
+                <title>{{ post.title }}</title>
+                <link>{{ app.request.schemeAndHttpHost ~ '/blog/post/' ~ post.identifier }}</link>
+                <guid>{{ app.request.schemeAndHttpHost ~ '/blog/post/' ~ post.identifier }}</guid>
+                <description><![CDATA[{{ post.content }}]]></description>
+                <pubDate>{{ post.publish_time|date('Y-m-d H:i:s') }}</pubDate>
+                {% if post.postCategories %}
+                    {% for category in post.postCategories %}
+                        <category>{{ category.title }}</category>
+                    {% endfor %}
+                {% endif %}
+            </item>
+        {% endfor %}
+    </channel>
+</rss>

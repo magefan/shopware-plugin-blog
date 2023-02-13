@@ -1,0 +1,146 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% block blog_post_list %}
+    <sw-page class="blog-post-list">
+        {% block blog_post_list_smart_bar_header %}
+            <template #smart-bar-header>
+                {% block blog_post_list_smart_bar_header_title %}
+                    <h2>
+                        {% block blog_post_list_smart_bar_header_title_text %}
+                            {{ $tc('blog-post.general.mainMenuItemList') }}
+                        {% endblock %}
+
+                        {% block blog_post_list_smart_bar_header_amount %}
+                            <span v-if="!isLoading" class="blog-post__smart-bar-amount">
+                                ({{ total }})
+                            </span>
+                        {% endblock %}
+                    </h2>
+                {% endblock %}
+            </template>
+        {% endblock %}
+
+        {% block blog_post_list_actions %}
+            <template #smart-bar-actions>
+                {% block blog_post_list_smart_bar_actions %}
+                    <sw-button
+                            v-tooltip.bottom="{
+                message: $tc('blog-post.tooltip.warning'),
+                showOnDisabledElements: true
+            }"
+                            :router-link="{ name: 'blog.post.create' }"
+                            class="blog-post-list__add-post"
+                            variant="primary"
+                    >
+                        {{ $tc('blog-post.list.addPostButton') }}
+                    </sw-button>
+                {% endblock %}
+            </template>
+        {% endblock %}
+
+        <template #content>
+            {% block blog_post_list_content %}
+                <div class="blog-post-list__content">
+                    {% block blog_post_list_grid %}
+                        <sw-entity-listing
+                                class="blog-post-list__grid"
+                                :items="posts"
+                                :repository="repository"
+                                :show-selection="true"
+                                detail-route="blog.post.detail"
+                                :columns="columns"
+                                :allow-edit="acl.can('blog_post.editor')"
+                                :allow-inline-edit="acl.can('blog_post.editor')"
+                                :allow-delete="acl.can('blog_post.deleter')"
+                                :show-selections="acl.can('blog_post.deleter')"
+                        >
+                            {% block blog_post_list_grid_columns_actions %}
+
+                                <template #actions="{ item }">
+                                    <sw-context-menu-item
+                                            class="blog-post-list__edit-action"
+                                            :disabled="!acl.can('blog_post.editor')"
+                                            :router-link="{ name: 'blog.post.detail', params: { id: item.id }, query: { edit: true } }"
+                                    >
+                                        {{ $tc('blog-post.list.editOption') }}
+                                    </sw-context-menu-item>
+
+                                    <sw-context-menu-item
+                                            class="blog-post-list__delete-action"
+                                            variant="danger"
+                                            :disabled="!acl.can('blog_post.deleter')"
+                                            @click="onDelete(item.id)"
+                                    >
+                                        {{ $tc('blog-post.list.deleteOption') }}
+                                    </sw-context-menu-item>
+                                </template>
+                            {% endblock %}
+                            <template #more-actions="{ item }">
+                                {#                               {% block blog_post_list_grid_columns_actions_duplicate %}
+                                    <sw-context-menu-item
+                                            class="blog-post-list-grid__duplicate-action"
+                                            @click="onDuplicate(item)"
+                                    >
+                                        {{ $tc('blog-post.list.buttonDuplicate') }}
+                                    </sw-context-menu-item>
+                                {% endblock %} #}
+                            </template>
+                            <template slot="column-authorId" slot-scope="{ item }">
+                                <template v-for="(item, index) in item.postAuthor">
+                                    <template v-if="index === 'firstname'">
+                                        {{ item }}
+                                    </template>
+                                    <template v-if="index === 'lastname'">
+                                        {{ item }}
+                                    </template>
+                                </template>
+                            </template>
+                            <template slot="column-categories" slot-scope="{ item }">
+                                <template v-for="(category, index) in item.postCategories">
+                                    {{ category.title }}
+                                    <span v-if="index != item.postCategories.length - 1">
+                                        , &nbsp;
+                                    </span>
+                                </template>
+                                <span v-if="0 === item.postCategories.length">
+                                     {{ $tc('blog-post.detail.labelNoCategorySelected') }}
+                                </span>
+                            </template>
+                            <template slot="column-active" slot-scope="{ item }">
+                                <sw-icon
+                                        small
+                                        :name="item.active ? 'regular-checkmark-xs' : 'regular-times-s'"
+                                        :color="item.active ? '#37d046' : '#de294c'"
+                                />
+                            </template>
+                            <template #column-createdAt="{item}">
+                                    {{ item.createdAt|date }}
+                            </template>
+                            <template #column-updatedAt="{item}">
+                                <template v-if="item.updatedAt">
+                                    {{ item.updatedAt|date }}
+                                </template>
+
+                                <template v-else>
+                                    {{ item.createdAt|date }}
+                                </template>
+                            </template>
+                        </sw-entity-listing>
+                    {% endblock %}
+                    {#                    {% block blog_post_list_content_clone_modal %}
+                        <blog-post-clone-modal
+                                v-if="cloning"
+                                :post="post"
+                                @clone-finish="onDuplicateFinish"
+                        />
+                    {% endblock %} #}
+                </div>
+            {% endblock %}
+        </template>
+    </sw-page>
+{% endblock %}
+
+

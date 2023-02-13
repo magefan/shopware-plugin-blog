@@ -1,0 +1,53 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% block blog_category_detail_base %}
+    <sw-card
+            v-if="category"
+            position-identifier="blog-category-detail-base"
+            :title="$tc('blog-category.detail.cardTitleGeneralInfo')"
+            :is-loading="isLoading"
+    >
+        <sw-switch-field
+                v-model="category.isActive"
+                :label="$tc('blog-category.detail.labelActive')"
+        />
+
+        <sw-field
+                v-model="category.title"
+                type="text"
+                :label="$tc('blog-category.detail.labelTitle')"
+                validation="required"
+                required
+                :error="categoryTitleError"
+                :disabled="!acl.can('blog_category.editor')"
+                :placeholder="$tc('blog-category.detail.placeholderTitle')"
+        />
+
+        <sw-number-field
+                v-model="category.position"
+                type="number"
+                :label="$tc('blog-category.detail.labelPosition')"
+                :disabled="!acl.can('blog_category.editor')"
+                :placeholder="$tc('blog-category.detail.placeholderPosition')"
+        />
+
+        <sw-switch-field
+                v-model="category.includeInMenu"
+                class="blog-category-detail__include-in-menu"
+                :label="$tc('blog-category.detail.labelIncludeInMenu')"
+        />
+
+        {% block blog_category_detail_base_info_field_description %}
+            <sw-text-editor
+                    v-model="category.content"
+                    :label="$tc('blog-category.detail.labelContent')"
+                    sanitize-input
+                    :disabled="!acl.can('blog-category.editor')"
+                    :placeholder="$tc('blog-category.detail.placeholderContent')"
+            />
+        {% endblock %}
+    </sw-card>
+{% endblock %}

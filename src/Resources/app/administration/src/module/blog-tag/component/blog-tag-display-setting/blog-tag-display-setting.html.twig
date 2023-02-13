@@ -1,0 +1,41 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% block blog_tag_display_setting %}
+    <sw-card
+            v-if="tag"
+            position-identifier="blog-tag-display-setting"
+            :title="$tc('blog-tag.detail.cardTitleDisplaySettingInfo')"
+            :is-loading="isLoading"
+    >
+        {% block blog_tag_detail_display_type %}
+            <sw-field
+                    v-model="tag.postsListTemplate"
+                    type="select"
+                    :label="$tc('blog-tag.detail.labelTemplate')"
+                    :disabled="!allowEdit"
+            >
+                <option
+                        v-for="option in displayTypes"
+                        slot="options"
+                        :key="option.value"
+                        :value="option.value"
+                >
+                    {{ option.label }}
+                </option>
+            </sw-field>
+        {% endblock %}
+
+        {% block blog_tag_detail_posts_per_page %}
+            <sw-number-field
+                    v-model="tag.postsPerPage"
+                    type="number"
+                    :label="$tc('blog-tag.detail.labelPostPerPage')"
+                    :placeholder="$tc('blog-tag.detail.placeholderPerPage')"
+                    :disabled="!allowEdit"
+            />
+        {% endblock %}
+    </sw-card>
+{% endblock %}

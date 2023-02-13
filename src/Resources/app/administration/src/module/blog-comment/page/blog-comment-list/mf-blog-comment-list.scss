@@ -1,0 +1,40 @@
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+
+@import "~scss/variables";
+
+$mf-blog-comment-list-color-not-approved: $color-crimson-900;
+$mf-blog-comment-list-color-pending: $color-module-orange-900;
+$mf-blog-comment-list-color-approved: $color-emerald-900;
+
+.grid-severity {
+  /*
+  border: 1px solid $mf-blog-comment-list-color-pending;
+  */
+  display: block;
+  font-weight: 700;
+  line-height: 17px;
+  padding: 0 3px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.grid-severity-minor {
+  background: $color-crimson-200 none repeat scroll 0 0;
+  border-color: $color-crimson-500;
+  color: $mf-blog-comment-list-color-not-approved;
+}
+
+.grid-severity-critical {
+  background: $color-module-orange-200 none repeat scroll 0 0;
+  border-color: $color-module-orange-500;
+  color: $mf-blog-comment-list-color-pending;
+}
+
+.grid-severity-notice {
+  background: $color-emerald-200 none repeat scroll 0 0;
+  border-color: $color-emerald-500;
+  color: $mf-blog-comment-list-color-approved;
+}

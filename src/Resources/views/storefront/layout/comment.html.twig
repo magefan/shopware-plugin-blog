@@ -1,0 +1,335 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+{% block magefan_blog_layout_add_commentt_morkup %}
+    {% set guestComments = config('MagefanBlog.config.guestComments') %}
+    {% set canPost = context.customer || guestComments %}
+    {% set formAjaxSubmitOptions = {replaceSelectors: [".card"]} %}
+
+    {% block magefan_blog_layout_add_comment %}
+        <div class="card">
+            <div class="card-body">
+                {% block magefan_blog_layout_add_comment_header %}
+                    {% if cardTitle %}
+                        <div class="card-title">
+                            {{ cardTitle }}
+                        </div>
+                    {% endif %}
+                {% endblock %}
+
+                {% block magefan_blog_layout_add_comment_form %}
+                    <form
+                            class="comment-form-blog"
+                            action="{{ path('frontend.blog.addcomment') }}"
+                            method="post"
+                            data-form-csrf-handler="true"
+                            data-form-validation="true"
+                            data-mf-form-ajax-submit
+                            data-form-ajax-submit="true"
+                            data-form-ajax-submit-options='{{ formAjaxSubmitOptions|json_encode }}'
+                    >
+                        {% block magefan_blog_layout_add_comment_form_csrf %}
+                            {{ sw_csrf('frontend.blog.addcomment') }}
+                        {% endblock %}
+
+                        {% block magefan_blog_layout_add_comment_form_hidden_inputs %}
+                            <input type="hidden" name="post_id" value="{{ post.id }}">
+                            <input type="hidden" name="parent_id" value="">
+                        {% endblock %}
+
+                        {% block magefan_blog_layout_add_comment_form_fields %}
+                            <div class="{{ formRowClass }}">
+                                {% block magefan_blog_layout_add_comment_form_comment %}
+                                    <div class="form-group col-md-12">
+                                        {% block magefan_blog_layout_add_comment_form_comment_label %}
+                                            <label class="form-label" for="comment">
+                                                {{ "Your Comment"|trans }}
+                                                {{ "general.required"|trans }}
+                                            </label>
+                                        {% endblock %}
+
+                                        {% block magefan_blog_layout_add_comment_form_comment_textarea %}
+                                            <textarea
+                                                    id="comment"
+                                                    class="form-control"
+                                                    name="text"
+                                                    placeholder="{% if canPost %} {{ "Add a comment..."|trans }} {% else %} {{ "Login to add a comment..."|trans }} {% endif %}"
+                                                    required="required"
+                                                    data-mf-form-field-show
+                                                    data-mf-form-field-show-target=".js-mf-form-field-show-comment"
+                                            ></textarea>
+                                        {% endblock %}
+                                    </div>
+                                {% endblock %}
+
+
+                                {% if canPost %}
+                                    {% block magefan_blog_layout_add_comment_form_nickname %}
+                                        <div class="form-group col-md-6 js-mf-form-field-show-comment d-none">
+                                            {% block magefan_blog_layout_add_comment_form_nickname_label %}
+                                                <label class="form-label" for="authorNickname">
+                                                    {{ "Full Name"|trans }}
+                                                    {{ "general.required"|trans }}
+                                                </label>
+                                            {% endblock %}
+
+                                            {% block magefan_blog_layout_add_comment_form_nickname_input %}
+                                                <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="authorNickname"
+                                                        name="author_nickname"
+                                                        placeholder="{{ "Full Name"|trans|striptags }}"
+                                                        required="required"
+                                                />
+                                            {% endblock %}
+                                        </div>
+                                    {% endblock %}
+
+                                    {% block magefan_blog_layout_add_comment_form_mail %}
+                                        <div class="form-group col-md-6 js-mf-form-field-show-comment d-none">
+                                            {% block magefan_blog_layout_add_comment_form_mail_label %}
+                                                <label class="form-label" for="authorEmail">
+                                                    {{ "Email"|trans }}
+                                                    {{ "general.required"|trans }}
+                                                </label>
+                                            {% endblock %}
+
+                                            {% block magefan_blog_layout_add_comment_form_mail_input %}
+                                                <input
+                                                        type="email"
+                                                        class="form-control"
+                                                        id="authorEmail"
+                                                        name="author_email"
+                                                        placeholder="{{ "account.loginMailPlaceholder"|trans|striptags }}"
+                                                        required="required"
+                                                />
+                                            {% endblock %}
+                                        </div>
+                                    {% endblock %}
+                                {% endif %}
+                            </div>
+                        {% endblock %}
+
+                        <div class="js-mf-form-field-show-comment d-none">
+                            {% block magefan_blog_layout_add_comment_form_captcha %}
+                                {% sw_include '@Storefront/storefront/component/captcha/base.html.twig' with { preCheck: true } %}
+                            {% endblock %}
+
+                            {% block magefan_blog_layout_add_comment_form_policy %}
+                                {% if config('MagefanBlog.config.privacyPolicyCheckbox') == 1 %}
+                                    <div class="form-text privacy-notice">
+                                        <div class="{{ formCheckboxWrapperClass }} data-protection-information">
+                                            {{ block('component_privacy_dpi_checkbox') }}
+                                            <label class="custom-control-label no-validation"
+                                                   for="acceptedDataProtection">
+                                                {{ "general.privacyNotice"|trans({
+                                                    '%privacyUrl%': path('frontend.cms.page',{ id: config('core.basicInformation.privacyPage') }),
+                                                    '%tosUrl%': path('frontend.cms.page',{ id: config('core.basicInformation.tosPage') })
+                                                })|raw }}
+                                                {{ "general.required"|trans }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endblock %}
+
+                            {% block magefan_blog_layout_add_comment_form_required_fields %}
+                                <p class="register-required-info">
+                                    {{ "general.requiredFields"|trans }}
+                                </p>
+                            {% endblock %}
+
+                            {% if canPost %}
+                                {% block  magefan_blog_layout_add_comment_form_submit %}
+                                    <div class="comment-submit">
+                                        <button type="submit" class="btn btn-primary">
+                                            {{ "Submit"|trans }}
+                                        </button>
+                                    </div>
+                                {% endblock %}
+                            {% else %}
+                                {{ block('layout_header_actions_account_widget_dropdown_login', '@Storefront/storefront/layout/header/account-menu.html.twig') }}
+                            {% endif %}
+                        </div>
+                    </form>
+                {% endblock %}
+
+                {% block magefan_blog_layout_add_comment_list %}
+                    {% set maxCommentsCount = config('MagefanBlog.config.numberOfComments') %}
+
+                    <div class="c-comments">
+                        {% sw_include '@MagefanBlog/storefront/component/post/comment/list.html.twig' with {
+                            comments
+                        } %}
+                        {% if comments|length > maxCommentsCount %}
+                            <span
+                               class="c-allcomments more-comments-action"
+                               data-mf-form-comments-field-show-target=".c-comment.c-comment-parent-0">
+                                {{ "Load more comments"|trans }}
+                            </span>
+                        {% endif %}
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block magefan_blog_layout_add_reply_comment %}
+        <div id="c-replyform-comment" class="c-replyform c-replyform-comment d-none">
+            <form
+                    class="reply-form-blog-comment"
+                    id="comment-reply"
+                    action="{{ path('frontend.blog.addcomment') }}"
+                    method="post"
+                    data-form-csrf-handler="true"
+                    data-form-validation="true"
+                    data-mf-form-ajax-reply-submit
+                    data-form-ajax-submit="true"
+                    data-form-ajax-submit-options='{{ formAjaxSubmitOptions|json_encode }}'
+            >
+                {% block magefan_blog_layout_add_comment_reply_form_csrf %}
+                    {{ sw_csrf('frontend.blog.addcomment') }}
+                {% endblock %}
+
+                {% block magefan_blog_layout_add_comment_reply_form_hidden_inputs %}
+                    <input type="hidden" name="post_id" value="{{ post.id }}">
+                    <input type="hidden" name="parent_id" id="parentIdReply" value="">
+                {% endblock %}
+
+                {% block magefan_blog_layout_add_comment_reply_form_fields %}
+                    <div class="{{ formRowClass }}">
+                        {% block magefan_blog_layout_add_comment_reply_form_comment %}
+                            <div class="form-group col-md-12">
+                                {% block magefan_blog_layout_add_comment_reply_form_comment_label %}
+                                    <label class="form-label" for="comment">
+                                        {{ "Your Comment"|trans }}
+                                        {{ "general.required"|trans }}
+                                    </label>
+                                {% endblock %}
+
+                                {% block magefan_blog_layout_add_comment_reply_form_comment_textarea %}
+                                    <textarea
+                                            id="commentReply"
+                                            class="form-control"
+                                            name="text"
+                                            placeholder="{% if canPost %} {{ "Add a comment..."|trans|striptags }} {% else %} {{ "Login to add a comment..."|trans|striptags }} {% endif %}"
+                                            required="required"
+                                    ></textarea>
+                                {% endblock %}
+                            </div>
+                        {% endblock %}
+
+
+                        {% if canPost %}
+                            {% block magefan_blog_layout_add_comment_reply_form_nickname %}
+                                <div class="form-group col-md-6 js-mf-form-field-show-comment">
+                                    {% block magefan_blog_layout_add_comment_reply_form_nickname_label %}
+                                        <label class="form-label" for="authorNickname">
+                                            {{ "Full Name"|trans }}
+                                            {{ "general.required"|trans }}
+                                        </label>
+                                    {% endblock %}
+
+                                    {% block magefan_blog_layout_add_comment_reply_form_nickname_input %}
+                                        <input
+                                                type="text"
+                                                class="form-control"
+                                                id="authorNicknameReply"
+                                                name="author_nickname"
+                                                placeholder="{{ "Full Name"|trans|striptags }}"
+                                                required="required"
+                                        />
+                                    {% endblock %}
+                                </div>
+                            {% endblock %}
+
+                            {% block magefan_blog_layout_add_comment_reply_form_mail %}
+                                <div class="form-group col-md-6 js-mf-form-field-show-comment">
+                                    {% block magefan_blog_layout_add_comment_reply_form_mail_label %}
+                                        <label class="form-label" for="authorEmail">
+                                            {{ "Email"|trans }}
+                                            {{ "general.required"|trans }}
+                                        </label>
+                                    {% endblock %}
+
+                                    {% block magefan_blog_layout_add_comment_reply_form_mail_input %}
+                                        <input
+                                                type="email"
+                                                class="form-control"
+                                                id="authorEmailReply"
+                                                name="author_email"
+                                                placeholder="{{ "account.loginMailPlaceholder"|trans|striptags }}"
+                                                required="required"
+                                        />
+                                    {% endblock %}
+                                </div>
+                            {% endblock %}
+                        {% endif %}
+                    </div>
+                {% endblock %}
+
+                <div class="js-mf-form-field-show-comment">
+                    {% block magefan_blog_layout_add_comment_reply_form_captcha %}
+                        {% sw_include '@Storefront/storefront/component/captcha/base.html.twig' with { preCheck: true } %}
+                    {% endblock %}
+
+                    {% block magefan_blog_layout_add_comment_reply_form_policy %}
+                        {% if config('MagefanBlog.config.privacyPolicyCheckbox') == 1 %}
+                            <div class="form-text privacy-notice">
+                                <div class="{{ formCheckboxWrapperClass }} data-protection-information">
+                                    {{ block('component_privacy_dpi_checkbox_reply') }}
+                                    <label class="custom-control-label no-validation"
+                                           for="acceptedDataProtectionReply">
+                                        {{ "general.privacyNotice"|trans({
+                                            '%privacyUrl%': path('frontend.cms.page',{ id: config('core.basicInformation.privacyPage') }),
+                                            '%tosUrl%': path('frontend.cms.page',{ id: config('core.basicInformation.tosPage') })
+                                        })|raw }}
+                                        {{ "general.required"|trans }}
+                                    </label>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endblock %}
+
+                    {% block magefan_blog_layout_add_comment_reply_form_required_fields %}
+                        <p class="register-required-info">
+                            {{ "general.requiredFields"|trans }}
+                        </p>
+                    {% endblock %}
+
+                    {% if canPost %}
+                        {% block  magefan_blog_layout_add_comment_reply_form_submit %}
+                            <button type="button" class="cancel reply-cancel-action">{{ "Cancel"|trans }}</button>
+                            <button type="submit">{{ "Submit"|trans }}</button>
+                        {% endblock %}
+                    {% else %}
+                        {{ block('layout_header_actions_account_widget_dropdown_login', '@Storefront/storefront/layout/header/account-menu.html.twig') }}
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    {% endblock %}
+    {% block component_post_privacy %}
+        {% block component_privacy_dpi_checkbox %}
+            <input type="checkbox"
+                   class="{{ formCheckInputClass }} {% if formViolations.getViolations('/acceptedDataProtection') is not empty %} is-invalid{% endif %}"
+                   name="acceptedDataProtection"
+                   required="required"
+                   value="1"
+                   id="acceptedDataProtection"
+                   {% if data.get('acceptedDataProtection') %}checked="checked"{% endif %}>
+        {% endblock %}
+
+        {% block component_privacy_dpi_checkbox_reply %}
+            <input type="checkbox"
+                   class="{{ formCheckInputClass }} {% if formViolations.getViolations('/acceptedDataProtection') is not empty %} is-invalid{% endif %}"
+                   name="acceptedDataProtection"
+                   required="required"
+                   value="1"
+                   id="acceptedDataProtectionReply"
+                   {% if data.get('acceptedDataProtection') %}checked="checked"{% endif %}>
+        {% endblock %}
+    {% endblock %}
+{% endblock %}

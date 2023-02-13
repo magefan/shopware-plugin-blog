@@ -1,0 +1,177 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+-->
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="Magefan\Blog\Twig\Extension\BlogRuntime">
+            <argument id="magefanblog_comment.repository" type="service"/>
+            <tag name="twig.runtime"/>
+        </service>
+        <service id="Magefan\Blog\Twig\Extension\BlogExtension">
+            <tag name="twig.extension"/>
+        </service>
+        <service id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogAbstractResolver">
+            <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
+        </service>
+        <service id="Magefan\Blog\Util\BlogCategories">
+            <argument id="category.repository" type="service"/>
+            <argument type="service" id="Symfony\Component\HttpFoundation\RequestStack"/>
+            <argument type="service" id="Doctrine\DBAL\Connection"/>
+        </service>
+        <service id="Magefan\Blog\Core\Content\Blog\Sitemap\Provider\BlogUrlProvider">
+            <argument type="service" id="magefanblog_post.repository"/>
+            <argument type="service" id="magefanblog_category.repository"/>
+            <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
+            <argument type="service" id="Symfony\Component\Routing\RouterInterface"/>
+            <tag name="shopware.sitemap_url_provider"/>
+        </service>
+        <service id="Magefan\Blog\Service\MagefanBlogService"/>
+        <service id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogArchiveResolver">
+            <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
+            <argument id="magefanblog_post.repository" type="service"/>
+        </service>
+        <service id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogPostResolver">
+            <argument id="magefanblog_post.repository" type="service"/>
+        </service>
+        <service id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogSidebarResolver">
+            <argument id="magefanblog_post.repository" type="service"/>
+            <argument id="magefanblog_category.repository" type="service"/>
+            <argument id="magefanblog_tag.repository" type="service"/>
+            <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
+        </service>
+        <service id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogListResolver">
+            <argument id="magefanblog_post.repository" type="service"/>
+            <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
+        </service>
+        <service id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogCategoryResolver">
+            <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
+            <argument id="Doctrine\DBAL\Connection" type="service"/>
+            <argument id="magefanblog_category.repository" type="service"/>
+            <argument id="magefanblog_post.repository" type="service"/>
+            <argument id="media.repository" type="service"/>
+            <argument id="Shopware\Core\Content\Media\File\FileLoader" type="service"/>
+        </service>
+        <service id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogTagResolver">
+            <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
+            <argument id="magefanblog_tag.repository" type="service"/>
+            <argument id="magefanblog_post.repository" type="service"/>
+        </service>
+        <service id="Magefan\Blog\Subscriber\Subscriber">
+            <argument id="magefanblog_category.repository" type="service"/>
+            <argument id="category.repository" type="service"/>
+            <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
+        <service id="Magefan\Blog\Storefront\Controller\Blog" autowire="true" autoconfigure="true">
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+        <service id="Magefan\Blog\Storefront\Controller\MagefanBlogController" public="true">
+            <tag name="controller.service_arguments"/>
+            <argument id="magefanblog_post.repository" type="service"/>
+            <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
+            <argument id="Shopware\Storefront\Page\GenericPageLoader" type="service"/>
+            <argument id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogListResolver" type="service"/>
+            <argument id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogSidebarResolver" type="service"/>
+            <argument id="Shopware\Core\Content\Seo\SeoUrlPlaceholderHandlerInterface" type="service"/>
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+        <service id="Magefan\Blog\Storefront\Controller\MagefanBlogPostController" public="true">
+            <argument id="magefanblog_post.repository" type="service"/>
+            <argument id="magefanblog_author.repository" type="service"/>
+            <argument id="magefanblog_tag.repository" type="service"/>
+            <argument id="magefanblog_category.repository" type="service"/>
+            <argument id="Shopware\Storefront\Page\GenericPageLoader" type="service"/>
+            <argument id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogPostResolver" type="service"/>
+            <argument id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogSidebarResolver" type="service"/>
+            <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
+            <argument id="Shopware\Core\Content\Seo\SeoUrlPlaceholderHandlerInterface" type="service"/>
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+        <service id="Magefan\Blog\Storefront\Controller\MagefanBlogTagController" public="true">
+            <argument id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogTagResolver" type="service"/>
+            <argument id="Shopware\Storefront\Page\GenericPageLoader" type="service"/>
+            <argument id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogSidebarResolver" type="service"/>
+            <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
+            <argument id="Shopware\Core\Content\Seo\SeoUrlPlaceholderHandlerInterface" type="service"/>
+            <argument id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogAbstractResolver" type="service"/>
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+        <service id="Magefan\Blog\Storefront\Controller\MagefanBlogCategoryController" public="true">
+            <argument id="magefanblog_category.repository" type="service"/>
+            <argument id="Shopware\Storefront\Page\GenericPageLoader" type="service"/>
+            <argument id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogSidebarResolver" type="service"/>
+            <argument id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogCategoryResolver" type="service"/>
+            <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
+            <argument id="Shopware\Core\Content\Seo\SeoUrlPlaceholderHandlerInterface" type="service"/>
+            <argument id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogAbstractResolver" type="service"/>
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+        <service id="Magefan\Blog\Storefront\Controller\MagefanBlogArchiveController" public="true">
+            <tag name="controller.service_arguments"/>
+            <argument id="Shopware\Storefront\Page\GenericPageLoader" type="service"/>
+            <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
+            <argument id="Shopware\Core\Content\Seo\SeoUrlPlaceholderHandlerInterface" type="service"/>
+            <argument id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogSidebarResolver" type="service"/>
+            <argument id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogArchiveResolver" type="service"/>
+            <argument id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogAbstractResolver" type="service"/>
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+        <service id="Magefan\Blog\Storefront\Controller\MagefanBlogRssFeedController" public="true">
+            <tag name="controller.service_arguments"/>
+            <argument id="magefanblog_post.repository" type="service"/>
+            <argument id="Shopware\Storefront\Page\GenericPageLoader" type="service"/>
+            <argument id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogSidebarResolver" type="service"/>
+            <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+        <service id="Magefan\Blog\Storefront\Controller\MagefanBlogCommentController" public="true">
+            <argument id="magefanblog_post.repository" type="service"/>
+            <argument id="magefanblog_comment.repository" type="service"/>
+            <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+        <service id="Magefan\Blog\Core\Content\Blog\Post\PostDefinition">
+            <tag name="shopware.entity.definition" entity="magefanblog_post"/>
+        </service>
+        <service id="Magefan\Blog\Core\Content\Blog\Category\CategoryDefinition">
+            <tag name="shopware.entity.definition" entity="magefanblog_category"/>
+        </service>
+        <service id="Magefan\Blog\Core\Content\Blog\Tag\TagDefinition">
+            <tag name="shopware.entity.definition" entity="magefanblog_tag"/>
+        </service>
+        <service id="Magefan\Blog\Core\Content\Blog\PostTag\PostTagDefinition">
+            <tag name="shopware.entity.definition" entity="magefanblog_post_tag"/>
+        </service>
+        <service id="Magefan\Blog\Core\Content\Blog\Comment\CommentDefinition">
+            <tag name="shopware.entity.definition" entity="magefanblog_comment"/>
+        </service>
+        <service id="Magefan\Blog\Core\Content\Blog\Author\AuthorDefinition">
+            <tag name="shopware.entity.definition" entity="magefanblog_author"/>
+        </service>
+        <service id="Magefan\Blog\Core\Content\Blog\PostCategory\PostCategoryDefinition">
+            <tag name="shopware.entity.definition" entity="magefanblog_post_category"/>
+        </service>
+    </services>
+</container>

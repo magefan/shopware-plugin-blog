@@ -1,0 +1,190 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% block blog_comment_detail %}
+    <sw-page class="blog-comment-detail">
+        {% block blog_comment_detail_header %}
+            <template #smart-bar-header>
+                <h2>{{ $tc('blog-comment.detail.header.titleEdit') }}</h2>
+            </template>
+        {% endblock %}
+
+        {% block blog_comment_detail_actions %}
+            <template #smart-bar-actions>
+                {% block blog_comment_detail_actions_abort %}
+                    <sw-button
+                            v-tooltip.bottom="tooltipCancel"
+                            class="blog-comment-detail__cancel-action"
+                            :disabled="comment !== null && comment.isLoading"
+                            @click="onCancel"
+                    >
+                        {{ $tc('global.default.cancel') }}
+                    </sw-button>
+                {% endblock %}
+
+                {% block blog_comment_detail_actions_save %}
+                    <sw-button-process
+                            v-model="isSaveSuccessful"
+                            v-tooltip.bottom="tooltipSave"
+                            class="blog-comment-detail__save-action"
+                            variant="primary"
+                            :is-loading="isLoading"
+                            :disabled="isLoading || !acl.can('comment.editor')"
+                            :process-success="isSaveSuccessful"
+                            @process-finish="saveFinish"
+                            @click.prevent="onSave"
+                    >
+                        {{ $tc('global.default.save') }}
+                    </sw-button-process>
+                {% endblock %}
+            </template>
+        {% endblock %}
+
+        {% block  blog_comment_detail_content %}
+            <template #content>
+                <sw-card-view>
+                    {% block  blog_comment_detail_content_view %}
+                        <div
+                                v-if="isLoading"
+                                class="blog-comment-detail__content-view-skeleton"
+                        >
+                            <sw-skeleton/>
+                            <sw-skeleton/>
+                        </div>
+                    {% endblock %}
+
+                    {% block blog_comment_detail_base %}
+                        <div class="blog-comment-detail-base">
+                            {% block blog_comment_detail_base_general_card %}
+                                <sw-card
+                                        v-if="comment"
+                                        position-identifier="blog-comment-detail-base-general"
+                                        class="blog-comment-detail-base__card-general"
+                                        :is-loading="isLoading"
+                                        :title="$tc('blog-comment.general.cardTitle')"
+                                >
+                                    <sw-container
+                                            columns="1fr 2fr"
+                                            justify="left"
+                                    >
+                                    </sw-container>
+                                    {% block sw_product_price_form_link %}
+                                        <sw-container
+                                                columns="1fr"
+                                                justify="start"
+                                                class="blog-comment-detail-base__links"
+                                        >
+                                            {% block blog_comment_detail_base_general_post_link %}
+                                                <sw-container
+                                                        columns="1fr 5fr"
+                                                        justify="left"
+                                                >
+                                                    <span>
+                                                    {{ $tc('blog-comment.general.labelPost') }}
+                                                </span>
+                                                    <router-link
+                                                            :to="{ name: 'blog.post.detail', params: { id: comment.post.id } }"
+                                                            class="sw-card__quick-link"
+                                                    >
+                                                        {{ comment.post.title }}
+                                                        <sw-icon
+                                                                name="regular-long-arrow-right"
+                                                                small
+                                                        />
+                                                    </router-link>
+                                                </sw-container>
+                                            {% endblock %}
+
+                                            {% block blog_comment_detail_base_general_author %}
+                                                <sw-container
+                                                        columns="1fr 5fr"
+                                                        justify="left"
+                                                >
+                                                <span>
+                                                    {{ $tc('blog-comment.general.labelAuthor') }}
+                                                </span>
+                                                    <p>
+                                                        {{ comment.authorNickname }}
+                                                    </p>
+                                                </sw-container>
+                                            {% endblock %}
+
+                                            {% block blog_comment_detail_base_general_parent_comment %}
+                                                <sw-container v-if="comment.parentId">
+                                                    <sw-container
+                                                            columns="1fr 5fr"
+                                                            justify="start"
+                                                    >
+                                                        <span>
+                                                            {{ $tc('blog-comment.general.labelParentComment') }}
+                                                        </span>
+                                                        <router-link
+                                                                :to="{ name: 'blog.comment.detail', params: { id: comment.parentId } }"
+                                                                class="sw-card__quick-link"
+                                                        >
+                                                            {{ comment.text }}
+                                                            <sw-icon
+                                                                    name="regular-long-arrow-right"
+                                                                    small
+                                                            />
+                                                        </router-link>
+                                                    </sw-container>
+                                                </sw-container>
+                                            {% endblock %}
+                                        </sw-container>
+                                    {% endblock %}
+
+                                    {% block blog_comment_detail_base_general_statuses %}
+                                        <sw-select-number-field
+                                                class="blog-comment-detail-base__field-code-type"
+                                                :label="$tc('blog-comment.detail.statuses.statusLabel')"
+                                                v-model="comment.status"
+                                                :disabled="!acl.can('comment.editor')"
+                                        >
+                                            {% block blog_comment_detail_base_general_statuses_select_options %}
+                                                <option
+                                                        v-for="option in statusOptions"
+                                                        :key="option.value"
+                                                        :value="option.value"
+                                                >
+                                                    {{ option.label }}
+                                                </option>
+                                            {% endblock %}
+                                        </sw-select-number-field>
+                                    {% endblock %}
+
+                                    {% block blog_comment_detail_base_general_parent_publish_date %}
+                                        <sw-container columns="1fr 1fr" gap="0 32px">
+                                            {% block blog_comment_detail_base_general_publish_date %}
+                                                <sw-datepicker
+                                                        v-model="comment.createdAt"
+                                                        class="blog-comment-detail-base__field-valid-from"
+                                                        date-type="datetime-local"
+                                                        :label="$tc('blog-comment.general.publishDateLabel')"
+                                                        :placeholder-text="$tc('blog-comment.general.publishDatePlaceholder')"
+                                                        :disabled="!acl.can('comment.editor')"
+                                                />
+                                            {% endblock %}
+                                        </sw-container>
+                                    {% endblock %}
+                                    {% block blog_comment_detail_base_general_text %}
+                                        <sw-textarea-field
+                                                v-model="comment.text"
+                                                class="blog-comment-detail-base__field-text"
+                                                :label="$tc('blog-comment.general.textLabel')"
+                                                :disabled="!acl.can('comment.editor')"
+                                                :error="commentTextError"
+                                                :placeholder="placeholder(comment, 'text', $tc('blog-comment.general.textPlaceholder'))"
+                                        />
+                                    {% endblock %}
+                                </sw-card>
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+                </sw-card-view>
+            </template>
+        {% endblock %}
+    </sw-page>
+{% endblock %}

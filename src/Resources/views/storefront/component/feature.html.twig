@@ -1,0 +1,26 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% sw_extends '@Storefront/storefront/component/feature.html.twig' %}
+
+{% block component_head_feature %}
+    {% set AddThisId = config('MagefanBlog.config.AddThisId') %}
+    {% set AddThisLanguage = config('MagefanBlog.config.AddThisLanguage') %}
+    {% set addThisEnabled = config('MagefanBlog.config.addThisEnabled') %}
+    {% if app.request.attributes.get('_route') == "frontend.blog.post" and addThisEnabled %}
+        <script type="text/javascript">
+            var addthis_config = {
+                "ui_language": {{ AddThisLanguage }},
+                "data_track_clickback": false
+            }
+        </script>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid={{ AddThisId }}"></script>
+    {% endif %}
+    <script src="{{ asset('bundles/magefanblog/administration/js/jquery-3.6.3.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/magefanblog/administration/js/jquery.tagcanvas.min.js') }}"></script>
+
+    {{ parent() }}
+{% endblock %}
+

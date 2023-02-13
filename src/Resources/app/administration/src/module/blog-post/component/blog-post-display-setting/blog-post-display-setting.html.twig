@@ -1,0 +1,55 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% block blog_post_display_setting %}
+<sw-card
+    v-if="post"
+    position-identifier="blog-post-display-setting"
+    :title="$tc('blog-post.detail.cardTitleDisplaySettingInfo')"
+    :is-loading="isLoading"
+>
+
+    {% block blog_post_detail_author %}
+        <sw-entity-single-select
+                v-model="post.authorId"
+                class="blog-post-detail__author"
+                entity="magefanblog_author"
+                value-property="firstname"
+                label-property="firstname"
+                :highlight-search-term="false"
+                :label="$tc('blog-post.detail.labelAuthor')"
+        />
+    {% endblock %}
+
+    {% block blog_post_detail_tags %}
+        <sw-multi-select
+                :label="$tc('blog-post.detail.labelTags')"
+                :options="tags"
+                :value="tagsSelected"
+                @change="updateSelectedTags"
+                :placeholder="$tc('blog-post.detail.placeholderTags')"
+        >
+        </sw-multi-select>
+    {% endblock %}
+
+    {% block blog_post_detail_include_in_recent %}
+    <sw-switch-field
+            v-model="post.includeInRecent"
+            class="blog-post-detail__active"
+            :label="$tc('blog-post.detail.labelIncludeInRecent')"
+    />
+    {% endblock %}
+
+    {% block blog_post_detail_position %}
+        <sw-number-field
+        v-model="post.position"
+                type="number"
+                :label="$tc('Position')"
+                :placeholder="$tc('blog-post.detail.placeholderPostPosition')"
+        />
+    {% endblock %}
+
+</sw-card>
+{% endblock %}

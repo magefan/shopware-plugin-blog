@@ -1,0 +1,80 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% block blog_category_detail %}
+    <sw-page class="blog-category-detail">
+
+        {% block blog_category_detail_header %}
+            <template #smart-bar-header>
+                <h2>{{ placeholder(category, 'title', $tc('blog-category.detail.buttonAddCategory')) }}</h2>
+            </template>
+        {% endblock %}
+
+        {% block blog_category_detail_actions %}
+            <template #smart-bar-actions>
+
+                {% block blog_category_detail_actions_abort %}
+                    <sw-button
+                            v-tooltip.bottom="tooltipCancel"
+                            :disabled="categoryIsLoading"
+                            @click="onCancel"
+                    >
+                        {{ $tc('blog-category.detail.buttonCancel') }}
+                    </sw-button>
+                {% endblock %}
+
+                {% block blog_category_detail_actions_save %}
+                    <sw-button-process
+                            v-model="isSaveSuccessful"
+                            v-tooltip.bottom="tooltipSave"
+                            class="blog-category-detail__save-action"
+                            :is-loading="isLoading"
+                            :process-success="isSaveSuccessful"
+                            :disabled="isLoading"
+                            variant="primary"
+                            @click.prevent="onSave"
+                    >
+                        {{ $tc('blog-category.detail.buttonSave') }}
+                    </sw-button-process>
+                {% endblock %}
+
+            </template>
+        {% endblock %}
+
+        {% block blog_category_detail_content %}
+            <sw-card-view slot="content">
+                <template v-if="categoryIsLoading">
+                    <sw-skeleton variant="detail-bold"/>
+                    <sw-skeleton/>
+                </template>
+
+                <template v-else>
+
+                    {% block blog_category_detail_base %}
+                        <blog-category-detail-base
+                                v-if="category"
+                                :category="category"
+                                :allow-edit="acl.can('blog_category.editor')"
+                        />
+                    {% endblock %}
+                    {% block blog_category_display_setting %}
+                        <blog-category-display-setting
+                                v-if="category"
+                                :category="category"
+                                :allow-edit="acl.can('blog_category.editor')"
+                        />
+                    {% endblock %}
+                    {% block blog_category_seo %}
+                        <blog-category-seo
+                                v-if="category"
+                                :category="category"
+                                :allow-edit="acl.can('blog_category.editor')"
+                        />
+                    {% endblock %}
+                </template>
+            </sw-card-view>
+        {% endblock %}
+    </sw-page>
+{% endblock %}

@@ -1,0 +1,55 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% block blog_post_detail_base %}
+    <sw-card
+            v-if="post"
+            position-identifier="blog-post-detail-base"
+            :title="$tc('blog-post.detail.cardTitleGeneralInfo')"
+    >
+
+        {% block blog_post_detail_active %}
+        <sw-switch-field
+                v-model="post.isActive"
+                class="magefan-blog-detail__active"
+                :label="$tc('blog-post.detail.labelActive')"
+        />
+        {% endblock %}
+
+        {% block blog_post_detail_title %}
+            <sw-field
+                    v-model="post.title"
+                    type="text"
+                    validation="required"
+                    required
+                    :error="postTitleError"
+                    :label="$tc('blog-post.detail.labelTitle')"
+                    :placeholder="$tc('blog-post.detail.placeholderTitle')"
+            >
+            </sw-field>
+        {% endblock %}
+
+        {% block blog_post_detail_select_categories %}
+            <sw-multi-select
+                    :options="categories"
+                    :value="categoriesSelected"
+                    @change="updateSelectedCategories"
+                    :label="$tc('blog-post.detail.labelCategories')"
+                    :placeholder="$tc('blog-post.detail.placeholderCategories')"
+            >
+            </sw-multi-select>
+        {% endblock %}
+
+        {% block blog_post_detail_content %}
+            <sw-text-editor
+                    v-model="post.content"
+                    :label="$tc('blog-post.detail.labelContent')"
+                    name="description"
+                    sanitize-input
+                    :placeholder="$tc('blog-post.detail.placeholderContent')"
+            />
+        {% endblock %}
+    </sw-card>
+{% endblock %}

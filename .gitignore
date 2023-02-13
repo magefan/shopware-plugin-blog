@@ -1,0 +1,16 @@
+### OSX
+.DS_Store
+.AppleDouble
+.LSOverride
+
+## other stuff
+/.idea
+/vendor
+
+## other files
+src/Resources/app/administration/node_modules
+
+src/Resources/app/storefront/dist/
+src/Resources/app/storefront/node_modules
+
+src/Resources/public/static/

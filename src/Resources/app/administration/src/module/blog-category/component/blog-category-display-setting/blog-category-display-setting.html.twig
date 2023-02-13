@@ -1,0 +1,59 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% block blog_category_display_setting %}
+    <sw-card
+            v-if="category"
+            position-identifier="blog-category-display-setting"
+            :title="$tc('blog-category.detail.cardTitleDisplaySettingInfo')"
+            :is-loading="isLoading"
+    >
+        {% block blog_category_display_setting_posts_soty_by %}
+            <sw-field
+                    v-model="category.postsSortBy"
+                    type="select"
+                    :label="$tc('blog-category.detail.labelSortBy')"
+                    :disabled="!allowEdit"
+            >
+                <option
+                        v-for="type in sortByTypes"
+                        slot="options"
+                        :key="type.value"
+                        :value="type.value"
+                >
+                    {{ type.label }}
+                </option>
+            </sw-field>
+        {% endblock %}
+
+        {% block blog_category_display_setting_posts_list_template %}
+            <sw-field
+                    v-model="category.postsListTemplate"
+                    type="select"
+                    :label="$tc('blog-category.detail.labelTemplate')"
+                    :disabled="!allowEdit"
+            >
+                <option
+                        v-for="option in displayTypes"
+                        slot="options"
+                        :key="option.value"
+                        :value="option.value"
+                >
+                    {{ option.label }}
+                </option>
+            </sw-field>
+        {% endblock %}
+
+        {% block blog_category_detail_posts_per_page %}
+            <sw-number-field
+                    v-model="category.postsPerPage"
+                    type="number"
+                    :label="$tc('blog-category.detail.labelPostPerPage')"
+                    :placeholder="$tc('blog-category.detail.placeholderPostsPerPage')"
+                    :disabled="!allowEdit"
+            />
+        {% endblock %}
+    </sw-card>
+{% endblock %}

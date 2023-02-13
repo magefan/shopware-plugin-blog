@@ -1,0 +1,94 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+{% block blog_tag_list %}
+    <sw-page class="blog-tag-list">
+        {% block blog_tag_list_smart_bar_header %}
+            <template #smart-bar-header>
+                {% block blog_tag_list_smart_bar_header_title %}
+                    <h2>
+                        {% block blog_tag_list_smart_bar_header_title_text %}
+                            {{ $tc('blog-tag.list.mainHeaderText') }}
+                        {% endblock %}
+
+                        {% block blog_tag_list_smart_bar_header_amount %}
+                            <span v-if="!isLoading" class="blog-tag__smart-bar-amount">
+                            ({{ total }})
+                        </span>
+                        {% endblock %}
+                    </h2>
+                {% endblock %}
+            </template>
+        {% endblock %}
+
+        {% block blog_tag_list_actions %}
+            <template #smart-bar-actions>
+                {% block blog_tag_list_smart_bar_actions %}
+                    <sw-button
+                            v-tooltip.bottom="{
+                                message: $tc('blog-tag.tooltip.warning'),
+                                showOnDisabledElements: true
+                            }"
+                            :router-link="{ name: 'blog.tag.create' }"
+                            class="blog-tag-list__add-tag"
+                            variant="primary"
+                    >
+                        {{ $tc('blog-tag.list.addTagButton') }}
+                    </sw-button>
+                {% endblock %}
+            </template>
+        {% endblock %}
+
+        <template #content>
+            {% block blog_tag_list_content %}
+                <div class="blog-tag-list__content">
+                    {% block blog_tag_list_grid %}
+                        <sw-entity-listing
+                                class="blog-tag-list__grid"
+                                :items="tags"
+                                :repository="repository"
+                                :show-selection="true"
+                                detail-route="blog.tag.detail"
+                                :columns="columns"
+                                :allow-edit="acl.can('post_tag.editor')"
+                                :allow-inline-edit="acl.can('post_tag.editor')"
+                                :allow-delete="acl.can('post_tag.deleter')"
+                                :show-selections="acl.can('post_tag.deleter')"
+                        >
+                            {#                            <template #more-actions="{ item }">
+                                {% block blog_tag_list_grid_columns_actions_duplicate %}
+                                    <sw-context-menu-item
+                                            class="blog-tag-list-grid__duplicate-action"
+                                            @click="onDuplicate(item)"
+                                    >
+                                        {{ $tc('blog-tag.list.buttonDuplicate') }}
+                                    </sw-context-menu-item>
+                                {% endblock %}
+                            </template> #}
+                            <template slot="column-active" slot-scope="{ item }">
+                                <sw-icon
+                                        small
+                                        :name="item.active ? 'regular-checkmark-xs' : 'regular-times-s'"
+                                        :color="item.active ? '#37d046' : '#de294c'"
+                                />
+                            </template>
+                        </sw-entity-listing>
+                    {% endblock %}
+                    {#                    {% block blog_tag_list_content_clone_modal %}
+                        <blog-tag-clone-modal
+                                v-if="cloning"
+                                :tag="tag"
+                                @clone-finish="onDuplicateFinish"
+                        />
+                    {% endblock %} #}
+                </div>
+            {% endblock %}
+        </template>
+        {#        {% block sw_data_grid_slot_pagination %}
+            <sw-pagination v-bind="{ page, limit, total }" :total-visible="7" @page-change="paginate"></sw-pagination>
+        {% endblock %} #}
+    </sw-page>
+{% endblock %}
+
+

@@ -1,0 +1,12 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{# Sidebar #}
+{% block base_sidebar %}
+    {% sw_include '@Storefront/storefront/layout/sidebar.html.twig' with {
+        context: context,
+    } only %}
+{% endblock %}
+{# End sidebar #}

@@ -1,0 +1,116 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% block blog_post_detail %}
+    <sw-page class="blog-post-detail">
+        {% block blog_post_detail_smart_bar_header %}
+            <template slot="smart-bar-header">
+
+                {% block blog_post_detail_smart_bar_header_title %}
+                    <h2>{{ placeholder(post, 'title', $tc('blog-post.detail.textHeadline')) }}</h2>
+                {% endblock %}
+
+            </template>
+        {% endblock %}
+
+        {% block blog_post_detail_smart_bar_actions %}
+            <template slot="smart-bar-actions">
+                {% block blog_post_detail_smart_bar_actions_cancel %}
+                    <sw-button
+                            v-tooltip.bottom="tooltipCancel"
+                            class="blog-post-detail__back-action"
+                            :disabled="isLoading"
+                            @click="onCancel"
+                    >
+                        {{ $tc('blog-post.detail.buttonCancel') }}
+                    </sw-button>
+                {% endblock %}
+
+                {% block blog_post_detail_smart_bar_actions_save %}
+                    <sw-button-process
+                            v-tooltip="tooltipSave"
+                            class="blog-post-detail__save-action"
+                            :is-loading="isLoading"
+                            :process-success="isSaveSuccessful"
+                            :disabled="isLoading || !acl.can('property.editor')"
+                            variant="primary"
+                            @process-finish="saveFinish"
+                            @click.prevent="onSave"
+                    >
+                        {{ $tc('blog-post.detail.buttonSave') }}
+                    </sw-button-process>
+                {% endblock %}
+            </template>
+        {% endblock %}
+
+        {% block blog_post_detail_content %}
+            <sw-card-view slot="content">
+                <template v-if="isLoading">
+                    <sw-skeleton variant="detail-bold" />
+                    <sw-skeleton />
+                </template>
+
+                <div v-show="!isLoading">
+
+                    {% block blog_post_detail_base %}
+                        <blog-post-detail-base
+                                v-if="post"
+                                :post="post"
+                                @categories="getCategories"
+                                :allow-edit="acl.can('post.editor')"
+                        />
+                    {% endblock %}
+
+                    {% block blog_post_short_content %}
+                        <blog-post-short-content
+                                v-if="post"
+                                :post="post"
+                                :allow-edit="acl.can('post.editor')"
+                        />
+                    {% endblock %}
+
+                    {% block blog_post_display_setting %}
+                        <blog-post-display-setting
+                                v-if="post"
+                                :post="post"
+                                @tags="getTags"
+                                :allow-edit="acl.can('post.editor')"
+                        />
+                    {% endblock %}
+
+                    {% block blog_post_media_form %}
+                        <blog-post-media-form
+                                v-if="post"
+                                :post="post"
+                                :allow-edit="acl.can('post.editor')"
+                        />
+                    {% endblock %}
+
+                    {% block blog_post_seo %}
+                        <blog-post-seo
+                                v-if="post"
+                                :post="post"
+                                :allow-edit="acl.can('post.editor')"
+                        />
+                    {% endblock %}
+
+                </div>
+            </sw-card-view>
+        {% endblock %}
+        {% block blog_post_sidebar %}
+            <template #sidebar>
+                <sw-sidebar>
+                    <sw-sidebar-media-item ref="mediaSidebarItem">
+                        <template #context-menu-items="media">
+                            <sw-context-menu-item @click="setMediaItemFromSidebar(media.mediaItem)">
+                                {{ $tc('blog-post.general.useAsImage') }}
+                            </sw-context-menu-item>
+                        </template>
+                    </sw-sidebar-media-item>
+                </sw-sidebar>
+            </template>
+        {% endblock %}
+    </sw-page>
+{% endblock %}

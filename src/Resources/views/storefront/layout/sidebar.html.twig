@@ -1,0 +1,133 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+<aside class="sidebar blog-sidebar">
+    {% set sideBarSearchEnabled = config('MagefanBlog.config.searchFormEnabled') %}
+    {% set sidebarCategoryEnabled = config('MagefanBlog.config.sidebarCategoryEnabled') %}
+    {% set displayNumberOfPosts = config('MagefanBlog.config.displayNumberOfPosts') %}
+    {% set recentPostFormEnabled = config('MagefanBlog.config.recentPostFormEnabled') %}
+    {% set featuredPostFormEnabled = config('MagefanBlog.config.featuredPostFormEnabled') %}
+    {% set popularPostFormEnabled = config('MagefanBlog.config.popularPostFormEnabled') %}
+    {% set archiveWidgetEnabled = config('MagefanBlog.config.archiveWidgetEnabled') %}
+    {% set rssSidebarEnabled = config('MagefanBlog.config.rssSidebarEnabled') %}
+    {% set tagColor = config('MagefanBlog.config.tagColor') %}
+
+    {# Search #}
+    {% if sideBarSearchEnabled %}
+        {# Functionality will be later #}
+    {% endif %}
+    {# END Search #}
+
+    {% for sidebarItemName, sidebarItem in sidebar %}
+
+        {# Blog Category #}
+        {% if sidebarItem['categories'].elements|length > 0 and sidebarItem.categories is defined %}
+            <div class="block block-categories">
+                <div class="block-title">{{ "Categories"|trans }}</div>
+                <ul class="accordion">
+                    {% set categoryChildCout = config('MagefanBlog.config.displayNumberOfPosts') ? 'style="display: none"' : '' %}
+                    {% for category in sidebarItem['categories'].elements %}
+                        <li>
+                            <a href="{{ app.request.basePath ~ '/blog/category/' ~ category.identifier }}">
+                                <span class="block-category-name">{{ category.title }}</span>
+                                <span class="block-category-count" {{ categoryChildCout }}>
+                                {% if displayNumberOfPosts %}
+                                    ({{ category.blogPosts.elements|length }})
+                                {% endif %}
+                            </span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        {# END Blog Category #}
+
+        {# Recent Post #}
+        {% if sidebarItem['recentPosts'].elements|length > 0 and sidebarItem.recentPosts is defined %}
+            <div class="block block_recent">
+                <div class="block-title">{{ "Recent Posts"|trans }}</div>
+                <div class="block-content">
+                    {% block recent_articles %}
+                        {% sw_include '@Storefront/storefront/layout/grid.html.twig' with {
+                            context: context,
+                            posts: sidebarItem['recentPosts'].elements,
+                            sidebar: true
+                    } only %}
+                    {% endblock %}
+                </div>
+            </div>
+        {% endif %}
+        {# END Recent Post #}
+
+        {# Archive #}
+        {% if sidebarItem['archive']|length > 0 and sidebarItem.archive is defined %}
+            <div class="block block-archive">
+                <div class="block-title"><span>{{ "Archive"|trans }}</span></div>
+                <div class="block-content">
+                    {% for date, label in sidebarItem['archive'] %}
+                        <div class="item">
+                            <a title="{{ "Archive"|trans }} {{ label }}" class="archive-item-link"
+                               href="{{ app.request.basePath ~ '/blog/archive/' ~ date }}">{{ label }}</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        {# END Archive #}
+
+        {# Tags #}
+        {% if sidebarItem['tags']|length > 0 and sidebarItem.tags is defined %}
+        <div class="widget block block-tagclaud">
+                <div class="block-title">
+                    <strong>{{ "Tags"|trans }}</strong>
+                </div>
+                <div id="blogSidebarCloudCanvasContainer">
+                    <canvas style="width: 100%;" height="250" id="blogSidebarCloudCanvas">
+                        <div class="tagclaud-hld">
+                            {% for title, tag in sidebarItem['tags'] %}
+                                <span class="{{ tag.class }}">
+                                  <a href="{{ app.request.basePath ~ '/blog/tag/' ~ tag.tag.identifier }}"
+                                     title="travel">{{ tag.tag.title }}</a>
+                                </span>
+                            {% endfor %}
+                        </div>
+                    </canvas>
+                </div>
+            </div>
+            {% block javascripts %}
+                <script type="text/javascript">
+                    if (!$('#blogSidebarCloudCanvas').tagcanvas({
+                        "textColour": "{{ tagColor }}",
+                        "outlineColour": "{{ tagColor }}",
+                        "maxSpeed": 0.03,
+                        "depth": 0.75,
+                        "weight": true,
+                        "initial": [0, 1]
+                    })) {
+                        $('#blogSidebarCloudCanvasContainer').hide();
+                    }
+                </script>
+            {% endblock %}
+        {% endif %}
+        {# END Tags #}
+
+        {# RSS #}
+        {% if sidebarItem.rss is defined and rssSidebarEnabled %}
+            <div class="block block-rss">
+                <div class="block-title">
+                    <img width="28" height="28" class="rss-icon" src="{{ asset('bundles/magefanblog/administration/images/rss-icon.png') }}"
+                         alt="{{ config('MagefanBlog.config.rssSidebarFeedTitle') }}">
+                    <strong>
+                        <a target="_blank"
+                           href="{{ app.request.basePath ~ '/blog/rss' }}">{{ config('MagefanBlog.config.rssSidebarFeedTitle') }}</a>
+                    </strong>
+                </div>
+            </div>
+        {% endif %}
+        {# END RSS #}
+    {% endfor %}
+
+</aside>

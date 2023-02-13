@@ -1,0 +1,54 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% block blog_category_seo %}
+    <sw-card
+            v-if="category"
+            position-identifier="blog-category-detail-base"
+            :title="$tc('blog-category.detail.cardSeoGroupInfo')"
+            :is-loading="isLoading"
+    >
+
+        {% block blog_category_seo_identifier %}
+            <sw-field
+                    v-model="category.identifier"
+                    type="text"
+                    :label="$tc('blog-category.detail.labelIdentifier')"
+                    :placeholder="$tc('blog-category.detail.placeholderUrlKey')"
+                    :disabled="!allowEdit"
+            />
+        {% endblock %}
+
+        {% block blog_category_seo_meta_title %}
+            <sw-field
+                    v-model="category.metaTitle"
+                    type="text"
+                    :label="$tc('blog-category.detail.labelMetaTitle')"
+                    :placeholder="$tc('blog-category.detail.placeholderMetaTitle')"
+                    :disabled="!allowEdit"
+            />
+        {% endblock %}
+
+        {% block blog_category_seo_meta_keywords %}
+            <sw-field
+                    v-model="category.metaKeywords"
+                    type="textarea"
+                    :label="$tc('blog-category.detail.labelMetaKeywords')"
+                    :placeholder="$tc('blog-category.detail.placeholderMetaKeywords')"
+                    :disabled="!allowEdit"
+            />
+        {% endblock %}
+
+        {% block blog_category_seo_meta_description %}
+            <sw-field
+                    v-model="category.metaDescription"
+                    type="textarea"
+                    :label="$tc('blog-category.detail.labelMetaDescription')"
+                    :placeholder="$tc('blog-category.detail.placeholderMetaDescription')"
+                    :disabled="!allowEdit"
+            />
+        {% endblock %}
+    </sw-card>
+{% endblock %}

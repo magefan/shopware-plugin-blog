@@ -1,0 +1,48 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+<div class="toolbar-blog-posts">
+    <div class="pages">
+        <ul class="items pages-items" aria-labelledby="paging-label">
+            {% set page = (app.request.get('page')|format_number)  %}
+            {% set pageNext = page == 0 ? 2 : page + 1 %}
+            {% set pagePrev = (app.request.get('page')|format_number) - 1 %}
+            {% set pageKeys = paginationPages|keys %}
+            {% if(pagePrev > 0) %}
+                {% if(pagePrev === 1)  %}
+                    <li class="item pages-item-previous">
+                        <a href="{{ app.request.uri }}" class="previous"></a>
+                    </li>
+                {% else %}
+                    <li class="item pages-item-previous">
+                        <a href="{{ app.request.uri ~ '?page=' ~ pagePrev }}" class="previous"></a>
+                    </li>
+                {% endif %}
+            {% endif %}
+            {% for page in paginationPages %}
+                {% set currentPage = '' %}
+                {% if(app.request.get('page') is empty and loop.index == 1  or app.request.get('page') == loop.index) %}
+                    {% set currentPage = 'current' %}
+                {% endif %}
+                <li class="item {{ currentPage }}">
+                    {% if(loop.index === 1)  %}
+                        <a href="{{ app.request.uri }}" class="page">
+                            <span>{{ loop.index }}</span>
+                        </a>
+                    {% else %}
+                        <a href="{{ app.request.uri ~ '?page=' ~ loop.index }}" class="page">
+                            <span>{{ loop.index }}</span>
+                        </a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            {% if(paginationPages and max(pageKeys) >= pageNext) %}
+                <li class="item pages-item-next">
+                    <a href="{{ app.request.uri ~ '?page=' ~ pageNext }}" class="next"></a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

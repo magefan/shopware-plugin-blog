@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/master/src/Core/System/SystemConfig/Schema/config.xsd">
+    <card>
+        <title>Blog Index Page</title>
+        <input-field>
+            <name>title</name>
+            <label>Title</label>
+            <defaultValue>Blog</defaultValue>
+        </input-field>
+        <input-field type="single-select">
+            <name>displayMode</name>
+            <label>Display Mode</label>
+            <options>
+                <option>
+                    <id>0</id>
+                    <name>Recent Blog Posts</name>
+                </option>
+            </options>
+            <defaultValue>"0"</defaultValue>
+        </input-field>
+        <input-field type="single-select">
+            <name>postsSortBy</name>
+            <label>Posts Sort By</label>
+            <options>
+                <option>
+                    <id>publishTime</id>
+                    <name>Publish Date (default)</name>
+                </option>
+                <option>
+                    <id>position</id>
+                    <name>Position</name>
+                </option>
+                <option>
+                    <id>title</id>
+                    <name>Title</name>
+                </option>
+            </options>
+            <defaultValue>"publishTime"</defaultValue>
+        </input-field>
+        <input-field type="single-select">
+            <name>blogIndexTemplate</name>
+            <label>Blog Index Template</label>
+            <options>
+                <option>
+                    <id>default</id>
+                    <name>Default</name>
+                </option>
+            </options>
+            <defaultValue>"default"</defaultValue>
+        </input-field>
+        <input-field type="int">
+            <name>postsPerPage</name>
+            <label>Posts Per Page</label>
+            <defaultValue>0</defaultValue>
+        </input-field>
+        <input-field>
+            <name>metaTitle</name>
+            <label>Meta Title</label>
+        </input-field>
+        <input-field>
+            <name>metaKeywords</name>
+            <label>Meta Keywords</label>
+        </input-field>
+        <input-field>
+            <name>metaDescription</name>
+            <label>Meta Description</label>
+        </input-field>
+    </card>
+    <card>
+        <title>Post Page (Post View)</title>
+        <input-field type="single-select">
+            <name>displayPrevNext</name>
+            <label>Display Prev. and Next Post Links</label>
+            <options>
+                <option>
+                    <id>0</id>
+                    <name>No</name>
+                </option>
+                <option>
+                    <id>1</id>
+                    <name>Yes</name>
+                </option>
+            </options>
+            <defaultValue>"1"</defaultValue>
+        </input-field>
+        <input-field type="single-select">
+            <name>postPrevNextButtonStyle</name>
+            <label>Prev. and Next Post Links Template</label>
+            <options>
+                <option>
+                    <id>default</id>
+                    <name>Default (Next / Previous Labels)</name>
+                </option>
+            </options>
+            <defaultValue>"default"</defaultValue>
+        </input-field>
+    </card>
+    <card>
+        <title>Comments</title>
+        <input-field type="single-select">
+            <name>type</name>
+            <label>Comments</label>
+            <options>
+                <option>
+                    <id>disabled</id>
+                    <name>Disabled</name>
+                </option>
+                <option>
+                    <id>magefan</id>
+                    <name>Use Magefan Blog Comment</name>
+                </option>
+            </options>
+            <defaultValue>"magefan"</defaultValue>
+        </input-field>
+        <input-field type="int">
+            <name>numberOfComments</name>
+            <label>Number of Comments</label>
+            <defaultValue>5</defaultValue>
+        </input-field>
+        <input-field type="int">
+            <name>numberOfReplies</name>
+            <label>Number of Replies</label>
+            <defaultValue>5</defaultValue>
+        </input-field>
+        <input-field type="bool">
+            <name>guestComments</name>
+            <label>Allow Guest Comments</label>
+            <defaultValue>1</defaultValue>
+        </input-field>
+        <input-field type="bool">
+            <name>privacyPolicyCheckbox</name>
+            <label>Display Privacy Policy Agreement (GDPR)</label>
+            <defaultValue>0</defaultValue>
+        </input-field>
+        <input-field type="single-select">
+            <name>status</name>
+            <label>New Comment Status</label>
+            <options>
+                <option>
+                    <id>0</id>
+                    <name>Pending</name>
+                </option>
+                <option>
+                    <id>1</id>
+                    <name>Approved</name>
+                </option>
+                <option>
+                    <id>2</id>
+                    <name>Not Approved</name>
+                </option>
+            </options>
+            <defaultValue>"0"</defaultValue>
+        </input-field>
+    </card>
+    <card>
+        <title>Post List</title>
+        <input-field type="int">
+            <name>postsPerPagePostList</name>
+            <label>Posts Per Page</label>
+            <defaultValue>10</defaultValue>
+        </input-field>
+        <input-field type="int">
+            <name>shortContentLength</name>
+            <label>Default Short Content Length</label>
+            <defaultValue>1000</defaultValue>
+        </input-field>
+        <input-field type="text">
+            <name>shortContentEndCharacter</name>
+            <label>Short Content End Сharacters</label>
+            <defaultValue>"..."</defaultValue>
+        </input-field>
+    </card>
+    <card>
+        <title>Sidebar -> Category</title>
+        <input-field type="single-select">
+            <name>sidebarCategoryEnabled</name>
+            <label>Category Enabled</label>
+            <options>
+                <option>
+                    <id>0</id>
+                    <name>No</name>
+                </option>
+                <option>
+                    <id>1</id>
+                    <name>Yes</name>
+                </option>
+            </options>
+            <defaultValue>"1"</defaultValue>
+        </input-field>
+        <input-field type="single-select">
+            <name>displayNumberOfPosts</name>
+            <label>Category Display Number Of Posts</label>
+            <options>
+                <option>
+                    <id>0</id>
+                    <name>No</name>
+                </option>
+                <option>
+                    <id>1</id>
+                    <name>Yes</name>
+                </option>
+            </options>
+            <defaultValue>"1"</defaultValue>
+        </input-field>
+        <input-field type="int">
+            <name>categoryMaximalDepth</name>
+            <label>Category Maximal Depth</label>
+            <defaultValue>1</defaultValue>
+            <disabled>true</disabled>
+        </input-field>
+        <input-field type="int">
+            <name>categorySortOrder</name>
+            <label>Category Sort Order</label>
+            <defaultValue>10</defaultValue>
+        </input-field>
+    </card>
+    <card>
+        <title>Sidebar -> Recent Post</title>
+        <input-field type="single-select">
+            <name>recentPostFormEnabled</name>
+            <label>Recent Post Enabled</label>
+            <options>
+                <option>
+                    <id>0</id>
+                    <name>No</name>
+                </option>
+                <option>
+                    <id>1</id>
+                    <name>Yes</name>
+                </option>
+            </options>
+            <defaultValue>"1"</defaultValue>
+        </input-field>
+        <input-field type="single-select">
+            <name>recentDisplayPostImage</name>
+            <label>Display Recent Post Image</label>
+            <options>
+                <option>
+                    <id>0</id>
+                    <name>No</name>
+                </option>
+                <option>
+                    <id>1</id>
+                    <name>Yes</name>
+                </option>
+            </options>
+            <defaultValue>"1"</defaultValue>
+        </input-field>
+        <input-field type="int">
+            <name>recentPostNumbers</name>
+            <label>Recent Post Numbers</label>
+            <defaultValue>5</defaultValue>
+        </input-field>
+        <input-field type="int">
+            <name>recentPostSortOrder</name>
+            <label>Recent Post Sort Order</label>
+            <defaultValue>30</defaultValue>
+        </input-field>
+    </card>
+    <card>
+        <title>Sidebar -> Archive</title>
+        <input-field type="single-select">
+            <name>archiveWidgetEnabled</name>
+            <label>Archive Widget Enabled</label>
+            <options>
+                <option>
+                    <id>0</id>
+                    <name>No</name>
+                </option>
+                <option>
+                    <id>1</id>
+                    <name>Yes</name>
+                </option>
+            </options>
+            <defaultValue>"1"</defaultValue>
+        </input-field>
+        <input-field type="int">
+            <name>archiveWidgetSortOrder</name>
+            <label>Archive Widget Sort Order</label>
+            <defaultValue>40</defaultValue>
+        </input-field>
+    </card>
+    <card>
+        <title>Sidebar -> Tag Cloud</title>
+        <input-field type="single-select">
+            <name>tagCloudEnabled</name>
+            <label>Tag Cloud Widget Enabled</label>
+            <options>
+                <option>
+                    <id>0</id>
+                    <name>No</name>
+                </option>
+                <option>
+                    <id>1</id>
+                    <name>Yes</name>
+                </option>
+            </options>
+            <defaultValue>"1"</defaultValue>
+        </input-field>
+        <input-field type="colorpicker">
+            <name>tagColor</name>
+            <label>Tag Color</label>
+            <defaultValue>"#56DB3A"</defaultValue>
+        </input-field>
+        <input-field type="int">
+            <name>tagSortOrder</name>
+            <label>Tag Sort Order</label>
+            <defaultValue>50</defaultValue>
+        </input-field>
+        <input-field type="int">
+            <name>tagsNumber</name>
+            <label>Tag Number of Tags</label>
+            <defaultValue>50</defaultValue>
+        </input-field>
+    </card>
+    <card>
+        <title>Sidebar -> RSS</title>
+        <input-field type="single-select">
+            <name>rssSidebarEnabled</name>
+            <label>RSS Sidebar Enabled</label>
+            <options>
+                <option>
+                    <id>0</id>
+                    <name>No</name>
+                </option>
+                <option>
+                    <id>1</id>
+                    <name>Yes</name>
+                </option>
+            </options>
+            <defaultValue>"1"</defaultValue>
+        </input-field>
+        <input-field type="int">
+            <name>rssSidebarSortOrder</name>
+            <label>RSS Sidebar Sort Order</label>
+            <defaultValue>60</defaultValue>
+        </input-field>
+        <input-field>
+            <name>rssSidebarFeedTitle</name>
+            <label>RSS Sidebar Feed Title</label>
+            <defaultValue>Blog Rss</defaultValue>
+        </input-field>
+        <input-field type="text-editor">
+            <name>rssSidebarFeedDescription</name>
+            <label>RSS Sidebar Feed Description</label>
+        </input-field>
+    </card>
+    <card>
+        <title>Tag</title>
+        <input-field type="single-select">
+            <name>defaultTagRobots</name>
+            <label>Default Robots</label>
+            <options>
+                <option>
+                    <id>IndexFollow</id>
+                    <name>INDEX, FOLLOW</name>
+                </option>
+                <option>
+                    <id>NoindexFollow</id>
+                    <name>NOINDEX, FOLLOW</name>
+                </option>
+                <option>
+                    <id>IndexNofollow</id>
+                    <name>INDEX, NOFOLLOW</name>
+                </option>
+                <option>
+                    <id>NoindexNofollow</id>
+                    <name>NOINDEX, NOFOLLOW</name>
+                </option>
+            </options>
+            <defaultValue>"INDEX, FOLLOW"</defaultValue>
+        </input-field>
+    </card>
+    <card>
+        <title>XML Sitemap</title>
+        <input-field type="single-select">
+            <name>blogIndexSitemapEnable</name>
+            <label>Blog Index Page Enabled</label>
+            <options>
+                <option>
+                    <id>0</id>
+                    <name>No</name>
+                </option>
+                <option>
+                    <id>1</id>
+                    <name>Yes</name>
+                </option>
+            </options>
+            <defaultValue>"1"</defaultValue>
+        </input-field>
+        <input-field type="single-select">
+            <name>blogIndexSitemapFrequency</name>
+            <label>Blog Index Page Frequency</label>
+            <options>
+                <option>
+                    <id>always</id>
+                    <name>Always</name>
+                </option>
+                <option>
+                    <id>hourly</id>
+                    <name>Hourly</name>
+                </option>
+                <option>
+                    <id>daily</id>
+                    <name>Daily</name>
+                </option>
+                <option>
+                    <id>weekly</id>
+                    <name>Weekly</name>
+                </option>
+                <option>
+                    <id>monthly</id>
+                    <name>Monthly</name>
+                </option>
+                <option>
+                    <id>yearly</id>
+                    <name>Yearly</name>
+                </option>
+                <option>
+                    <id>never</id>
+                    <name>Never</name>
+                </option>
+            </options>
+            <defaultValue>"daily"</defaultValue>
+        </input-field>
+        <input-field type="float">
+            <name>blogIndexSitemapPriority</name>
+            <label>Blog Index Page Priority</label>
+            <defaultValue>0.8</defaultValue>
+        </input-field>
+        <input-field type="single-select">
+            <name>blogCategoriesSitemapEnable</name>
+            <label>Blog Categories Enabled</label>
+            <options>
+                <option>
+                    <id>0</id>
+                    <name>No</name>
+                </option>
+                <option>
+                    <id>1</id>
+                    <name>Yes</name>
+                </option>
+            </options>
+            <defaultValue>"1"</defaultValue>
+        </input-field>
+        <input-field type="single-select">
+            <name>blogCategoriesSitemapFrequency</name>
+            <label>Blog Categories Frequency</label>
+            <options>
+                <option>
+                    <id>always</id>
+                    <name>Always</name>
+                </option>
+                <option>
+                    <id>hourly</id>
+                    <name>Hourly</name>
+                </option>
+                <option>
+                    <id>daily</id>
+                    <name>Daily</name>
+                </option>
+                <option>
+                    <id>weekly</id>
+                    <name>Weekly</name>
+                </option>
+                <option>
+                    <id>monthly</id>
+                    <name>Monthly</name>
+                </option>
+                <option>
+                    <id>yearly</id>
+                    <name>Yearly</name>
+                </option>
+                <option>
+                    <id>never</id>
+                    <name>Never</name>
+                </option>
+            </options>
+            <defaultValue>"daily"</defaultValue>
+        </input-field>
+        <input-field type="float">
+            <name>blogCategoriesSitemapPriority</name>
+            <label>Blog Categories Priority</label>
+            <defaultValue>0.8</defaultValue>
+        </input-field>
+        <input-field type="single-select">
+            <name>blogPostsSitemapEnable</name>
+            <label>Blog Posts Enabled</label>
+            <options>
+                <option>
+                    <id>0</id>
+                    <name>No</name>
+                </option>
+                <option>
+                    <id>1</id>
+                    <name>Yes</name>
+                </option>
+            </options>
+            <defaultValue>"1"</defaultValue>
+        </input-field>
+        <input-field type="single-select">
+            <name>blogPostsSitemapFrequency</name>
+            <label>Blog Posts Frequency</label>
+            <options>
+                <option>
+                    <id>always</id>
+                    <name>Always</name>
+                </option>
+                <option>
+                    <id>hourly</id>
+                    <name>Hourly</name>
+                </option>
+                <option>
+                    <id>daily</id>
+                    <name>Daily</name>
+                </option>
+                <option>
+                    <id>weekly</id>
+                    <name>Weekly</name>
+                </option>
+                <option>
+                    <id>monthly</id>
+                    <name>Monthly</name>
+                </option>
+                <option>
+                    <id>yearly</id>
+                    <name>Yearly</name>
+                </option>
+                <option>
+                    <id>never</id>
+                    <name>Never</name>
+                </option>
+            </options>
+            <defaultValue>"daily"</defaultValue>
+        </input-field>
+        <input-field type="float">
+            <name>blogPostsSitemapPriority</name>
+            <label>Blog Posts Priority</label>
+            <defaultValue>0.5</defaultValue>
+        </input-field>
+    </card>
+    <card>
+        <title>Social</title>
+        <input-field type="single-select">
+            <name>addThisEnabled</name>
+            <label>AddThis Enabled</label>
+            <options>
+                <option>
+                    <id>0</id>
+                    <name>No</name>
+                </option>
+                <option>
+                    <id>1</id>
+                    <name>Yes</name>
+                </option>
+            </options>
+            <defaultValue>"0"</defaultValue>
+        </input-field>
+        <input-field>
+            <name>AddThisId</name>
+            <label>AddThis ID</label>
+        </input-field>
+        <input-field>
+            <name>AddThisLanguage</name>
+            <label>AddThis Language</label>
+        </input-field>
+    </card>
+    <card>
+        <title>Category Top Navigation</title>
+        <input-field type="single-select">
+            <name>DisplayBlogLink</name>
+            <label>Display Blog Link</label>
+            <options>
+                <option>
+                    <id>0</id>
+                    <name>No</name>
+                </option>
+                <option>
+                    <id>1</id>
+                    <name>Yes</name>
+                </option>
+            </options>
+            <defaultValue>"1"</defaultValue>
+        </input-field>
+        <input-field>
+            <name>LinkText</name>
+            <label>Link Text</label>
+            <defaultValue>Blog</defaultValue>
+        </input-field>
+        <input-field type="single-select">
+            <name>IncludeBlogCategories</name>
+            <label>Include Blog Categories</label>
+            <options>
+                <option>
+                    <id>0</id>
+                    <name>No</name>
+                </option>
+                <option>
+                    <id>1</id>
+                    <name>Yes</name>
+                </option>
+            </options>
+            <defaultValue>"1"</defaultValue>
+        </input-field>
+        <input-field type="int">
+            <name>MaximalDepth</name>
+            <label>Maximal Depth</label>
+            <defaultValue>0</defaultValue>
+            <disabled>true</disabled>
+        </input-field>
+    </card>
+</config>

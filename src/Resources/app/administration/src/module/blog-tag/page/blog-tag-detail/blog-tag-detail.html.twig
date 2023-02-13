@@ -1,0 +1,83 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% block blog_tag_detail %}
+    <sw-page class="blog-tag-detail">
+        {% block blog_tag_detail_smart_bar_header %}
+            <template slot="smart-bar-header">
+
+                {% block blog_tag_detail_smart_bar_header_title %}
+                    <h2>{{ placeholder(tag, 'title', $tc('blog-tag.detail.textHeadline')) }}</h2>
+                {% endblock %}
+
+            </template>
+        {% endblock %}
+
+        {% block blog_tag_detail_smart_bar_actions %}
+            <template slot="smart-bar-actions">
+                {% block blog_tag_detail_smart_bar_actions_cancel %}
+                    <sw-button
+                            v-tooltip.bottom="tooltipCancel"
+                            class="blog-tag-detail__back-action"
+                            :disabled="isLoading"
+                            @click="onCancel"
+                    >
+                        {{ $tc('blog-tag.detail.buttonCancel') }}
+                    </sw-button>
+                {% endblock %}
+
+                {% block blog_tag_detail_smart_bar_actions_save %}
+                    <sw-button-process
+                            v-tooltip="tooltipSave"
+                            class="blog-tag-detail__save-action"
+                            :is-loading="isLoading"
+                            :process-success="isSaveSuccessful"
+                            :disabled="isLoading || !acl.can('blog_author.editor')"
+                            variant="primary"
+                            @process-finish="saveFinish"
+                            @click.prevent="onSave"
+                    >
+                        {{ $tc('blog-tag.detail.buttonSave') }}
+                    </sw-button-process>
+                {% endblock %}
+            </template>
+        {% endblock %}
+
+        {% block blog_tag_detail_content %}
+            <sw-card-view slot="content">
+                <template v-if="isLoading">
+                    <sw-skeleton variant="detail-bold"/>
+                    <sw-skeleton/>
+                </template>
+                <div v-show="!isLoading">
+
+                    {% block blog_tag_detail_base %}
+                        <blog-tag-detail-base
+                                v-if="tag"
+                                :tag="tag"
+                                :allow-edit="acl.can('blog_tag.editor')"
+                        />
+                    {% endblock %}
+
+                    {% block blog_tag_display_setting %}
+                        <blog-tag-display-setting
+                                v-if="tag"
+                                :tag="tag"
+                                :allow-edit="acl.can('blog_tag.editor')"
+                        />
+                    {% endblock %}
+
+                    {% block blog_tag_seo %}
+                        <blog-tag-seo
+                                v-if="tag"
+                                :tag="tag"
+                                :allow-edit="acl.can('blog_tag.editor')"
+                        />
+                    {% endblock %}
+                </div>
+            </sw-card-view>
+        {% endblock %}
+    </sw-page>
+{% endblock %}

@@ -1,0 +1,71 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% block blog_tag_seo %}
+    <sw-card
+            v-if="tag"
+            position-identifier="blog-tag-detail-base"
+            :title="$tc('blog-tag.detail.cardSeoGroupInfo')"
+            :is-loading="isLoading"
+    >
+        {% block blog_tag_seo_identifier %}
+            <sw-field
+                    v-model="tag.identifier"
+                    type="text"
+                    :label="$tc('blog-tag.detail.labelIdentifier')"
+                    :placeholder="$tc('blog-tag.detail.placeholderUrlKey')"
+                    :disabled="!allowEdit"
+            />
+        {% endblock %}
+
+        {% block blog_tag_seo_meta_title %}
+            <sw-field
+                    v-model="tag.metaTitle"
+                    type="text"
+                    :label="$tc('blog-tag.detail.labelMetaTitle')"
+                    :placeholder="$tc('blog-tag.detail.placeholderMetaTitle')"
+                    :disabled="!allowEdit"
+            />
+        {% endblock %}
+
+        {% block blog_tag_seo_meta_keywords %}
+            <sw-field
+                    v-model="tag.metaKeywords"
+                    type="textarea"
+                    :label="$tc('blog-tag.detail.labelMetaKeywords')"
+                    :placeholder="$tc('blog-tag.detail.placeholderMetaKeywords')"
+                    :disabled="!allowEdit"
+            />
+        {% endblock %}
+
+        {% block blog_tag_seo_meta_description %}
+            <sw-field
+                    v-model="tag.metaDescription"
+                    type="textarea"
+                    :label="$tc('blog-tag.detail.labelMetaDescription')"
+                    :placeholder="$tc('blog-tag.detail.placeholderMetaDescription')"
+                    :disabled="!allowEdit"
+            />
+        {% endblock %}
+
+        {% block blog_tag_seo_display_type %}
+            <sw-field
+                    v-model="tag.metaRobots"
+                    type="select"
+                    :label="$tc('blog-tag.detail.labelDisplayRobotsType')"
+                    :disabled="!allowEdit"
+            >
+                <option
+                        v-for="robot in metaRobots"
+                        slot="options"
+                        :key="robot.value"
+                        :value="robot.value"
+                >
+                    {{ robot.label }}
+                </option>
+            </sw-field>
+        {% endblock %}
+    </sw-card>
+{% endblock %}

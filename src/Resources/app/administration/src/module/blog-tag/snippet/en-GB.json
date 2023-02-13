@@ -1,0 +1,66 @@
+{
+  "blog-tag": {
+    "general": {
+      "title": "Blog Tags",
+      "mainMenuItemList": "Blog Tags",
+      "descriptionTextModule": "Blog Tag plugin for Shopware store",
+      "layoutUpdateLabel": "Layout Update"
+    },
+    "list": {
+      "titleColumn": "Title",
+      "descColumn": "Description",
+      "titleSaveSuccess": "Success",
+      "addTagButton": "Add New Tag",
+      "buttonDuplicate": "Duplicate",
+      "messageSaveSuccess": "Details updated successfully",
+      "labelActive": "Status",
+      "labelUrlKey": "Url Key",
+      "labelTitle": "Title",
+      "mainHeaderText": "Tags"
+    },
+    "detail": {
+      "textHeadline": "Tag Detail",
+      "buttonCancel": "Cancel",
+      "buttonSave": "Save",
+      "cardTitleGeneralInfo": "General",
+      "cardTitleLayoutInfo": "Layout",
+      "layoutLabel": "Layout",
+      "messageSaveError": "Saving error, please try again",
+      "emptyLayout": "Empty",
+      "oneColumnLayout": "1 column",
+      "columnsWithLeftLayout": "2 columns with left sidebar",
+      "columnsWithRightLayout": "2 columns with right sidebar",
+      "3columnsLayout": "3 columns",
+      "layoutUpdateLabel": "Layout Update",
+      "labelDisplayRobotsType": "Robots",
+      "labelTitle": "Title",
+      "cardTitleDisplaySettingInfo": "Display Setting",
+      "labelPostPerPage": "Posts Per Page",
+      "labelTemplate": "Template",
+      "cardSeoGroupInfo": "Search Engine Optimization",
+      "defaultTemplate": "Default",
+      "modernTemplate": "Modern",
+      "labelIdentifier": "Url Key",
+      "labelMetaTitle": "Meta Title",
+      "labelMetaKeywords": "Meta Keywords",
+      "labelMetaDescription": "Meta Description",
+      "configRobots": "Use config settings",
+      "indexFollow": "INDEX, FOLLOW",
+      "noindexFollow": "NOINDEX, FOLLOW",
+      "indexNofollow": "INDEX, NOFOLLOW",
+      "noindexNofollow": "NOINDEX, NOFOLLOW",
+      "placeholderMetaDescription": "Type meta description here...",
+      "placeholderMetaKeywords": "Type meta keywords here...",
+      "placeholderMetaTitle": "Type meta title type here...",
+      "placeholderUrlKey": "Type url key here...",
+      "placeholderPerPage": "Type posts per page count here...",
+      "labelActive": "Enable Tag",
+      "labelContent": "Content",
+      "placeholderTitle": "Type tag title here...",
+      "placeholderContent": "Type content here..."
+    },
+    "tooltip": {
+      "warning": "Warning"
+    }
+  }
+}

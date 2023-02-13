@@ -1,0 +1,171 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% sw_extends '@Storefront/storefront/base.html.twig' %}
+
+{% block base_content %}
+    {% set prevNextStyle = config('MagefanBlog.config.postPrevNextButtonStyle') %}
+    {% set displayPrevNext = config('MagefanBlog.config.displayPrevNext') %}
+    {% set relatedPostEnabled = config('MagefanBlog.config.displayRelatedPostsPost') %}
+    {% set relatedPostTemplate = config('MagefanBlog.config.relatedPostTemplate') %}
+    {% set displayRelatedProducts = config('MagefanBlog.config.displayRelatedProducts') %}
+    {% set relatedProductsEnabled = config('MagefanBlog.config.displayRelatedPostsPost') %}
+    {% set displayAuthorInformation = config('MagefanBlog.config.displayAuthorInformation') %}
+    {% set displayPostListByAuthor = config('MagefanBlog.config.displayPostListByAuthor') %}
+    {% set author = post.postAuthor %}
+    {% set authorRoute = app.request.basePath ~ '/blog/author/' ~ author.firstname ~ '-' ~ author.lastname %}
+    {% set commentType = config('MagefanBlog.config.type') %}
+    {# Blog Post #}
+    <section class="shopware-section shopware-section__blog-post">
+        <div class="container">
+            <h1 class="blog-page__title">{{ post.title }}</h1>
+
+            <div class="main-wrapper">
+                <div class="main-content">
+                    <div class="post-header">
+
+                        {# Category #}
+                        {% if post.postCategories %}
+                            <div class="blog-post__category">
+                                {% for category in post.postCategories %}
+                                    <a
+                                            class="blog-post__category-name"
+                                            href="{{ app.request.basePath ~ '/blog/category/' ~ category.identifier }}"
+                                            title="{{ category.title }}">
+                                        {{ category.title }}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {# END Category #}
+
+                        {# Author and Data #}
+                        <div class="blog-post__data-wrap">
+                            {% if author %}
+                                <span class="blog-post__author">
+                                        <span>{{ author.firstname ~ ' ' ~  author.lastname }}</span>&nbsp;
+                                        <span class="divider">-</span>
+                                </span>
+                            {% endif %}
+                            <span class="blog-post__data">{{ post.createdAt|date("M d,Y") }}</span>
+                        </div>
+                        {# Author and Data #}
+                    </div>
+
+                    <div class="post-content">
+                        {# Image #}
+                        <div class="post-featured-image">
+                            {% if post.media.url %}
+                                <img src="{{ post.media.url }}"
+                                     width="{{ post.media.metaData.width }}"
+                                     height="{{ post.media.metaData.height }}"
+                                     alt="{{ post.featuredImgAlt }}">
+                            {% endif %}
+                        </div>
+                        {# END Image #}
+
+                        {# Tags #}
+                        {% if post.postTags.elements %}
+                            <div class="post-tag">
+                                <div class="post-tags">
+                                    <div class="post-tag-title">{{ "Tags"|trans }}</div>
+                                    {% for tag in post.postTags.elements %}
+                                        <a title="{{ tag.title }}"
+                                           href="{{ app.request.basePath ~ '/blog/tag/' ~ tag.identifier }}">
+                                            {{ tag.title }}
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {# END Tags #}
+
+                        {# Description #}
+                        <div class="post-description">
+                            {{ post.content|raw }}
+                        </div>
+                        {# Description #}
+                    </div>
+
+
+                    <div class="post-footer">
+                        {% set addThisEnabled = config('MagefanBlog.config.addThisEnabled') %}
+                        {% if addThisEnabled %}
+                            {# Sharing #}
+                            <div class="post-sharing-bottom">
+                                <div class="addthis_inline_share_toolbox"></div>
+                            </div>
+                            {# END Sharing #}
+                        {% endif %}
+                        {# Next Prev #}
+                        {% if prevNextStyle === 'default' %}
+                            {% if (prevnext.prev.identifier or prevnext.next.identifier) and displayPrevNext %}
+                                <div class="post-nextprev row-cols-2">
+                                    {% if prevnext.prev.identifier %}
+                                        <div class="post-prev">
+                                            <a class="nextprev-link prev-link float-left"
+                                               href="{{ app.request.basePath ~ '/blog/post/' ~ prevnext.prev.identifier }}"
+                                               title="">
+                                                <span class="text-left">{{ "Previous"|trans }}</span>
+                                                {{ prevnext.prev.title }}
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                    {% if prevnext.next.identifier %}
+                                        <div class="post-next">
+                                            <a class="nextprev-link next-link float-right"
+                                               href="{{ app.request.basePath ~ '/blog/post/' ~ prevnext.next.identifier }}"
+                                               title="">
+                                                <span class="text-right">{{ "Next"|trans }}</span>
+                                                {{ prevnext.next.title }}
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            {# Modern style button #}
+                        {% endif %}
+                        {# END Next Prev #}
+
+                        {% if relatedPostEnabled %}
+                            {# Related Post #}
+                            {# Related Post #}
+                        {% endif %}
+
+                        {% if displayRelatedProducts %}
+                            {# Related Products #}
+                            {# END Related Products #}
+                        {% endif %}
+
+                        {# Comments #}
+                        {% if commentType == 'magefan' %}
+                            {% block magefan_blog_post_comment %}
+                                {% sw_include '@Storefront/storefront/layout/comment.html.twig' with {
+                                    context: context,
+                                    comments: post|getPostComments(post),
+                                    post: post,
+                                    cardTitle: post|getPostComments(post)|length ~ ' ' ~ 'Comment(s)'
+                                } only %}
+                            {% endblock %}
+                        {% endif %}
+                        {# END Comments #}
+                    </div>
+                </div>
+
+                {# Sidebar #}
+                {% block base_sidebar %}
+                    {% sw_include '@Storefront/storefront/layout/sidebar.html.twig' with {
+                        context: context,
+                        sidebar: sidebar
+                    } only %}
+                {% endblock %}
+                {# End sidebar #}
+            </div>
+        </div>
+    </section>
+    {# END Blog Post #}
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{
+  "blog-comment": {
+    "general": {
+      "cardTitle": "General information",
+      "title": "Blog Comments",
+      "mainMenuItemList": "Blog Comments",
+      "descriptionTextModule": "Blog plugin for Shopware store",
+      "publishDateLabel": "Publish Date",
+      "publishDatePlaceholder": "Select publish date...",
+      "textLabel": "Text",
+      "textPlaceholder": "Enter text...",
+      "labelAuthor": "Author",
+      "labelPost": "Post",
+      "labelParentComment": "Parent Comment"
+    },
+    "list": {
+      "title": "Comments",
+      "titleColumn": "Title",
+      "descColumn": "Description",
+      "titleSaveSuccess": "Success",
+      "messageSaveSuccess": "Details updated successfully",
+      "labelStatus": "Status",
+      "labelModified": "Modified",
+      "labelPublished": "Published",
+      "labelAuthorType": "Author Type",
+      "labelPost": "Post",
+      "labelNickName": "Author Nickname",
+      "labelText": "Text"
+    },
+    "detail": {
+      "header": {
+        "titleEdit": "Comment"
+      },
+      "statuses": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "not_approved": "Not Approved",
+        "statusLabel": "Status"
+      },
+      "cancelButton": "Cancel",
+      "saveButton": "Save",
+      "labelPublishDate": "Publish Date",
+      "labelText": "Text",
+      "labelStatus": "Status",
+      "cardTitle": "Setting",
+      "buttonAddComment": "Add Comment"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% block blog_post_short_content %}
+    <sw-card
+            v-if="post"
+            position-identifier="blog-post-short-content"
+            :title="$tc('blog-post.detail.cardShortContent')"
+    >
+        {% block blog_post_detail_short_content %}
+            <sw-text-editor
+                    v-model="post.contentHeading"
+                    sanitize-input
+                    :allow-edit="acl.can('post.editor')"
+                    :label="$tc('blog-post.detail.labelShortContent')"
+                    :placeholder="$tc('blog-post.detail.placeholderShortContent')"
+            />
+        {% endblock %}
+    </sw-card>
+{% endblock %}

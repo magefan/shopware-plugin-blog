@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+-->
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing
+        https://symfony.com/schema/routing/routing-1.0.xsd">
+    <import resource="../../Storefront/Controller/MagefanBlogController.php" type="annotation"/>
+    <import resource="../../Storefront/Controller/MagefanBlogPostController.php" type="annotation"/>
+    <import resource="../../Storefront/Controller/MagefanBlogCategoryController.php" type="annotation"/>
+    <import resource="../../Storefront/Controller/MagefanBlogTagController.php" type="annotation"/>
+    <import resource="../../Storefront/Controller/MagefanBlogArchiveController.php" type="annotation"/>
+    <import resource="../../Storefront/Controller/MagefanBlogCommentController.php" type="annotation" />
+    <import resource="../../Storefront/Controller/MagefanBlogRssFeedController.php" type="annotation"/>
+</routes>

@@ -1,0 +1,47 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% block blog_post_media_form %}
+    <sw-card
+            v-if="post"
+            position-identifier="blog-post-media-form"
+            :title="$tc('blog-post.detail.cardTitleImageUpload')"
+            :is-loading="isLoading"
+    >
+        {% block blog_post_detail_image_upload %}
+            <sw-upload-listener
+                    :upload-tag="mediaUploadTag"
+                    auto-upload
+                    @media-upload-finish="setMediaItem"
+            />
+            <sw-media-upload-v2
+                    class="blog-post-detail__image-upload"
+                    :source="post.mediaId"
+                    :allow-multi-select="false"
+                    variant="regular"
+                    :upload-tag="mediaUploadTag"
+                    :label="$tc('blog-post.detail.labelImage')"
+                    :default-folder="postRepository.entityName"
+                    :disabled="!acl.can('blog_post.editor')"
+                    @sw-media-upload-v2-media-upload-success="setMediaItem"
+                    @media-drop="onDropMedia"
+                    @media-upload-sidebar-open="openMediaSidebar"
+                    @media-upload-remove-image="onUnlinkLogo"
+            />
+        {% endblock %}
+
+        {% block blog_post_detail_featured_img_alt %}
+            <sw-field
+                    v-model="post.featuredImgAlt"
+                    type="text"
+                    :allow-edit="acl.can('post.editor')"
+                    :label="$tc('blog-post.detail.labelImageAlt')"
+                    :placeholder="$tc('blog-post.detail.placeholderImageAlt')"
+
+            >
+            </sw-field>
+        {% endblock %}
+    </sw-card>
+{% endblock %}

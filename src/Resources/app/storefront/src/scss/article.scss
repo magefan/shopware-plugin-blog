@@ -1,0 +1,198 @@
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+
+.blog-articles {
+  .article-post {
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+    &.position-horizontal {
+      flex-direction: row;
+    }
+    &.position-vertical {
+      flex-direction: column;
+    }
+    .article-post__image-container {
+      position: relative;
+      //flex: 1 1 30%;
+    }
+    &.article-post__no-content {
+      .article-post__info {
+        padding: 2rem 0 0;
+      }
+    }
+  }
+}
+
+.article-list {
+  .article-post {
+    display: flex;
+    flex-direction: row;
+    @media screen and (max-width: 767px) {
+      flex-direction: column;
+    }
+    .article-post__image-container {
+      flex: 0 0 30%;
+      align-self: flex-start;
+    }
+  }
+}
+.article-grid {
+  .article-post {
+    display: flex;
+    flex-direction: column;
+    @media screen and (max-width: 767px) {}
+    .article-post__image-container {
+      flex: 1 1;
+      align-self: auto;
+    }
+  }
+}
+
+// Image
+.article-post__image-container {
+  .article-post__image-wrapper {
+    position: relative;
+    overflow: hidden;
+    img {
+      display: block;
+      max-width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+
+      object-fit: cover;
+      object-position: center center;
+    }
+  }
+}
+
+//@media screen and (any-hover: hover) {
+//  .animation-type--zoom {
+//    img {
+//      transform: scale(1);
+//      transition: transform .5s ease;
+//    }
+//    &:hover {
+//      img {
+//        transform: scale(1.07);
+//        transition: transform .5s ease;
+//      }
+//    }
+//  }
+//}
+
+// Animation
+.animation-type--zoom {
+  img {
+    transform: scale(1);
+    transition: transform .5s ease;
+  }
+  &:hover {
+    img {
+      transform: scale(1.07);
+      transition: transform .5s ease;
+    }
+  }
+}
+
+// Category
+.article-post__category {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  line-height: 1;
+  .article-post__category-name {
+    display: inline-block;
+    margin: 5px 5px 0 0;
+    padding: 8px 14px;
+    background: #000;
+    color: #fff;
+    font-size: 11px;
+    line-height: 12px;
+    font-weight: 500;
+    text-decoration: none;
+    text-transform: uppercase;
+    @include transition();
+    .article-post__image-container:hover & {
+      background-color: #4db2ec;
+    }
+  }
+}
+
+// Post Info
+.article-post {
+  .article-post__info {
+    @media screen and (min-width: 768px) {}
+    @media screen and (max-width: 767px) {}
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    .article-list & {
+      padding: 0 1rem;
+    }
+    .article-grid & {
+      padding: 1rem 0;
+    }
+    @media screen and (max-width: 767px) {
+      .article-list &,
+      .article-grid & {
+        padding: 1rem 0;
+      }
+    }
+    .article-post__header {
+      line-height: .8;
+      margin-bottom: 0.75rem;
+      .article-post__title {
+        //font-size: 2.6rem;
+        font-size: 24px;
+        line-height: 20px;
+        font-weight: 500;
+        margin: 0 0 6px;
+        text-decoration: none;
+        word-break: break-word;
+        a {
+          color: var(--post-title-color);
+          text-decoration: none;
+          @include transition();
+          &:hover {
+            color: var(--post-title-color-hover);
+          }
+        }
+      }
+      .article-post__data-wrap {
+        font-size: .75rem;
+        line-height: .75rem;
+        font-family: sans-serif;
+        .article-post__author {
+          text-decoration: none;
+          font-family: sans-serif;
+          color: #222;
+          font-weight: 600;
+          .divider {
+            vertical-align: text-top;
+          }
+        }
+        .article-post__data {
+          //letter-spacing: .13rem;
+          opacity: 0.6;
+        }
+      }
+    }
+    .article-post__content {
+      max-height: 120px;
+      overflow: hidden;
+      p {
+        margin: 0 0 1rem 0;
+      }
+    }
+    .article-post__footer {
+
+    }
+  }
+}

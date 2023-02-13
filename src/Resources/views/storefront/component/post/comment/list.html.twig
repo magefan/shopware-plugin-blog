@@ -1,0 +1,52 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% block magefan_blog_component_post_comment_list %}
+    {% set maxCommentsCount = config('MagefanBlog.config.numberOfComments') %}
+
+    {% for comment in comments %}
+        <div class="c-comment c-comment-parent-0 {% if loop.index > maxCommentsCount %} {{ 'd-none' }} {% endif %}">
+            <div class="c-post c-post-{{ comment.id }}">
+                <div class="p-info">
+                    <div class="p-name">{{ comment.authorNickname }}</div>
+                    <div class="publish-date">{{ comment.createdAt|date('M d, Y H:i') }}</div>
+                </div>
+                <div class="p-text">{{ comment.text }}</div>
+                <div class="p-actions">
+                <span
+                        class="reply-action"
+                        data-mf-form-field-show-reply
+                        title="Reply">
+                    {{ "Reply"|trans }}
+                </span>
+                </div>
+                {% block  magefan_blog_component_post_comment_list_replies %}
+                    <div class="p-replies">
+                          {% for childComment in comment|get_child %}
+                        <div class="c-comment c-comment-parent-{{ comment.id }}">
+                            <div class="c-post c-post-{{ childComment.id }}">
+                                <div class="p-info">
+                                    <div class="p-name">{{ childComment.authorNickname }}</div>
+                                    <div class="publish-date">{{ childComment.createdAt|date('M d, Y H:i') }}</div>
+                                </div>
+                                <div class="p-text"
+                                >{{ childComment.text }}</div>
+                                <div class="p-actions">
+                                    <span
+                                            data-mf-form-field-show-reply
+                                            class="reply-action"
+                                            title="Reply">
+                                        {{ "Reply"|trans }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

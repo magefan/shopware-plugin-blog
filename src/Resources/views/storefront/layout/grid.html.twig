@@ -1,0 +1,18 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+<div class="blog-articles article-grid">
+    {% for post in posts %}
+        {# Grid #}
+        {% block article %}
+            {% sw_include '@Storefront/storefront/layout/article.html.twig' with {
+                context: context,
+                post: post,
+                sidebar:sidebar
+            } only %}
+        {% endblock %}
+        {# END Grid #}
+    {% endfor %}
+</div>

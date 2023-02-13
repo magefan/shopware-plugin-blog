@@ -1,0 +1,69 @@
+{
+  "blog-category":{
+    "general": {
+      "title": "Blog Categories",
+      "mainMenuItemList": "Blog Categories",
+      "descriptionTextModule": "Blog plugin for Shopware store"
+    },
+
+    "list": {
+      "titleColumn": "Title",
+      "descColumn": "Description",
+      "titleSaveSuccess": "Success",
+      "messageSaveSuccess": "Details updated successfully",
+      "headerText": "Categories",
+      "addCategoryButton": "Add New Category",
+      "labelActive": "Status",
+      "labelUrlKey": "Url Key",
+      "labelTitle": "Title",
+      "editOption": "Edit",
+      "deleteOption": "Delete",
+      "buttonCancel": "Cancel",
+      "buttonDelete": "Delete",
+      "textDeleteConfirm": "Are you sure you really want to delete the element \"{name}\"?"
+    },
+
+    "detail": {
+      "labelMetaTitle": "Meta Title",
+      "labelMetaKeywords": "Meta Keywords",
+      "labelMetaDescription": "Meta Description",
+      "configRobots": "Use config settings",
+      "indexFollow": "INDEX, FOLLOW",
+      "noindexFollow": "NOINDEX, FOLLOW",
+      "indexNofollow": "INDEX, NOFOLLOW",
+      "noindexNofollow": "NOINDEX, NOFOLLOW",
+      "labelDisplayRobotsType": "Robots Type",
+      "cardTitleDisplaySettingInfo": "Display Setting",
+      "labelPostPerPage": "Posts Per Page",
+      "labelTemplate": "Template",
+      "cardSeoGroupInfo": "Search Engine Optimization",
+      "defaultTemplate": "Default",
+      "modernTemplate": "Modern",
+      "labelIdentifier": "Identifier",
+      "textHeadline": "Author Detail",
+      "buttonCancel": "Cancel",
+      "buttonSave": "Save",
+      "cardTitleGeneralInfo": "General",
+      "cardTitleLayoutInfo": "Layout",
+      "layoutLabel": "Layout",
+      "buttonAddCategory": "Add New Category",
+      "labelIncludeInMenu": "Include In Menu",
+      "labelContent": "Content",
+      "labelPosition": "Position",
+      "placeholderMetaDescription": "Type meta description here...",
+      "placeholderMetaKeywords": "Type meta keyword here...",
+      "placeholderMetaTitle": "Type meta title here...",
+      "placeholderUrlKey": "Type url key here...",
+      "placeholderPostsPerPage": "Type posts per page here...",
+      "labelActive": "Enable Category",
+      "labelTitle": "Title",
+      "placeholderTitle": "Type category title here...",
+      "placeholderPosition": "Type category position here...",
+      "placeholderContent": "Type content here...",
+      "labelSortBy": "Posts Sort By",
+      "defaultSort": "Publish Date (default)",
+      "positionSort": "Position",
+      "titleSort": "Title"
+    }
+  }
+}

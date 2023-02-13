@@ -1,0 +1,160 @@
+{#
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+#}
+
+{% block blog_category_list %}
+    <sw-page class="blog-category-list">
+        {% block blog_category_list_smart_bar_header %}
+            <template #smart-bar-header>
+                {% block blog_category_list_smart_bar_header_title %}
+                    <h2>
+                        {% block blog_category_list_smart_bar_header_title_text %}
+                            {{ $tc('blog-category.list.headerText') }}
+                        {% endblock %}
+
+                        {% block blog_category_list_smart_bar_header_amount %}
+                            <span v-if="!isLoading" class="blog-category__smart-bar-amount">
+                                ({{ total }})
+                            </span>
+                        {% endblock %}
+                    </h2>
+                {% endblock %}
+            </template>
+        {% endblock %}
+
+        {% block blog_category_list_actions %}
+            <template #smart-bar-actions>
+                {% block blog_category_list_smart_bar_actions %}
+                    <sw-button
+                            v-tooltip.bottom="{
+                                message: $tc('sw-privileges.tooltip.warning'),
+                                showOnDisabledElements: true
+                            }"
+                            :router-link="{ name: 'blog.category.create' }"
+                            class="blog-category-list__add-category"
+                            variant="primary"
+                    >
+                        {{ $tc('blog-category.list.addCategoryButton') }}
+                    </sw-button>
+                {% endblock %}
+            </template>
+        {% endblock %}
+
+        <template #content>
+            {% block blog_category_list_content %}
+                <div class="blog-category-list__content">
+                    {% block blog_category_list_grid %}
+                        <sw-entity-listing
+                                class="blog-category-list__grid"
+                                :items="categories"
+                                :repository="repository"
+                                detail-route="blog.category.detail"
+                                :columns="columns"
+                                :show-selection="true"
+                                :allow-edit="acl.can('blog_category.editor')"
+                                :allow-inline-edit="acl.can('blog_category.editor')"
+                                :allow-delete="acl.can('blog_category.deleter')"
+                                :show-selections="acl.can('blog_category.deleter')"
+                        >
+                            {% block blog_category_list_grid_columns_actions %}
+
+                            <template #actions="{ item }">
+                                    <sw-context-menu-item
+                                            class="blog-category-list__edit-action"
+                                            :disabled="!acl.can('blog_category.editor')"
+                                            :router-link="{ name: 'blog.category.detail', params: { id: item.id }, query: { edit: true } }"
+                                    >
+                                        {{ $tc('blog-category.list.editOption') }}
+                                    </sw-context-menu-item>
+
+                                    <sw-context-menu-item
+                                            class="blog-category-list__delete-action"
+                                            variant="danger"
+                                            :disabled="!acl.can('blog_category.deleter')"
+                                            @click="onDelete(item.id)"
+                                    >
+                                        {{ $tc('blog-category.list.deleteOption') }}
+                                    </sw-context-menu-item>
+                            </template>
+                            {% endblock %}
+
+                            {% block blog_category_list_grid_action_modals %}
+                            <template #action-modals="{ item }">
+
+                                {% block blog_category_list_delete_modal %}
+                                <sw-modal
+                                        v-if="showDeleteModal === item.id"
+                                        :title="$tc('global.default.warning')"
+                                        variant="small"
+                                        @modal-close="onCloseDeleteModal"
+                                >
+
+                                    {% block blog_category_list_delete_modal_confirm_delete_text %}
+                                    <p class="blog-category-list__confirm-delete-text">
+                                    {{ $tc('blog-category.list.textDeleteConfirm', 0, { name: `${item.title}` }) }}
+                                </p>
+                                {% endblock %}
+
+                                {% block blog_category_list_delete_modal_footer %}
+                                    <template #modal-footer>
+
+                                        {% block blog_category_list_delete_modal_cancel %}
+                                        <sw-button
+                                                size="small"
+                                                @click="onCloseDeleteModal"
+                                        >
+                                            {{ $tc('blog-category.list.buttonCancel') }}
+                                            </sw-button>
+                                            {% endblock %}
+
+                                            {% block blog_category_list_delete_modal_confirm %}
+                                            <sw-button
+                                                    variant="danger"
+                                                    size="small"
+                                                    @click="onConfirmDelete(item.id)"
+                                            >
+                                                {{ $tc('blog-category.list.buttonDelete') }}
+                                            </sw-button>
+                                            {% endblock %}
+                                    </template>
+                                    {% endblock %}
+                                </sw-modal>
+                                {% endblock %}
+                            </template>
+                            {% endblock %}
+                            <template slot="column-active" slot-scope="{ item }">
+                                <sw-icon
+                                        small
+                                        :name="item.active ? 'regular-checkmark-xs' : 'regular-times-s'"
+                                        :color="item.active ? '#37d046' : '#de294c'"
+                                />
+                            </template>
+                            <template #column-createdAt="{item}">
+                                {{ item.createdAt|date }}
+                            </template>
+                            <template #column-updatedAt="{item}">
+                                <template v-if="item.updatedAt">
+                                    {{ item.updatedAt|date }}
+                                </template>
+
+                                <template v-else>
+                                    {{ item.createdAt|date }}
+                                </template>
+                            </template>
+                        </sw-entity-listing>
+                    {% endblock %}
+                    {#                    {% block blog_category_list_content_clone_modal %}
+                        <blog-category-clone-modal
+                                v-if="cloning"
+                                :category="category"
+                                @clone-finish="onDuplicateFinish"
+                        />
+                    {% endblock %} #}
+                </div>
+            {% endblock %}
+        </template>
+    </sw-page>
+{% endblock %}
+
+
