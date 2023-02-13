@@ -4,15 +4,24 @@
  */
 
 const { Module } = Shopware;
+
+/* Pages */
 import './page/blog-tag-list';
 import './page/blog-tag-detail';
 import './page/blog-tag-create';
+
+/* Components */
 import './component/blog-tag-detail-base';
 import './component/blog-tag-display-setting';
 import './component/blog-tag-seo';
 import './component/blog-tag-clone-modal';
+
+/* Translations */
 import enGB from './snippet/en-GB';
 import deDE from './snippet/de-DE';
+
+/* Acl */
+import './acl'
 
 Module.register('blog-tag', {
     type: 'plugin',
@@ -32,7 +41,8 @@ Module.register('blog-tag', {
             component: 'blog-tag-list',
             path: 'list',
             meta: {
-                parentPath: 'sw-content'
+                parentPath: 'sw-content',
+                privilege: 'blog_tag.viewer',
             }
         },
         create: {
@@ -40,6 +50,7 @@ Module.register('blog-tag', {
             path: 'create',
             meta: {
                 parentPath: 'blog.tag.index',
+                privilege: 'blog_tag.creator',
             },
         },
         detail: {
@@ -47,6 +58,7 @@ Module.register('blog-tag', {
             path: 'detail/:id',
             meta: {
                 parentPath: 'blog.tag.index',
+                privilege: 'blog_tag.viewer',
             },
             props: {
                 default(route) {
@@ -65,6 +77,7 @@ Module.register('blog-tag', {
         path: 'blog.tag.index',
         icon: 'regular-content',
         position: 13,
+        privilege: 'blog_tag.viewer',
         parent: 'sw-content',
     }],
 });

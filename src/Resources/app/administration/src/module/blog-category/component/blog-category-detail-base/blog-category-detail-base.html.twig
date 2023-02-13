@@ -13,6 +13,7 @@
         <sw-switch-field
                 v-model="category.isActive"
                 :label="$tc('blog-category.detail.labelActive')"
+                :disabled="!acl.can('blog_category.editor')"
         />
 
         <sw-field
@@ -45,7 +46,7 @@
                     v-model="category.content"
                     :label="$tc('blog-category.detail.labelContent')"
                     sanitize-input
-                    :disabled="!acl.can('blog-category.editor')"
+                    :disabled="!acl.can('blog_category.editor')"
                     :placeholder="$tc('blog-category.detail.placeholderContent')"
             />
         {% endblock %}

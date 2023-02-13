@@ -19,6 +19,7 @@
                 value-property="firstname"
                 label-property="firstname"
                 :highlight-search-term="false"
+                :disabled="!acl.can('blog_post.editor')"
                 :label="$tc('blog-post.detail.labelAuthor')"
         />
     {% endblock %}
@@ -29,6 +30,7 @@
                 :options="tags"
                 :value="tagsSelected"
                 @change="updateSelectedTags"
+                :disabled="!acl.can('blog_post.editor')"
                 :placeholder="$tc('blog-post.detail.placeholderTags')"
         >
         </sw-multi-select>
@@ -38,15 +40,17 @@
     <sw-switch-field
             v-model="post.includeInRecent"
             class="blog-post-detail__active"
+            :disabled="!acl.can('blog_post.editor')"
             :label="$tc('blog-post.detail.labelIncludeInRecent')"
     />
     {% endblock %}
 
     {% block blog_post_detail_position %}
         <sw-number-field
-        v-model="post.position"
+                v-model="post.position"
                 type="number"
                 :label="$tc('Position')"
+                :disabled="!acl.can('blog_post.editor')"
                 :placeholder="$tc('blog-post.detail.placeholderPostPosition')"
         />
     {% endblock %}

@@ -4,17 +4,26 @@
  */
 
 const { Module } = Shopware;
+
+/* Pages */
 import './page/blog-post-list';
 import './page/blog-post-detail';
 import './page/blog-post-create';
+
+/* Components */
 import './component/blog-post-detail-base';
 import './component/blog-post-display-setting';
 import './component/blog-post-seo';
 import './component/blog-post-clone-modal';
 import './component/blog-post-media-form'
 import './component/blog-post-short-content'
+
+/* Translations  */
 import enGB from './snippet/en-GB';
 import deDE from './snippet/de-DE';
+
+/* Acl */
+import './acl'
 
 Module.register('blog-post', {
     type: 'plugin',
@@ -34,13 +43,15 @@ Module.register('blog-post', {
             component: 'blog-post-list',
             path: 'list',
             meta: {
-                parentPath: 'sw-content'
+                parentPath: 'sw-content',
+                privilege: 'blog_post.viewer',
             }
         },
         create: {
             component: 'blog-post-create',
             path: 'create',
             meta: {
+                privilege: 'blog_post.creator',
                 parentPath: 'blog.post.index',
             },
         },
@@ -49,6 +60,7 @@ Module.register('blog-post', {
             path: 'detail/:id',
             meta: {
                 parentPath: 'blog.post.index',
+                privilege: 'blog_post.viewer',
             },
             props: {
                 default(route) {
@@ -67,6 +79,7 @@ Module.register('blog-post', {
         path: 'blog.post.index',
         icon: 'regular-content',
         position: 10,
+        privilege: 'blog_post.viewer',
         parent: 'sw-content',
     }],
 });

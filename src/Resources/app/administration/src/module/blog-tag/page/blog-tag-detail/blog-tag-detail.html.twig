@@ -34,7 +34,7 @@
                             class="blog-tag-detail__save-action"
                             :is-loading="isLoading"
                             :process-success="isSaveSuccessful"
-                            :disabled="isLoading || !acl.can('blog_author.editor')"
+                            :disabled="isLoading || !acl.can('blog_tag.editor')"
                             variant="primary"
                             @process-finish="saveFinish"
                             @click.prevent="onSave"

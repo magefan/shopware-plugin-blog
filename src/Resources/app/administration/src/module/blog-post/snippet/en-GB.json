@@ -22,7 +22,10 @@
       "labelUrlKey": "Url Key",
       "labelTitle": "Title",
       "deleteOption": "Delete",
-      "editOption": "Edit"
+      "editOption": "Edit",
+      "buttonCancel": "Cancel",
+      "buttonDelete": "Delete",
+      "textDeleteConfirm": "Are you sure you really want to delete the element \"{name}\"?"
     },
     "detail": {
       "textHeadline": "Post Detail",
@@ -96,6 +99,14 @@
 
     "tooltip": {
       "warning": "Warning"
+    }
+  },
+
+  "sw-privileges": {
+    "permissions": {
+      "blog_post": {
+        "label": "Blog Post"
+      }
     }
   }
 }

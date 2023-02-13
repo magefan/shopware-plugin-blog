@@ -15,8 +15,8 @@
     <sw-field
         v-model="post.identifier"
         type="text"
-        :allow-edit="acl.can('post.editor')"
         :label="$tc('blog-post.detail.labelIdentifier')"
+        :disabled="!acl.can('blog_post.editor')"
         :placeholder="$tc('blog-post.detail.placeholderUrlKey')"
     />
     {% endblock %}
@@ -25,8 +25,8 @@
         <sw-field
                 v-model="post.metaTitle"
                 type="text"
-                :allow-edit="acl.can('post.editor')"
                 :label="$tc('blog-post.detail.labelMetaTitle')"
+                :disabled="!acl.can('blog_post.editor')"
                 :placeholder="$tc('blog-post.detail.placeholderMetaTitle')"
         />
     {% endblock %}
@@ -35,8 +35,8 @@
         <sw-field
                 v-model="post.metaKeywords"
                 type="textarea"
-                :allow-edit="acl.can('post.editor')"
                 :label="$tc('blog-post.detail.labelMetaKeywords')"
+                :disabled="!acl.can('blog_post.editor')"
                 :placeholder="$tc('blog-post.detail.placeholderMetaKeywords')"
         />
     {% endblock %}
@@ -45,8 +45,8 @@
         <sw-field
                 v-model="post.metaDescription"
                 type="textarea"
-                :allow-edit="acl.can('post.editor')"
                 :label="$tc('blog-post.detail.labelMetaDescription')"
+                :disabled="!acl.can('blog_post.editor')"
                 :placeholder="$tc('blog-post.detail.placeholderMetaDescription')"
         />
     {% endblock %}

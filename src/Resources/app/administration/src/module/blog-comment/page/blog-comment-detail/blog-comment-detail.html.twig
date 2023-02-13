@@ -31,7 +31,7 @@
                             class="blog-comment-detail__save-action"
                             variant="primary"
                             :is-loading="isLoading"
-                            :disabled="isLoading || !acl.can('comment.editor')"
+                            :disabled="isLoading || !acl.can('blog_comment.editor')"
                             :process-success="isSaveSuccessful"
                             @process-finish="saveFinish"
                             @click.prevent="onSave"
@@ -141,7 +141,7 @@
                                                 class="blog-comment-detail-base__field-code-type"
                                                 :label="$tc('blog-comment.detail.statuses.statusLabel')"
                                                 v-model="comment.status"
-                                                :disabled="!acl.can('comment.editor')"
+                                                :disabled="!acl.can('blog_comment.editor')"
                                         >
                                             {% block blog_comment_detail_base_general_statuses_select_options %}
                                                 <option
@@ -164,7 +164,7 @@
                                                         date-type="datetime-local"
                                                         :label="$tc('blog-comment.general.publishDateLabel')"
                                                         :placeholder-text="$tc('blog-comment.general.publishDatePlaceholder')"
-                                                        :disabled="!acl.can('comment.editor')"
+                                                        :disabled="!acl.can('blog_comment.editor')"
                                                 />
                                             {% endblock %}
                                         </sw-container>
@@ -174,7 +174,7 @@
                                                 v-model="comment.text"
                                                 class="blog-comment-detail-base__field-text"
                                                 :label="$tc('blog-comment.general.textLabel')"
-                                                :disabled="!acl.can('comment.editor')"
+                                                :disabled="!acl.can('blog_comment.editor')"
                                                 :error="commentTextError"
                                                 :placeholder="placeholder(comment, 'text', $tc('blog-comment.general.textPlaceholder'))"
                                         />

@@ -32,7 +32,7 @@
                             class="blog-category-detail__save-action"
                             :is-loading="isLoading"
                             :process-success="isSaveSuccessful"
-                            :disabled="isLoading"
+                            :disabled="isLoading || !acl.can('blog_comment.editor')"
                             variant="primary"
                             @click.prevent="onSave"
                     >

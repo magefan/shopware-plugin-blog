@@ -87,7 +87,7 @@ Component.register('blog-category-detail', {
             return {
                 showDelay: 300,
                 message: this.$tc('sw-privileges.tooltip.warning'),
-                disabled: this.acl.can('order.editor'),
+                disabled: this.acl.can('blog_category.editor'),
                 showOnDisabledElements: true,
             };
         },

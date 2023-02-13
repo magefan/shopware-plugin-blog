@@ -4,10 +4,17 @@
  */
 
 const { Module } = Shopware;
+
+/* Pages */
 import './page/blog-comment-list';
 import './page/blog-comment-detail';
+
+/* Translations */
 import enGB from './snippet/en-GB';
 import deDE from './snippet/de-DE';
+
+/* Acl */
+import './acl';
 
 import mfDefaultSearchConfiguration from './mf-default-search-configuration';
 
@@ -18,7 +25,7 @@ Module.register('blog-comment', {
     color: '#ff68b4',
     icon: 'regular-content',
     favicon: 'icon-module-content.png',
-    entity: 'comment',
+    entity: 'magefanblog_comment',
     snippets: {
         'en-GB': enGB,
         'de-DE': deDE
@@ -31,7 +38,7 @@ Module.register('blog-comment', {
             },
             path: 'list',
             meta: {
-                privilege: 'comment.viewer',
+                privilege: 'blog_comment.viewer',
                 appSystem: {
                     view: 'list',
                 },
@@ -46,7 +53,7 @@ Module.register('blog-comment', {
             },
 
             meta: {
-                privilege: 'comment.viewer',
+                privilege: 'blog_comment.viewer',
                 parentPath: 'blog.comment.index',
                 appSystem: {
                     view: 'detail',
@@ -56,14 +63,14 @@ Module.register('blog-comment', {
     },
 
     navigation: [{
-        id: 'blog-comment',
+        id: 'blog.comment.index',
         label: 'blog-comment.general.mainMenuItemList',
         color: '#ff68b4',
         path: 'blog.comment.index',
         icon: 'regular-content',
         position: 15,
         parent: 'sw-content',
-        privilege: 'comment.viewer',
+        privilege: 'blog_comment.viewer',
     }],
 
     mfDefaultSearchConfiguration,

@@ -6,22 +6,26 @@
 Shopware.Service('privileges')
     .addPrivilegeMappingEntry({
         category: 'permissions',
-        parent: 'catalogues',
-        key: 'category',
+        parent: 'content',
+        key: 'blog_category',
         roles: {
             viewer: {
                 privileges: [
-                    'blog_category:create',
-                    'blog_category:update',
-                    'blog_category:read',
-                    Shopware.Service('privileges').getPrivileges('cms.viewer'),
+                    'magefanblog_category:create',
+                    'magefanblog_category:update',
+                    'magefanblog_category:read',
+                    'magefanblog_post_category:create',
+                    'magefanblog_post_category:update',
+                    'magefanblog_post_category:read',
                 ],
                 dependencies: [],
             },
             editor: {
                 privileges: [
-                    'blog_category:create',
-                    'blog_category:delete',
+                    'magefanblog_category:create',
+                    'magefanblog_category:delete',
+                    'magefanblog_author:create',
+                    'magefanblog_author:delete',
                 ],
                 dependencies: [
                     'blog_category.viewer',
@@ -29,7 +33,8 @@ Shopware.Service('privileges')
             },
             creator: {
                 privileges: [
-                    'blog_category:create',
+                    'magefanblog_category:create',
+                    'magefanblog_author:create',
                 ],
                 dependencies: [
                     'blog_category.viewer',
@@ -38,7 +43,8 @@ Shopware.Service('privileges')
             },
             deleter: {
                 privileges: [
-                    'blog_category:delete',
+                    'magefanblog_category:delete',
+                    'magefanblog_author:delete',
                 ],
                 dependencies: [
                     'blog_category.viewer',

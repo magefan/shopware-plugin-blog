@@ -6,22 +6,26 @@
 Shopware.Service('privileges')
     .addPrivilegeMappingEntry({
         category: 'permissions',
-        parent: 'catalogues',
-        key: 'tag',
+        parent: 'content',
+        key: 'blog_tag',
         roles: {
             viewer: {
                 privileges: [
-                    'blog_tag:create',
-                    'blog_tag:update',
-                    'blog_tag:read',
-                    Shopware.Service('privileges').getPrivileges('cms.viewer'),
+                    'magefanblog_tag:create',
+                    'magefanblog_tag:update',
+                    'magefanblog_tag:read',
+                    'magefanblog_post_tag:create',
+                    'magefanblog_post_tag:update',
+                    'magefanblog_post_tag:read',
                 ],
                 dependencies: [],
             },
             editor: {
                 privileges: [
-                    'blog_tag:create',
-                    'blog_tag:delete',
+                    'magefanblog_tag:create',
+                    'magefanblog_tag:delete',
+                    'magefanblog_post_tag:create',
+                    'magefanblog_post_tag:delete',
                 ],
                 dependencies: [
                     'blog_tag.viewer',
@@ -29,7 +33,8 @@ Shopware.Service('privileges')
             },
             creator: {
                 privileges: [
-                    'blog_tag:create',
+                    'magefanblog_tag:create',
+                    'magefanblog_post_tag:create',
                 ],
                 dependencies: [
                     'blog_tag.viewer',
@@ -38,7 +43,8 @@ Shopware.Service('privileges')
             },
             deleter: {
                 privileges: [
-                    'blog_tag:delete',
+                    'magefanblog_tag:delete',
+                    'magefanblog_post_tag:delete',
                 ],
                 dependencies: [
                     'blog_tag.viewer',
