@@ -27,7 +27,7 @@
                 {% block blog_tag_list_smart_bar_actions %}
                     <sw-button
                             v-tooltip.bottom="{
-                                message: $tc('sw-privileges.tooltip.warning'),
+                                message: $tc('blog-tag.tooltip.warning'),
                                 showOnDisabledElements: true
                             }"
                             :router-link="{ name: 'blog.tag.create' }"
@@ -38,6 +38,12 @@
                         {{ $tc('blog-tag.list.addTagButton') }}
                     </sw-button>
                 {% endblock %}
+            </template>
+        {% endblock %}
+
+        {% block blog_tag_list_language_switch %}
+            <template #language-switch>
+                <sw-language-switch @on-change="onChangeLanguage" />
             </template>
         {% endblock %}
 

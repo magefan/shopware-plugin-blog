@@ -4,7 +4,7 @@
  */
 
 const {Component, Mixin} = Shopware;
-const {Criteria} = Shopware.Data;
+const {Context, Data: { Criteria } } = Shopware;
 
 import template from './blog-category-list.html.twig';
 
@@ -126,6 +126,13 @@ Component.register('blog-category-list', {
                 this.total = result.total;
                 this.isLoading = false;
             })
+        },
+
+        onChangeLanguage(languageId) {
+
+            Shopware.State.commit('context/setApiLanguageId', languageId);
+
+            this.getList();
         },
 
         updateTotal({total}) {

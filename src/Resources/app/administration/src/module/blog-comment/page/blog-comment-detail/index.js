@@ -129,7 +129,7 @@ Component.register('blog-comment-detail', {
         onSave() {
             this.isLoading = true;
 
-            return this.commentRepository.save(this.comment).then(() => {
+            return this.commentRepository.save(this.comment, Context.api).then(() => {
                 this.isLoading = false;
                 this.isSaveSuccessful = true;
             }).catch((exception) => {

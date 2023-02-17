@@ -152,6 +152,15 @@
                 <argument type="service" id="service_container"/>
             </call>
         </service>
+        <service id="Magefan\Blog\Core\Content\Blog\Category\CategoryTranslation\CategoryTranslationDefinition">
+            <tag name="shopware.entity.definition" entity="magefanblog_category_translation"/>
+        </service>
+        <service id="Magefan\Blog\Core\Content\Blog\Post\PostTranslation\PostTranslationDefinition">
+            <tag name="shopware.entity.definition" entity="magefanblog_post_translation"/>
+        </service>
+        <service id="Magefan\Blog\Core\Content\Blog\Tag\TagTranslation\TagTranslationDefinition">
+            <tag name="shopware.entity.definition" entity="magefanblog_tag_translation"/>
+        </service>
         <service id="Magefan\Blog\Core\Content\Blog\Post\PostDefinition">
             <tag name="shopware.entity.definition" entity="magefanblog_post"/>
         </service>

@@ -7,7 +7,7 @@ import template from './blog-tag-detail.html.twig';
 import slug from "slug";
 
 const {Component, Mixin} = Shopware;
-const {Criteria} = Shopware.Data;
+const {Context, Data: {Criteria}} = Shopware;
 
 Component.register('blog-tag-detail', {
     template,
@@ -33,7 +33,7 @@ Component.register('blog-tag-detail', {
     },
 
     props: {
-        tagId: {
+        id: {
             type: String,
             default: null,
         },
@@ -45,6 +45,7 @@ Component.register('blog-tag-detail', {
             isLoading: false,
             isSaveSuccessful: false,
             customFieldSets: null,
+            isChangedLanguage: Shopware.Context.api.languageId,
         };
     },
 
@@ -93,7 +94,11 @@ Component.register('blog-tag-detail', {
     },
 
     watch: {
-        tagId() {
+        'tag.title': function (value) {
+            if (typeof value !== 'undefined') {
+            }
+        },
+        id() {
             this.loadEntityData();
         },
     },
@@ -110,7 +115,7 @@ Component.register('blog-tag-detail', {
         loadEntityData() {
             this.isLoading = true;
 
-            this.tagRepository.get(this.$attrs.id, Shopware.Context.api, this.defaultCriteria)
+            this.tagRepository.get(this.id, Shopware.Context.api, this.defaultCriteria)
                 .then((currentTag) => {
                     this.tag = currentTag;
                     this.isLoading = false;
@@ -118,6 +123,14 @@ Component.register('blog-tag-detail', {
                 this.isLoading = false;
             });
         },
+
+        onChangeLanguage(languageId) {
+
+            Shopware.State.commit('context/setApiLanguageId', languageId);
+
+            this.loadEntityData();
+        },
+
         saveFinish() {
             this.isSaveSuccessful = false;
         },

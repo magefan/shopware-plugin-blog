@@ -6,8 +6,7 @@
 import template from './blog-post-detail.html.twig';
 import slug from "slug";
 
-const {Component, Mixin, Context} = Shopware;
-const {Criteria} = Shopware.Data;
+const { Component, Mixin,Context, Data: { Criteria } } = Shopware;
 
 Component.register('blog-post-detail', {
     template,
@@ -34,7 +33,7 @@ Component.register('blog-post-detail', {
     },
 
     props: {
-        postId: {
+        id: {
             type: String,
             default: null,
         },
@@ -52,6 +51,7 @@ Component.register('blog-post-detail', {
             categoryItem: {},
             existTag: false,
             existCategory: false,
+            isChangedLanguage: Shopware.Context.api.languageId,
         };
     },
 
@@ -63,7 +63,7 @@ Component.register('blog-post-detail', {
 
     computed: {
         identifier() {
-            return this.placeholder(this.post, 'position');
+            return this.placeholder(this.post, 'title');
         },
 
         optionRepository() {
@@ -120,7 +120,7 @@ Component.register('blog-post-detail', {
     },
 
     watch: {
-        postId() {
+        id() {
             this.loadEntityData();
         },
     },
@@ -131,6 +131,14 @@ Component.register('blog-post-detail', {
 
     methods: {
         createdComponent() {
+            if (Shopware.Context.api.languageId !== Shopware.Context.api.systemLanguageId) {
+                Shopware.State.commit('context/setApiLanguageId', Shopware.Context.api.languageId)
+            }
+
+            if (!Shopware.State.getters['context/isSystemDefaultLanguage']) {
+                Shopware.State.commit('context/resetLanguageToDefault');
+            }
+
             this.loadEntityData();
         },
 
@@ -145,13 +153,21 @@ Component.register('blog-post-detail', {
         loadEntityData() {
             this.isLoading = true;
 
-            this.postRepository.get(this.$attrs.id, Shopware.Context.api, this.defaultCriteria)
+            this.postRepository.get(this.id, Shopware.Context.api, this.defaultCriteria)
                 .then((currentPost) => {
                     this.post = currentPost;
                     this.isLoading = false;
                 }).catch(() => {
                 this.isLoading = false;
             });
+        },
+
+        onChangeLanguage(languageId) {
+
+            Shopware.State.commit('context/setApiLanguageId', languageId);
+
+            this.isChangedLanguage = languageId;
+            this.loadEntityData();
         },
 
         saveFinish() {
@@ -174,7 +190,7 @@ Component.register('blog-post-detail', {
 
                 this.updateCategories();
                 this.updateTags();
-                this.postRepository.save(this.post).then(() => {
+                this.postRepository.save(this.post, Context.api).then(() => {
                     this.isLoading = false;
                     this.isSaveSuccessful = true;
                     if (this.post.id) {
@@ -202,10 +218,10 @@ Component.register('blog-post-detail', {
                 for (const category of this.categories) {
                     this.checkCategoryExists(category).then((isCategoryNotExist) => {
                         if (this.existCategory) {
-                            this.categoryItem = this.postCategoryRepository.create();
+                            this.categoryItem = this.postCategoryRepository.create(Shopware.Context.api);
                             this.categoryItem.categoryId = category;
                             this.categoryItem.postId = this.post.id;
-                            this.postCategoryRepository.save(this.categoryItem).then(() => {
+                            this.postCategoryRepository.save(this.categoryItem, Context.api).then(() => {
 
                             }).catch((response) => {
                                 //  resolve(response);
@@ -215,7 +231,7 @@ Component.register('blog-post-detail', {
                 }
                 const criteria = new Criteria();
                 criteria.addFilter(Criteria.equals('postId', this.post.id));
-                this.postCategoryRepository.search(criteria).then((relations) => {
+                this.postCategoryRepository.search(criteria, Shopware.Context.api).then((relations) => {
 
                     if (relations) {
                         for (const relation of relations) {

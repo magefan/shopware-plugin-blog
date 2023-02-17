@@ -164,11 +164,18 @@ Component.register('blog-post-list', {
             criteria.addAssociation('postAuthor');
 
             this.repository = this.repositoryFactory.create('magefanblog_post');
-            this.repository.search(criteria).then((result) => {
+            this.repository.search(criteria, Shopware.Context.api).then((result) => {
                 this.posts = result;
                 this.total = result.total;
                 this.isLoading = false;
             })
+        },
+
+        onChangeLanguage(languageId) {
+
+            Shopware.State.commit('context/setApiLanguageId', languageId);
+
+            this.getList();
         },
 
         updateTotal({total}) {

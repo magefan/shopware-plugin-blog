@@ -5,9 +5,8 @@
 
 import template from './blog-category-detail.html.twig';
 import slug from "slug";
-import path from "path";
 
-const {Component, Mixin, Data: {Criteria}} = Shopware;
+const {Component, Context, Mixin, Data: {Criteria}} = Shopware;
 
 const {mapPropertyErrors} = Shopware.Component.getComponentHelper();
 
@@ -40,6 +39,7 @@ Component.register('blog-category-detail', {
             rootCategoryBlog: {},
             isLoading: false,
             isSaveSuccessful: false,
+            isChangedLanguage: Shopware.Context.api.languageId,
         };
     },
 
@@ -123,6 +123,14 @@ Component.register('blog-category-detail', {
                 return;
             }
 
+            if (Shopware.Context.api.languageId !== Shopware.Context.api.systemLanguageId) {
+                Shopware.State.commit('context/setApiLanguageId', Shopware.Context.api.languageId)
+            }
+
+            if (!Shopware.State.getters['context/isSystemDefaultLanguage']) {
+                Shopware.State.commit('context/resetLanguageToDefault');
+            }
+
             this.category = this.categoryRepository.create();
         },
 
@@ -170,7 +178,7 @@ Component.register('blog-category-detail', {
                         category.externalLink = rootCategory[0].externalLink + '/category/' + this.category.identifier;
                         category.level = 3;
                         category.active = Boolean(this.category.isActive && this.category.includeInMenu);
-                        this.categoryMenuRepository.save(category);
+                        this.categoryMenuRepository.save(category, Context.api);
                     } else if(rootCategory[0].id && category) {
                         this.categoryMenuRepository.get(this.category.id).then((category) => {
                             category.id = this.category.id;
@@ -178,7 +186,7 @@ Component.register('blog-category-detail', {
                             category.externalLink = rootCategory[0].externalLink + '/category/' + this.category.identifier;
                             category.level = 3;
                             category.active = Boolean(this.category.isActive && this.category.includeInMenu);
-                            this.categoryMenuRepository.save(category);
+                            this.categoryMenuRepository.save(category, Context.api);
                         });
                     }
                 })
@@ -207,7 +215,7 @@ Component.register('blog-category-detail', {
             }
 
             this.category.identifier = identifier;
-            this.categoryRepository.save(this.category).then(() => {
+            this.categoryRepository.save(this.category, Context.api).then(() => {
                 this.updateCategoryMenu()
                 this.isLoading = false;
                 this.isSaveSuccessful = true;
@@ -225,6 +233,14 @@ Component.register('blog-category-detail', {
                     });
                     throw exception;
                 });
+        },
+
+        onChangeLanguage(languageId) {
+
+            Shopware.State.commit('context/setApiLanguageId', languageId);
+
+            this.isChangedLanguage = languageId;
+            this.loadEntityData();
         },
 
         onCancel() {

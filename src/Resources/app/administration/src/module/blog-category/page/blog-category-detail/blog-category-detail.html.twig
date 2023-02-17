@@ -43,6 +43,21 @@
             </template>
         {% endblock %}
 
+        {% block blog_category_detail_language_switch %}
+            <template slot="language-switch">
+                <sw-language-switch
+                        :disabled="category._isNew"
+                        @on-change="onChangeLanguage"
+                />
+            </template>
+        {% endblock %}
+
+        {% block blog_category_detail_language_info %}
+            <sw-language-info
+                    :entity-description="placeholder(category, 'title', $tc('blog-category.detail.textHeadline'))"
+            />
+        {% endblock %}
+
         {% block blog_category_detail_content %}
             <sw-card-view slot="content">
                 <template v-if="categoryIsLoading">

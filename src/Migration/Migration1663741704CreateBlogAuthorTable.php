@@ -33,12 +33,8 @@ class Migration1663741704CreateBlogAuthorTable extends MigrationStep
             '
                 CREATE TABLE `magefanblog_author` (
                  `id` binary(16) NOT NULL COMMENT "Author ID",
-                 `is_active` smallint NOT NULL DEFAULT 1 COMMENT "Is Author Active",
                  `firstname` varchar(255) DEFAULT NULL COMMENT "Author FirstName",
                  `lastname` varchar(255) DEFAULT NULL COMMENT "Author LastName",
-                 `admin_user_id` binary(16) NOT NULL COMMENT "Admin user ID",
-                 `email` varchar(255) DEFAULT NULL COMMENT "Author Email",
-                 `role` varchar(255) DEFAULT NULL COMMENT "Author role (developer)",
                  `facebook_page_url` varchar(255) DEFAULT NULL COMMENT "Author in Facebook",
                  `twitter_page_url` varchar(255) DEFAULT NULL COMMENT "Author in Twitter",
                  `instagram_page_url` varchar(255) DEFAULT NULL COMMENT "Author in Instagram",
@@ -52,6 +48,10 @@ class Migration1663741704CreateBlogAuthorTable extends MigrationStep
                  `content` mediumtext COMMENT "Author Content",
                  `short_content` mediumtext COMMENT "Author Short Content",
                  `featured_img` varchar(255) DEFAULT NULL COMMENT "Author Image",
+                 `is_active` smallint NOT NULL DEFAULT 1 COMMENT "Is Author Active",
+                 `admin_user_id` binary(16) NOT NULL COMMENT "Admin user ID",
+                 `email` varchar(255) DEFAULT NULL COMMENT "Author Email",
+                 `role` varchar(255) DEFAULT NULL COMMENT "Author role (developer)",
                  `page_layout` varchar(255) DEFAULT NULL COMMENT "Author Layout",
                  `layout_update_xml` text COMMENT "Author Layout Update Content",
                  `custom_theme` varchar(100) DEFAULT NULL COMMENT "Author Custom Thema",
