@@ -374,4 +374,82 @@
   }
 }
 
+// Block Search
+.field {
+  position: relative;
+  width: 100%;
+  display: flex;
+  .field__input {
+    flex-grow: 1;
+    text-align: left;
+    padding: 1.5rem;
+    &:focus {
+      font-size: 11px;
+    }
+  }
+  .field__label {
+    font-size: 1.6rem;
+    left: 1.5rem;
+    top: 1rem;
+    margin-bottom: 0;
+    pointer-events: none;
+    position: absolute;
+    transition: top var(--duration-short) ease,
+    font-size var(--duration-short) ease;
+    color: rgba(var(--color-foreground), 0.75);
+    letter-spacing: 0.1rem;
+    line-height: 1.5;
+  }
+  .field__button {
+    align-items: center;
+    background-color: transparent;
+    border: 0;
+    color: currentColor;
+    cursor: pointer;
+    display: flex;
+    height: 4.4rem;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 4.4rem;
+    &:focus {
+      outline: none;
+    }
+    > svg {
+      height: 2.5rem;
+      width: 2.5rem;
+    }
+    &:hover {
+      color: var(--color-icon-hover);
+    }
+  }
+}
+.field--with-error {
+  flex-wrap: wrap;
+}
 
+.field__input:focus ~ .field__label,
+.field__input:not(:placeholder-shown) ~ .field__label,
+.field__input:-webkit-autofill ~ .field__label {
+  font-size: 1rem;
+  top: 0.3em;
+  letter-spacing: 0.04rem;
+}
+.field__input:focus,
+.field__input:not(:placeholder-shown),
+.field__input:-webkit-autofill {
+  padding: 2.2rem 1.5rem 0.8rem;
+}
+.field__input::-webkit-search-cancel-button{
+  display: none;
+}
+.field__input::placeholder {
+  opacity: 0;
+}
+.field__input:-webkit-autofill ~ .field__button,
+.field__input:-webkit-autofill ~ .field__label{
+  color: rgb(0, 0, 0);
+}

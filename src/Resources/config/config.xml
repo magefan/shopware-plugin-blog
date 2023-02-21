@@ -178,6 +178,29 @@
         </input-field>
     </card>
     <card>
+        <title>Sidebar -> Search Form</title>
+        <input-field type="single-select">
+            <name>sidebarSearchFormEnabled</name>
+            <label>Search Form Enabled</label>
+            <options>
+                <option>
+                    <id>0</id>
+                    <name>No</name>
+                </option>
+                <option>
+                    <id>1</id>
+                    <name>Yes</name>
+                </option>
+            </options>
+            <defaultValue>"1"</defaultValue>
+        </input-field>
+        <input-field type="int">
+            <name>searchFormSortOrder</name>
+            <label>Search Form Sort Order</label>
+            <defaultValue>5</defaultValue>
+        </input-field>
+    </card>
+    <card>
         <title>Sidebar -> Category</title>
         <input-field type="single-select">
             <name>sidebarCategoryEnabled</name>
