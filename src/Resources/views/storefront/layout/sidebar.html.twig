@@ -4,7 +4,7 @@
 #}
 
 <aside class="sidebar blog-sidebar">
-    {% set sideBarSearchEnabled = config('MagefanBlog.config.searchFormEnabled') %}
+    {% set sideBarSearchEnabled = config('MagefanBlog.config.sidebarSearchFormEnabled') %}
     {% set sidebarCategoryEnabled = config('MagefanBlog.config.sidebarCategoryEnabled') %}
     {% set displayNumberOfPosts = config('MagefanBlog.config.displayNumberOfPosts') %}
     {% set recentPostFormEnabled = config('MagefanBlog.config.recentPostFormEnabled') %}
@@ -14,13 +14,46 @@
     {% set rssSidebarEnabled = config('MagefanBlog.config.rssSidebarEnabled') %}
     {% set tagColor = config('MagefanBlog.config.tagColor') %}
 
-    {# Search #}
-    {% if sideBarSearchEnabled %}
-        {# Functionality will be later #}
-    {% endif %}
-    {# END Search #}
-
     {% for sidebarItemName, sidebarItem in sidebar %}
+        {# Search #}
+        {% if sidebarItem.search is defined and sideBarSearchEnabled %}
+        <div class="block block_search">
+            <div class="block-content">
+                <div class="field">
+                    <form action="{{ path('frontend.blog.search') }}" method="get">
+                        <input
+                                value=""
+                                name="q"
+                                class="search__input field__input"
+                                id="mf-search-in"
+                                type="search"
+                                placeholder="{{ "Search"|trans }}"
+                                role="combobox"
+                                aria-expanded="false"
+                                aria-owns="predictive-search-results-list"
+                                aria-controls="predictive-search-results-list"
+                                aria-haspopup="listbox"
+                                aria-autocomplete="list"
+                                autocorrect="off"
+                                autocomplete="off"
+                                autocapitalize="off"
+                        >
+                        <label class="field__label" for="mf-search-in">{{ "Search"|trans }}</label>
+                        <button class="search__button field__button" aria-label="Search">
+                            <svg class="icon icon-search" viewBox="0 0 18 19" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                      d="M11.03 11.68A5.784 5.784 0 112.85 3.5a5.784 5.784 0 018.18 8.18zm.26 1.12a6.78 6.78 0 11.72-.7l5.4 5.4a.5.5 0 11-.71.7l-5.41-5.4z"
+                                      fill="currentColor"></path>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+                <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
+            </div>
+        </div>
+        {% endif %}
+        {# END Search #}
 
         {# Blog Category #}
         {% if sidebarItem['categories'].elements|length > 0 and sidebarItem.categories is defined %}

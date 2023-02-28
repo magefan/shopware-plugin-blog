@@ -200,6 +200,16 @@
 
 
 // Block Search
+.block_search {
+  form {
+    width: 100%;
+
+    input {
+      width: 100%;
+    }
+  }
+}
+
 /* Field */
 .field {
   position: relative;
