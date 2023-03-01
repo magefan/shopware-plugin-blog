@@ -136,7 +136,7 @@ class MagefanBlogTagController extends StorefrontController
             $page->getMetaInformation()->setCanonical($canonical);
         }
 
-        return $this->renderStorefront('@MagefanBlog/storefront/page/blog/tag/' . $template . '.html.twig', [
+        return $this->renderStorefront('@MagefanBlog/storefront/page/blog/tag/default.html.twig', [
             'tag' => $tag,
             'tagPosts' => $tagPosts,
             'page' => $page,

@@ -5,6 +5,8 @@
 
 {% sw_extends '@Storefront/storefront/base.html.twig' %}
 
+{% set template = config('MagefanBlog.config.blogIndexTemplate') %}
+
 {% block base_content %}
     <h1 class="blog-page__title"> {{ config('MagefanBlog.config.title') }} </h1>
 
@@ -12,7 +14,7 @@
 
         {# Main Content #}
         <div class="main-content">
-            <div class="blog-articles article-grid">
+            <div class="blog-articles article-list {% if template == "grid" %} article-grid {% endif %}">
                 {% if posts|length > 0  %}
                     {% for post in posts %}
                         {% block article %}

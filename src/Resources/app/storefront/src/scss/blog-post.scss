@@ -42,7 +42,8 @@
       display: inline-block;
       margin: 5px 5px 0 0;
       padding: 8px 14px;
-      background: #000;
+      //background: #000;
+      background: var(--primary-color);
       color: #fff;
       font-size: 11px;
       line-height: 12px;
@@ -62,7 +63,8 @@
     .blog-post__author {
       text-decoration: none;
       font-family: sans-serif;
-      color: #222;
+      //color: #222;
+      color: var(--post-title-color);
       font-weight: 600;
     }
     .blog-post__data {
@@ -86,8 +88,11 @@
     .post-tag-title {
       display: inline-block;
       padding: 7px 12px;
-      border: 1px solid #222;
-      background: #222;
+      //border: 1px solid #222;
+      //border: 1px solid var(--color-tag-category-data);
+      border: 1px solid var(--primary-color);
+      //background: #222;
+      background: var(--primary-color);
       color: #fff;
       line-height: 1;
       margin: 0 10px 10px 0;
@@ -97,7 +102,8 @@
     .post-tags a {
       display: inline-block;
       border: 1px solid #d5d6da;
-      color: #222;
+      //color: #222;
+      color: var(--primary-color);
       background: #fff;
       padding: 7px 12px;
       margin-right: 10px;
@@ -111,7 +117,8 @@
       &:hover {
         text-decoration: none;
         opacity: .9;
-        background: #333;
+        //background: #333;
+        background: var(--primary-color);
         color: #fff;
         @include transition();
       }

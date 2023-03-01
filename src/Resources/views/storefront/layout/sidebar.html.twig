@@ -13,6 +13,7 @@
     {% set archiveWidgetEnabled = config('MagefanBlog.config.archiveWidgetEnabled') %}
     {% set rssSidebarEnabled = config('MagefanBlog.config.rssSidebarEnabled') %}
     {% set tagColor = config('MagefanBlog.config.tagColor') %}
+    {% set template = config('MagefanBlog.config.RecentPostTemplate') %}
 
     {# Search #}
     {% if sideBarSearchEnabled %}
@@ -50,13 +51,17 @@
             <div class="block block_recent">
                 <div class="block-title">{{ "Recent Posts"|trans }}</div>
                 <div class="block-content">
-                    {% block recent_articles %}
-                        {% sw_include '@Storefront/storefront/layout/grid.html.twig' with {
-                            context: context,
-                            posts: sidebarItem['recentPosts'].elements,
-                            sidebar: true
-                    } only %}
-                    {% endblock %}
+                    <div class="blog-articles article-post__no-content article-{{ template }}">
+                    {% for post in sidebarItem['recentPosts'].elements %}
+                        {% block recent_articles %}
+                            {% sw_include '@Storefront/storefront/layout/article.html.twig' with {
+                                context: context,
+                                post: post,
+                                sidebar: true
+                        } only %}
+                        {% endblock %}
+                    {% endfor %}
+                    </div>
                 </div>
             </div>
         {% endif %}
@@ -82,7 +87,7 @@
         {% if sidebarItem['tags']|length > 0 and sidebarItem.tags is defined %}
         <div class="widget block block-tagclaud">
                 <div class="block-title">
-                    <strong>{{ "Tags"|trans }}</strong>
+                    <span{{ "Tags"|trans }}</strong>
                 </div>
                 <div id="blogSidebarCloudCanvasContainer">
                     <canvas style="width: 100%;" height="250" id="blogSidebarCloudCanvas">

@@ -46,14 +46,18 @@
         </input-field>
         <input-field type="single-select">
             <name>blogIndexTemplate</name>
-            <label>Blog Index Template</label>
+            <label>Template</label>
             <options>
                 <option>
-                    <id>default</id>
-                    <name>Default</name>
+                    <id>list</id>
+                    <name>List</name>
+                </option>
+                <option>
+                    <id>grid</id>
+                    <name>Grid</name>
                 </option>
             </options>
-            <defaultValue>"default"</defaultValue>
+            <defaultValue>"list"</defaultValue>
         </input-field>
         <input-field type="int">
             <name>postsPerPage</name>
@@ -75,6 +79,21 @@
     </card>
     <card>
         <title>Post Page (Post View)</title>
+        <input-field type="single-select">
+            <name>displayAuthorInformation</name>
+            <label>Display Author Information</label>
+            <options>
+                <option>
+                    <id>0</id>
+                    <name>No</name>
+                </option>
+                <option>
+                    <id>1</id>
+                    <name>Yes</name>
+                </option>
+            </options>
+            <defaultValue>"1"</defaultValue>
+        </input-field>
         <input-field type="single-select">
             <name>displayPrevNext</name>
             <label>Display Prev. and Next Post Links</label>
@@ -161,6 +180,21 @@
     </card>
     <card>
         <title>Post List</title>
+                <input-field type="single-select">
+            <name>postListTemplate</name>
+            <label>Template</label>
+            <options>
+                <option>
+                    <id>list</id>
+                    <name>List</name>
+                </option>
+                <option>
+                    <id>grid</id>
+                    <name>Grid</name>
+                </option>
+            </options>
+            <defaultValue>"list"</defaultValue>
+        </input-field>
         <input-field type="int">
             <name>postsPerPagePostList</name>
             <label>Posts Per Page</label>
@@ -239,6 +273,21 @@
             <defaultValue>"1"</defaultValue>
         </input-field>
         <input-field type="single-select">
+            <name>RecentPostTemplate</name>
+            <label>Template</label>
+            <options>
+                <option>
+                    <id>list</id>
+                    <name>List</name>
+                </option>
+                <option>
+                    <id>grid</id>
+                    <name>Grid</name>
+                </option>
+            </options>
+            <defaultValue>"list"</defaultValue>
+        </input-field>
+        <input-field type="single-select">
             <name>recentDisplayPostImage</name>
             <label>Display Recent Post Image</label>
             <options>
@@ -280,6 +329,21 @@
                 </option>
             </options>
             <defaultValue>"1"</defaultValue>
+        </input-field>
+        <input-field type="single-select">
+            <name>archiveIndexTemplate</name>
+            <label>Template</label>
+            <options>
+                <option>
+                    <id>list</id>
+                    <name>List</name>
+                </option>
+                <option>
+                    <id>grid</id>
+                    <name>Grid</name>
+                </option>
+            </options>
+            <defaultValue>"list"</defaultValue>
         </input-field>
         <input-field type="int">
             <name>archiveWidgetSortOrder</name>

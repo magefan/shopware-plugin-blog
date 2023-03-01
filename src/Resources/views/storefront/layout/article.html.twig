@@ -7,9 +7,12 @@
     {% set shortContentLength = config('MagefanBlog.config.shortContentLength') %}
     {% set shortContentEndCharacters = config('MagefanBlog.config.shortContentEndCharacter') %}
     {% set recentDisplayPostImage = config('MagefanBlog.config.recentDisplayPostImage') %}
+    {% set displayAuthorInformation = config('MagefanBlog.config.displayAuthorInformation') %}
     <article class="blog-article">
+
         {# Post Item #}
         <div class="article-post">
+
             {# Image #}
             <div class="article-post__image-container animation-type--zoom">
                 {% if recentDisplayPostImage or not sidebar %}
@@ -43,6 +46,7 @@
                 {% endif %}
             </div>
             {# END Image #}
+
             {# Post Info #}
             <div class="article-post__info">
                 <div class="article-post__header">
@@ -50,13 +54,13 @@
                         <a href="{{ app.request.basePath ~ '/blog/post/' ~ post.identifier }}">{{ post.title }}</a>
                     </h2>
                     <div class="article-post__data-wrap">
-                        {% if post.postAuthor and (post.postAuthor.firstname or post.postAuthor.lastname) %}
+                        {% if displayAuthorInformation and post.postAuthor and (post.postAuthor.firstname or post.postAuthor.lastname) %}
                             <span class="article-post__author">
                                     <span>{{ post.postAuthor.firstname ~ ' ' ~ post.postAuthor.lastname }}</span>&nbsp;<span
                                         class="divider">-</span>
                                 </span>
                         {% endif %}
-                        <span class="article-post__data">{{ post.createdAt|date("M d,Y") }}</span>
+                        <span class="article-post__data">{{ post.createdAt|date("M d, Y") }}</span>
                     </div>
                 </div>
                 <div class="article-post__content">
@@ -69,7 +73,9 @@
                 <div class="article-post__footer"></div>
             </div>
             {# END Post Info #}
+
         </div>
         {# END Post Item #}
+
     </article>
 {% endblock %}
