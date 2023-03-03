@@ -238,7 +238,7 @@
         <title>Sidebar -> Category</title>
         <input-field type="single-select">
             <name>sidebarCategoryEnabled</name>
-            <label>Category Enabled</label>
+            <label>Enable</label>
             <options>
                 <option>
                     <id>0</id>
@@ -253,7 +253,7 @@
         </input-field>
         <input-field type="single-select">
             <name>displayNumberOfPosts</name>
-            <label>Category Display Number Of Posts</label>
+            <label>Display Number Of Posts</label>
             <options>
                 <option>
                     <id>0</id>
@@ -282,7 +282,7 @@
         <title>Sidebar -> Recent Post</title>
         <input-field type="single-select">
             <name>recentPostFormEnabled</name>
-            <label>Recent Post Enabled</label>
+            <label>Enable</label>
             <options>
                 <option>
                     <id>0</id>
@@ -327,12 +327,12 @@
         </input-field>
         <input-field type="int">
             <name>recentPostNumbers</name>
-            <label>Recent Post Numbers</label>
+            <label>Number of Posts</label>
             <defaultValue>5</defaultValue>
         </input-field>
         <input-field type="int">
             <name>recentPostSortOrder</name>
-            <label>Recent Post Sort Order</label>
+            <label>Recent Posts Sort Order</label>
             <defaultValue>30</defaultValue>
         </input-field>
     </card>
@@ -340,7 +340,7 @@
         <title>Sidebar -> Archive</title>
         <input-field type="single-select">
             <name>archiveWidgetEnabled</name>
-            <label>Archive Widget Enabled</label>
+            <label>Enable</label>
             <options>
                 <option>
                     <id>0</id>
@@ -370,7 +370,7 @@
         </input-field>
         <input-field type="int">
             <name>archiveWidgetSortOrder</name>
-            <label>Archive Widget Sort Order</label>
+            <label>Archive Sort Order</label>
             <defaultValue>40</defaultValue>
         </input-field>
     </card>
@@ -378,7 +378,7 @@
         <title>Sidebar -> Tag Cloud</title>
         <input-field type="single-select">
             <name>tagCloudEnabled</name>
-            <label>Tag Cloud Widget Enabled</label>
+            <label>Enable</label>
             <options>
                 <option>
                     <id>0</id>
@@ -403,7 +403,7 @@
         </input-field>
         <input-field type="int">
             <name>tagsNumber</name>
-            <label>Tag Number of Tags</label>
+            <label>Number of Tags</label>
             <defaultValue>50</defaultValue>
         </input-field>
     </card>
@@ -411,7 +411,7 @@
         <title>Sidebar -> RSS</title>
         <input-field type="single-select">
             <name>rssSidebarEnabled</name>
-            <label>RSS Sidebar Enabled</label>
+            <label>Enable</label>
             <options>
                 <option>
                     <id>0</id>
@@ -426,17 +426,17 @@
         </input-field>
         <input-field type="int">
             <name>rssSidebarSortOrder</name>
-            <label>RSS Sidebar Sort Order</label>
+            <label>RSS Feed Sort Order</label>
             <defaultValue>60</defaultValue>
         </input-field>
         <input-field>
             <name>rssSidebarFeedTitle</name>
-            <label>RSS Sidebar Feed Title</label>
+            <label>RSS Feed Title</label>
             <defaultValue>Blog Rss</defaultValue>
         </input-field>
         <input-field type="text-editor">
             <name>rssSidebarFeedDescription</name>
-            <label>RSS Sidebar Feed Description</label>
+            <label>RSS Feed Description</label>
         </input-field>
     </card>
     <card>
@@ -469,7 +469,7 @@
         <title>XML Sitemap</title>
         <input-field type="single-select">
             <name>blogIndexSitemapEnable</name>
-            <label>Blog Index Page Enabled</label>
+            <label>Enable Blog Index Page</label>
             <options>
                 <option>
                     <id>0</id>
@@ -524,7 +524,7 @@
         </input-field>
         <input-field type="single-select">
             <name>blogCategoriesSitemapEnable</name>
-            <label>Blog Categories Enabled</label>
+            <label>Enable Blog Categories</label>
             <options>
                 <option>
                     <id>0</id>
@@ -579,7 +579,7 @@
         </input-field>
         <input-field type="single-select">
             <name>blogPostsSitemapEnable</name>
-            <label>Blog Posts Enabled</label>
+            <label>Enable Blog Posts</label>
             <options>
                 <option>
                     <id>0</id>
@@ -637,7 +637,7 @@
         <title>Social</title>
         <input-field type="single-select">
             <name>addThisEnabled</name>
-            <label>AddThis Enabled</label>
+            <label>Enable AddThis</label>
             <options>
                 <option>
                     <id>0</id>
