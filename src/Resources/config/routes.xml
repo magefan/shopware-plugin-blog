@@ -16,4 +16,5 @@
     <import resource="../../Storefront/Controller/MagefanBlogArchiveController.php" type="annotation"/>
     <import resource="../../Storefront/Controller/MagefanBlogCommentController.php" type="annotation" />
     <import resource="../../Storefront/Controller/MagefanBlogRssFeedController.php" type="annotation"/>
+    <import resource="../../Storefront/Controller/MagefanBlogSearchController.php" type="annotation"/>
 </routes>

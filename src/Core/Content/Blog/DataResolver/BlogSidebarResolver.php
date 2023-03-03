@@ -70,6 +70,7 @@ class BlogSidebarResolver
      */
     public function getSidebar($context): array
     {
+        $searchSortOrder = (int)$this->systemConfigService->get('MagefanBlog.config.searchFormSortOrder');
         $categorySortOrder = (int)$this->systemConfigService->get('MagefanBlog.config.categorySortOrder');
         $recentPostSortOrder = (int)$this->systemConfigService->get('MagefanBlog.config.recentPostSortOrder');
         $tagSortOrder = (int)$this->systemConfigService->get('MagefanBlog.config.tagSortOrder');
@@ -81,6 +82,7 @@ class BlogSidebarResolver
         $sidebar[$archiveWidgetSortOrder] = $this->getArchive($context);
         $sidebar[$tagSortOrder]['tags'] = $this->getTags($context);
         $sidebar[$rssSidebarSortOrder]['rss'] = '';
+        $sidebar[$searchSortOrder]['search'] = '';
         ksort($sidebar);
 
         return $sidebar;
