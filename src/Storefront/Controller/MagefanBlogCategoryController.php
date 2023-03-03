@@ -132,7 +132,7 @@ class MagefanBlogCategoryController extends StorefrontController
             $page->getMetaInformation()->setCanonical($canonical);
         }
 
-        return $this->renderStorefront('@MagefanBlog/storefront/page/blog/category/' . $template . '.html.twig', [
+        return $this->renderStorefront('@MagefanBlog/storefront/page/blog/category/default.html.twig', [
             'page' => $page,
             'category' => $category,
             'sidebar' => $sidebar,

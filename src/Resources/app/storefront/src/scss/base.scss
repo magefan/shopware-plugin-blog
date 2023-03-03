@@ -20,7 +20,8 @@ $mf_border-color: #d5d6da;
 
 
 :root {
-  --primary-color: #333333;
+  //--primary-color: #333333;
+  --primary-color: #4a545b;
   --primary-color-alt: #545454;
   --secondary-color: #ee5204;
 
@@ -38,11 +39,13 @@ $mf_border-color: #d5d6da;
   --article-margin-bottom: 5rem;
 
   // Post
-  --post-title-color: #1b1b1b;
+  //--post-title-color: #1b1b1b;
+  --post-title-color: #4a545b;
   --post-title-color-hover: #ee5204;
 
   // Block
   --block-title-font-size: 30px;
+  --block-title-font-size-mobile: 24px;
   --block-title-font-weight: 500;
 
   // Link
@@ -61,6 +64,9 @@ $mf_border-color: #d5d6da;
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
+
+  // Category and Tags
+  --color-tag-category-data: #222;
 }
 
 @mixin hidden() {

@@ -10,17 +10,19 @@
     <div class="main-wrapper">
         {# Main Content #}
         <div class="main-content">
-            {% for post in authorPosts %}
-                {% block article %}
-                    {% sw_include '@Storefront/storefront/layout/article.html.twig' with {
-                        context: context,
-                        post: post,
-                        author: author,
-                        categories: categories,
-                        sidebar: false
-                    } only %}
-                {% endblock %}
-            {% endfor %}
+            <div class="blog-articles article-grid">
+                {% for post in authorPosts %}
+                    {% block article %}
+                        {% sw_include '@Storefront/storefront/layout/article.html.twig' with {
+                            context: context,
+                            post: post,
+                            author: author,
+                            categories: categories,
+                            sidebar: false
+                        } only %}
+                    {% endblock %}
+                {% endfor %}
+            </div>    
         </div>
         {# END Main Content #}
 

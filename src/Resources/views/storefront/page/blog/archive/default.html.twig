@@ -5,30 +5,30 @@
 
 {% sw_extends '@Storefront/storefront/base.html.twig' %}
 
+{% set template = config('MagefanBlog.config.archiveIndexTemplate') %}
+
 {% block base_content %}
+    <h1 class="blog-page__title" itemprop="headline">{{ "Monthly Archives:"|trans ~ ' ' ~ app.request.pathInfo | split('/')[3] }}</h1>
     <div class="main-wrapper">
         {# Main Content #}
         <div class="main-content">
-            <div class="page-title-wrapper mf-initial">
-                <h1 class="page-title">
-                    <span class="base">{{ "Monthly Archives:"|trans ~ ' ' ~ app.request.pathInfo | split('/')[3] }}</span>
-                </h1>
+            <div class="blog-articles article-list {% if template == "grid" %} article-grid {% endif %}">
+                {% if posts.elements|length > 0 %}
+                    {% for post in posts.elements %}
+                        {% block article %}
+                            {% sw_include '@Storefront/storefront/layout/article.html.twig' with {
+                                context: context,
+                                post: post,
+                                author: author,
+                                categories: categories,
+                                sidebar: false
+                            } only %}
+                        {% endblock %}
+                    {% endfor %}
+                {% else %}
+                    <span>{{ "Unfortunately we can`t find any article"|trans }}</span>
+                {% endif %}
             </div>
-            {% if posts.elements|length > 0 %}
-                {% for post in posts.elements %}
-                    {% block article %}
-                        {% sw_include '@Storefront/storefront/layout/article.html.twig' with {
-                            context: context,
-                            post: post,
-                            author: author,
-                            categories: categories,
-                            sidebar: false
-                        } only %}
-                    {% endblock %}
-                {% endfor %}
-            {% else %}
-                <span>{{ "Unfortunately we can`t find any article"|trans }}</span>
-            {% endif %}
         </div>
         {# END Main Content #}
 

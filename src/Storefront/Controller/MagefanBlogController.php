@@ -114,7 +114,7 @@ class MagefanBlogController extends StorefrontController
             $page->getMetaInformation()->setCanonical($canonical);
         }
 
-        return $this->renderStorefront('@MagefanBlog/storefront/page/blog/' . $template . '.html.twig', [
+        return $this->renderStorefront('@MagefanBlog/storefront/page/blog/default.html.twig', [
             'page' => $page,
             'posts' => $posts,
             'sidebar' => $sidebar,

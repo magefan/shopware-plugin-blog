@@ -5,30 +5,34 @@
 
 {% sw_extends '@Storefront/storefront/base.html.twig' %}
 
+{% set template = config('MagefanBlog.config.postListTemplate') %}
+
 {% block base_content %}
     <h1 class="blog-page__title">{{ category.title }}</h1>
-    <img src="{{ category.media.url }}" alt="{{ category.media.fileName }}">
     <div class="main-wrapper">
+
         {# Main Content #}
         <div class="main-content">
             <div class="post-list-content">
                 <p>{{ category.content }}</p>
             </div>
-            {% if categoryPosts|length > 0 %}
-                {% for post in categoryPosts %}
-                    {% block article %}
-                        {% sw_include '@Storefront/storefront/layout/article.html.twig' with {
-                            context: context,
-                            post: post,
-                            author: author,
-                            categories: categories,
-                            sidebar: false
-                        } only %}
-                    {% endblock %}
-                {% endfor %}
-            {% else %}
-                <span>{{ "Unfortunately we can`t find any article"|trans }}</span>
-            {% endif %}
+            <div class="blog-articles article-list {% if template == "grid" %} article-grid {% endif %}">
+                {% if categoryPosts|length > 0 %}
+                    {% for post in categoryPosts %}
+                        {% block article %}
+                            {% sw_include '@Storefront/storefront/layout/article.html.twig' with {
+                                context: context,
+                                post: post,
+                                author: author,
+                                categories: categories,
+                                sidebar: false
+                            } only %}
+                        {% endblock %}
+                    {% endfor %}
+                {% else %}
+                    <span>{{ "Unfortunately we can`t find any article"|trans }}</span>
+                {% endif %}
+            </div>
         </div>
         {# END Main Content #}
 
