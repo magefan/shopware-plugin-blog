@@ -375,7 +375,12 @@ class PostEntity extends Entity
      */
     public function getContentHeading(): ?string
     {
-        return $this->contentHeading;
+        $desc = $this->contentHeading;
+        if (!$desc) {
+            $desc = $this->content;
+        }
+
+        return $desc;
     }
 
     /**
