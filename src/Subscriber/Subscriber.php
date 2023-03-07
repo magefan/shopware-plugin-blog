@@ -6,8 +6,12 @@
 
 namespace Magefan\Blog\Subscriber;
 
+use Magefan\Blog\Storefront\Framework\Seo\SeoUrlRoute\BlogPostPageSeoUrlRoute;
+use Shopware\Core\Content\Seo\Event\SeoEvents;
+use Shopware\Core\Content\Seo\SeoUrlUpdater;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityDeletedEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
@@ -39,16 +43,24 @@ class Subscriber implements EventSubscriberInterface
     private SystemConfigService $systemConfigService;
 
     /**
+     * @var SeoUrlUpdater
+     */
+    private SeoUrlUpdater $seoUrlUpdater;
+
+    /**
+     * @param SeoUrlUpdater $seoUrlUpdater
      * @param EntityRepositoryInterface $blogCategoryRepository
      * @param EntityRepositoryInterface $categoryRepository
+     * @param SystemConfigService $systemConfigService
      */
     public function __construct(
+        SeoUrlUpdater             $seoUrlUpdater,
         EntityRepositoryInterface $blogCategoryRepository,
         EntityRepositoryInterface $categoryRepository,
         SystemConfigService       $systemConfigService
-
     )
     {
+        $this->seoUrlUpdater = $seoUrlUpdater;
         $this->blogCategoryRepository = $blogCategoryRepository;
         $this->categoryRepository = $categoryRepository;
         $this->systemConfigService = $systemConfigService;
@@ -59,9 +71,45 @@ class Subscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents(): array
     {
-        return ['system_config.written' => 'onSaveConfig',];
+        return [
+            'magefanblog_post.written' => 'onBlogEntriesUpdated',
+            'magefanblog_post.deleted' => 'onBlogPostDeleted',
+            'magefanblog_category.written' => 'onBlogEntriesUpdated',
+            'magefanblog_category.deleted' => 'onBlogPostDeleted',
+            'magefanblog_tag.written' => 'onBlogEntriesUpdated',
+            'magefanblog_tag.deleted' => 'onBlogPostDeleted',
+            'system_config.written' => 'onSaveConfig',
+        ];
     }
 
+    /**
+     * @param EntityWrittenEvent $event
+     * @return void
+     */
+    public function onBlogEntriesUpdated(EntityWrittenEvent $event): void
+    {
+        $name = ucfirst(explode('_', $event->getEntityName())[1]);
+        $className = '\Magefan\Blog\Storefront\Framework\Seo\SeoUrlRoute\Blog' . $name . 'PageSeoUrlRoute';
+
+        $this->seoUrlUpdater->update($className::ROUTE_NAME, $event->getIds());
+    }
+
+    /**
+     * @param EntityDeletedEvent $event
+     * @return void
+     */
+    public function onBlogEntriesDeleted(EntityDeletedEvent $event): void
+    {
+        $name = ucfirst(explode('_', $event->getEntityName())[1]);
+        $className = '\Magefan\Blog\Storefront\Framework\Seo\SeoUrlRoute\Blog' . $name . 'PageSeoUrlRoute';
+
+        $this->seoUrlUpdater->update($className::ROUTE_NAME, $event->getIds());
+    }
+
+    /**
+     * @param EntityWrittenEvent $entityWrittenEvent
+     * @return void
+     */
     public function onSaveConfig(EntityWrittenEvent $entityWrittenEvent)
     {
         foreach ($entityWrittenEvent->getWriteResults() as $result) {
@@ -93,7 +141,7 @@ class Subscriber implements EventSubscriberInterface
                     }
                 }
 
-                if ($blogCategories){
+                if ($blogCategories) {
                     foreach ($blogCategories as $category) {
 
                         if ($category->getIsActive()) {

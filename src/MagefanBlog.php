@@ -70,6 +70,8 @@ class MagefanBlog extends Plugin
         $connection->executeStatement('DROP TABLE IF EXISTS `magefanblog_post_tag`');
         $connection->executeStatement('DROP TABLE IF EXISTS `magefanblog_tag`');
         $connection->executeStatement('DROP TABLE IF EXISTS `magefanblog_tag_translation`');
+        $connection->executeStatement("DELETE FROM seo_url_template WHERE entity_name LIKE 'magefanblog_%';");
+        $connection->executeStatement("DELETE FROM seo_url WHERE route_name LIKE 'frontend.blog%';");
         $connection->executeStatement('SET FOREIGN_KEY_CHECKS=1;');
     }
 

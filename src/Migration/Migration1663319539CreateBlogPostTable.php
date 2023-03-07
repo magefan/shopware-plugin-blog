@@ -89,7 +89,7 @@ class Migration1663319539CreateBlogPostTable extends MigrationStep
             '
         );
 
-        $id = Uuid::randomBytes();
+        $id = '265e0b57d2c54b49ba9e9e36ad4bc981';
 
         $connection->executeStatement(
             '
@@ -112,7 +112,7 @@ class Migration1663319539CreateBlogPostTable extends MigrationStep
                   );
               ',
             [
-                'id' => $id,
+                'id' => Uuid::fromHexToBytes($id),
                 'identifier' => 'magefan-blog-post-sample',
                 'publishTime' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT),
                 'updatedAt' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT),
@@ -143,7 +143,7 @@ class Migration1663319539CreateBlogPostTable extends MigrationStep
               );
         ',
                 [
-                    'id' => $id,
+                    'id' => Uuid::fromHexToBytes($id),
                     'languageId' => $language['language_id'],
                     'title' => 'Magefan Blog Post Sample',
                     'metaKeywords' => 'Magefan blog sample',

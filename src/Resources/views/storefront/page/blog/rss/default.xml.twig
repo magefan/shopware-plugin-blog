@@ -21,8 +21,8 @@
         {% for post in posts.elements %}
             <item>
                 <title>{{ post.title }}</title>
-                <link>{{ app.request.schemeAndHttpHost ~ '/blog/post/' ~ post.identifier }}</link>
-                <guid>{{ app.request.schemeAndHttpHost ~ '/blog/post/' ~ post.identifier }}</guid>
+                <link>{{ app.request.schemeAndHttpHost ~ '/blog/post/' ~ post.id }}</link>
+                <guid>{{ app.request.schemeAndHttpHost ~ '/blog/post/' ~ post.id }}</guid>
                 <description><![CDATA[{{ post.content }}]]></description>
                 <pubDate>{{ post.publish_time|date('Y-m-d H:i:s') }}</pubDate>
                 {% if post.postCategories %}

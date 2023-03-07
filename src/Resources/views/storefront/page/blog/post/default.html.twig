@@ -32,7 +32,7 @@
                                 {% for category in post.postCategories %}
                                     <a
                                             class="blog-post__category-name"
-                                            href="{{ app.request.basePath ~ '/blog/category/' ~ category.identifier }}"
+                                            href="{{ app.request.basePath ~ '/blog/category/' ~ category.id }}"
                                             title="{{ category.title }}">
                                         {{ category.title }}
                                     </a>
@@ -73,7 +73,7 @@
                                     <div class="post-tag-title">{{ "Tags"|trans }}</div>
                                     {% for tag in post.postTags.elements %}
                                         <a title="{{ tag.title }}"
-                                           href="{{ app.request.basePath ~ '/blog/tag/' ~ tag.identifier }}">
+                                           href="{{ app.request.basePath ~ '/blog/tag/' ~ tag.id }}">
                                             {{ tag.title }}
                                         </a>
                                     {% endfor %}
@@ -101,22 +101,22 @@
                         {% endif %}
                         {# Next Prev #}
                         {% if prevNextStyle === 'default' %}
-                            {% if (prevnext.prev.identifier or prevnext.next.identifier) and displayPrevNext %}
+                            {% if (prevnext.prev.id or prevnext.next.id) and displayPrevNext %}
                                 <div class="post-nextprev row-cols-2">
-                                    {% if prevnext.prev.identifier %}
+                                    {% if prevnext.prev.id %}
                                         <div class="post-prev">
                                             <a class="nextprev-link prev-link float-left"
-                                               href="{{ app.request.basePath ~ '/blog/post/' ~ prevnext.prev.identifier }}"
+                                               href="{{ app.request.basePath ~ '/blog/post/' ~ prevnext.prev.id }}"
                                                title="">
                                                 <span class="text-left">{{ "Previous"|trans }}</span>
                                                 {{ prevnext.prev.title }}
                                             </a>
                                         </div>
                                     {% endif %}
-                                    {% if prevnext.next.identifier %}
+                                    {% if prevnext.next.id %}
                                         <div class="post-next">
                                             <a class="nextprev-link next-link float-right"
-                                               href="{{ app.request.basePath ~ '/blog/post/' ~ prevnext.next.identifier }}"
+                                               href="{{ app.request.basePath ~ '/blog/post/' ~ prevnext.next.id }}"
                                                title="">
                                                 <span class="text-right">{{ "Next"|trans }}</span>
                                                 {{ prevnext.next.title }}
