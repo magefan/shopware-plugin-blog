@@ -71,6 +71,7 @@ class PostTranslationDefinition extends EntityTranslationDefinition
             (new StringField('og_description', 'ogDescription'))->addFlags(new ApiAware()),
             (new StringField('og_img', 'ogImg'))->addFlags(new ApiAware()),
             (new StringField('og_type', 'ogType'))->addFlags(new ApiAware()),
+            (new StringField('identifier', 'identifier'))->addFlags(new Required()),
             (new StringField('created_at', 'createdAt'))->addFlags(new ApiAware()),
             (new StringField('updated_at', 'updatedAt'))->addFlags(new ApiAware()),
         ]);

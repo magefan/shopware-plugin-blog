@@ -64,6 +64,7 @@ class TagTranslationDefinition extends EntityTranslationDefinition
             (new StringField('meta_keywords', 'metaKeywords')),
             (new StringField('meta_title', 'metaTitle')),
             (new LongTextField('content', 'content')),
+            (new StringField('identifier', 'identifier')),
             (new StringField('created_at', 'createdAt')),
             (new StringField('updated_at', 'updatedAt')),
         ]);

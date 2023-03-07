@@ -72,8 +72,8 @@ class CategoryDefinition extends EntityDefinition
             (new TranslatedField('contentHeading'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('content'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('path'))->addFlags(new ApiAware(), new Inherited()),
+            (new TranslatedField('identifier'))->addFlags(new ApiAware(), new Inherited()),
 
-            (new StringField('identifier', 'identifier')),
             (new IntField('position', 'position')),
             (new StringField('posts_sort_by', 'postsSortBy')),
             (new BoolField('include_in_menu', 'includeInMenu')),

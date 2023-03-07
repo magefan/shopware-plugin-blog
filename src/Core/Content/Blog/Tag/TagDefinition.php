@@ -70,8 +70,8 @@ class TagDefinition extends EntityDefinition
             (new TranslatedField('metaKeywords'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('metaTitle'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('content'))->addFlags(new ApiAware(), new Inherited()),
+            (new TranslatedField('identifier'))->addFlags(new ApiAware(), new Inherited()),
 
-            (new StringField('identifier', 'identifier')),
             (new StringField('page_layout', 'pageLayout')),
             (new BoolField('is_active', 'isActive')),
             (new StringField('layout_update_xml', 'layoutUpdateXml')),

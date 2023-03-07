@@ -87,8 +87,8 @@ class PostDefinition extends EntityDefinition
             (new TranslatedField('ogDescription'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('ogImg'))->addFlags(new ApiAware(), new Inherited()),
             (new TranslatedField('ogType'))->addFlags(new ApiAware(), new Inherited()),
+            (new TranslatedField('identifier'))->addFlags(new ApiAware(), new Inherited()),
 
-            (new StringField('identifier', 'identifier'))->addFlags(new Required()),
             (new IntField('position', 'position')),
             (new BoolField('include_in_recent', 'includeInRecent')),
             (new DateTimeField('publish_time', 'publishTime')),

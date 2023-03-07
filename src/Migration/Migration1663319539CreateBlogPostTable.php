@@ -38,7 +38,6 @@ class Migration1663319539CreateBlogPostTable extends MigrationStep
                  `publish_time` DATETIME(3) NULL DEFAULT NULL COMMENT "Post Publish Time",
                  `is_active` smallint NOT NULL DEFAULT 1 COMMENT "Is Post Active",
                  `position` smallint NOT NULL DEFAULT 0 COMMENT "Position",
-                 `identifier` varchar(100) DEFAULT NULL COMMENT "Post String Identifier",
                  `author_id` binary(16) DEFAULT NULL COMMENT "Author ID",
                  `page_layout` varchar(255) DEFAULT NULL COMMENT "Post Layout",
                  `layout_update_xml` text COMMENT "Post Layout Update Content",
@@ -57,7 +56,6 @@ class Migration1663319539CreateBlogPostTable extends MigrationStep
                  `post_media_version_id` binary(16) DEFAULT NULL,
                  `created_at` DATETIME(3) NOT NULL COMMENT "Post Comment Counts",
                  `updated_at` DATETIME(3) NULL COMMENT "Post Comment Counts",
-                  KEY `MAGEFANBLOG_POST_IDENTIFIER` (`identifier`),
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3 COMMENT="Magefan Blog Post Table";
             '
@@ -69,6 +67,7 @@ class Migration1663319539CreateBlogPostTable extends MigrationStep
                  `magefanblog_post_id` binary(16) NOT NULL COMMENT "Post ID",
                  `language_id` BINARY(16) NOT NULL,
                  `title` varchar(255) NOT NULL COMMENT "Post Title",
+                 `identifier` varchar(100) DEFAULT NULL COMMENT "Post String Identifier",
                  `meta_title` varchar(255) DEFAULT NULL COMMENT "Post Meta Title",
                  `meta_keywords` text COMMENT "Post Meta Keywords",
                  `meta_description` text COMMENT "Post Meta Description",
@@ -84,6 +83,7 @@ class Migration1663319539CreateBlogPostTable extends MigrationStep
                  `created_at` DATETIME(3) NOT NULL COMMENT "Post Comment Counts",
                  `updated_at` DATETIME(3) NULL COMMENT "Post Comment Counts",
                  PRIMARY KEY (`magefanblog_post_id`, `language_id`),
+                 KEY `MAGEFANBLOG_POST_IDENTIFIER` (`identifier`),
                  FULLTEXT KEY `FTI_A31A6CE1BAE9596AD2A53A8D37C22351` (`title`,`meta_keywords`,`meta_description`,`content`)
                 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3 COMMENT="Magefan Blog Post Table Translation";
             '
@@ -95,7 +95,7 @@ class Migration1663319539CreateBlogPostTable extends MigrationStep
             '
                  INSERT INTO `magefanblog_post` (
                   `id`, `created_at`, `updated_at`, `publish_time`,
-                  `is_active`, `include_in_recent`, `identifier`,
+                  `is_active`, `include_in_recent`,
                   `author_id`, `page_layout`, `layout_update_xml`, 
                   `custom_theme`, `custom_layout`, 
                   `custom_layout_update_xml`, `custom_theme_from`, 
@@ -105,7 +105,7 @@ class Migration1663319539CreateBlogPostTable extends MigrationStep
                 VALUES 
                   (
                     :id, :createdAt, :updatedAt, 
-                   :publishTime, 1, 1, :identifier,
+                   :publishTime, 1, 1,
                     NULL, NULL, NULL, NULL, NULL, 
                     NULL, NULL, NULL, NULL, NULL, NULL, 
                     NULL, 0
@@ -113,7 +113,6 @@ class Migration1663319539CreateBlogPostTable extends MigrationStep
               ',
             [
                 'id' => Uuid::fromHexToBytes($id),
-                'identifier' => 'magefan-blog-post-sample',
                 'publishTime' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT),
                 'updatedAt' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT),
                 'createdAt' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT)
@@ -127,7 +126,7 @@ class Migration1663319539CreateBlogPostTable extends MigrationStep
             $connection->executeStatement(
                 '
              INSERT INTO `magefanblog_post_translation` (
-              `magefanblog_post_id`, `language_id`, `title`, `meta_title`, 
+              `magefanblog_post_id`, `language_id`, `title`,`identifier`, `meta_title`, 
               `meta_keywords`, `meta_description`, 
               `og_title`, `og_description`, 
               `og_img`, `og_type`, `content_heading`, 
@@ -136,7 +135,7 @@ class Migration1663319539CreateBlogPostTable extends MigrationStep
             ) 
             VALUES 
               (
-                :id, :languageId, :title, 
+                :id, :languageId, :title, :identifier,
                 NULL, :metaKeywords, :metaDescription, NULL, 
                 NULL, NULL, NULL, :contentHeading, 
                 :content, 0, NULL, NULL, :createdAt, :updatedAt
@@ -146,6 +145,7 @@ class Migration1663319539CreateBlogPostTable extends MigrationStep
                     'id' => Uuid::fromHexToBytes($id),
                     'languageId' => $language['language_id'],
                     'title' => 'Magefan Blog Post Sample',
+                    'identifier' => 'magefan-blog-post-sample',
                     'metaKeywords' => 'Magefan blog sample',
                     'metaDescription' => 'Magefan blog default post.',
                     'contentHeading' => 'Magefan Blog Post Sample',

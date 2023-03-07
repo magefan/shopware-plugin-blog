@@ -30,7 +30,7 @@
                     {% set categoryChildCout = config('MagefanBlog.config.displayNumberOfPosts') ? 'style="display: none"' : '' %}
                     {% for category in sidebarItem['categories'].elements %}
                         <li>
-                            <a href="{{ app.request.basePath ~ '/blog/category/' ~ category.id }}">
+                            <a href="{{ seoUrl('frontend.blog.category', {'identifier':  category.id}) }}">
                                 <span class="block-category-name">{{ category.title }}</span>
                                 <span class="block-category-count" {{ categoryChildCout }}>
                                 {% if displayNumberOfPosts %}
@@ -89,7 +89,7 @@
                         <div class="tagclaud-hld">
                             {% for title, tag in sidebarItem['tags'] %}
                                 <span class="{{ tag.class }}">
-                                  <a href="{{ app.request.basePath ~ '/blog/tag/' ~ tag.tag.id }}"
+                                  <a href="{{ seoUrl('frontend.blog.tag', {'identifier':  tag.tag.id}) }}"
                                      title="travel">{{ tag.tag.title }}</a>
                                 </span>
                             {% endfor %}

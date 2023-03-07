@@ -13,7 +13,7 @@
             {# Image #}
             <div class="article-post__image-container animation-type--zoom">
                 {% if recentDisplayPostImage or not sidebar %}
-                    <a href="{{ app.request.basePath ~ '/blog/post/' ~ post.id }}" class="
+                    <a href="{{ seoUrl('frontend.blog.post', {'identifier':  post.id}) }}" class="
                     article-post__image-wrapper
                     media
                     media--landscape
@@ -34,7 +34,7 @@
                     <div class="article-post__category">
                         {% for category in post.postCategories.elements %}
                             <a class="article-post__category-name"
-                               href="{{ app.request.basePath ~ '/blog/category/' ~ category.id }}"
+                               href="{{ seoUrl('frontend.blog.category', {'identifier':  category.id}) }}"
                                title="{{ category.title }}">
                                 {{ category.title }}
                             </a>
@@ -47,7 +47,7 @@
             <div class="article-post__info">
                 <div class="article-post__header">
                     <h2 class="article-post__title">
-                        <a href="{{ app.request.basePath ~ '/blog/post/' ~ post.id }}">{{ post.title }}</a>
+                        <a href="{{ seoUrl('frontend.blog.post', {'identifier':  post.id}) }}">{{ post.title }}</a>
                     </h2>
                     <div class="article-post__data-wrap">
                         {% if post.postAuthor and (post.postAuthor.firstname or post.postAuthor.lastname) %}

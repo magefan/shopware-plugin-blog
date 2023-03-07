@@ -64,6 +64,7 @@ class CategoryTranslationDefinition extends EntityTranslationDefinition
             (new StringField('meta_description', 'metaDescription')),
             (new LongTextField('content_heading', 'contentHeading')),
             (new LongTextField('content', 'content')),
+            (new StringField('identifier', 'identifier')),
             (new StringField('path', 'path')),
         ]);
     }

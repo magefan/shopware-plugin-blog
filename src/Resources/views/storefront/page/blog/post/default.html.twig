@@ -15,7 +15,6 @@
     {% set displayAuthorInformation = config('MagefanBlog.config.displayAuthorInformation') %}
     {% set displayPostListByAuthor = config('MagefanBlog.config.displayPostListByAuthor') %}
     {% set author = post.postAuthor %}
-    {% set authorRoute = app.request.basePath ~ '/blog/author/' ~ author.firstname ~ '-' ~ author.lastname %}
     {% set commentType = config('MagefanBlog.config.type') %}
     {# Blog Post #}
     <section class="shopware-section shopware-section__blog-post">
@@ -32,7 +31,7 @@
                                 {% for category in post.postCategories %}
                                     <a
                                             class="blog-post__category-name"
-                                            href="{{ app.request.basePath ~ '/blog/category/' ~ category.id }}"
+                                            href="{{ seoUrl('frontend.blog.category', {'identifier':  category.id}) }}"
                                             title="{{ category.title }}">
                                         {{ category.title }}
                                     </a>
@@ -73,7 +72,7 @@
                                     <div class="post-tag-title">{{ "Tags"|trans }}</div>
                                     {% for tag in post.postTags.elements %}
                                         <a title="{{ tag.title }}"
-                                           href="{{ app.request.basePath ~ '/blog/tag/' ~ tag.id }}">
+                                           href="{{ seoUrl('frontend.blog.tag', {'identifier':  tag.id}) }}">
                                             {{ tag.title }}
                                         </a>
                                     {% endfor %}
@@ -106,7 +105,7 @@
                                     {% if prevnext.prev.id %}
                                         <div class="post-prev">
                                             <a class="nextprev-link prev-link float-left"
-                                               href="{{ app.request.basePath ~ '/blog/post/' ~ prevnext.prev.id }}"
+                                               href="{{ seoUrl('frontend.blog.post', {'identifier':  post.id}) }}"
                                                title="">
                                                 <span class="text-left">{{ "Previous"|trans }}</span>
                                                 {{ prevnext.prev.title }}
@@ -116,7 +115,7 @@
                                     {% if prevnext.next.id %}
                                         <div class="post-next">
                                             <a class="nextprev-link next-link float-right"
-                                               href="{{ app.request.basePath ~ '/blog/post/' ~ prevnext.next.id }}"
+                                               href="{{ seoUrl('frontend.blog.post', {'identifier':  prevnext.next.id}) }}"
                                                title="">
                                                 <span class="text-right">{{ "Next"|trans }}</span>
                                                 {{ prevnext.next.title }}

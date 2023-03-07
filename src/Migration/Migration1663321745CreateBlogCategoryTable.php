@@ -34,7 +34,6 @@ class Migration1663321745CreateBlogCategoryTable extends MigrationStep
                 CREATE TABLE `magefanblog_category` (
                  `id` binary(16) NOT NULL COMMENT "Category ID",
                  `position` smallint DEFAULT 10 COMMENT "Category Position",
-                 `identifier` varchar(100) DEFAULT NULL COMMENT "Category String Identifier",
                  `posts_sort_by` varchar(15) DEFAULT "createdAt" NOT NULL COMMENT "Category Sort By",
                  `include_in_menu` smallint DEFAULT NULL COMMENT "Category In Menu",
                  `is_active` smallint NOT NULL DEFAULT 1 COMMENT "Is Category Active",
@@ -51,7 +50,6 @@ class Migration1663321745CreateBlogCategoryTable extends MigrationStep
                  `created_at` DATETIME(3) NOT NULL,
                  `updated_at` DATETIME(3) NULL,
                  PRIMARY KEY (`id`),
-                 KEY `MAGEFANBLOG_POST_IDENTIFIER` (`identifier`),
                  KEY `MYM2MAGEFAN_BLOG_CATEGORY_INCLUDE_IN_MENU` (`include_in_menu`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT="Magefan Blog Category Table"
             '
@@ -63,6 +61,7 @@ class Migration1663321745CreateBlogCategoryTable extends MigrationStep
                  `magefanblog_category_id` binary(16) NOT NULL COMMENT "Category ID",
                  `language_id` BINARY(16) NOT NULL COMMENT "Language Id",
                  `title` varchar(255) DEFAULT NULL COMMENT "Category Title",
+                 `identifier` varchar(100) DEFAULT NULL COMMENT "Category String Identifier",
                  `meta_title` varchar(255) DEFAULT NULL COMMENT "Category Meta Title",
                  `meta_keywords` text COMMENT "Category Meta Keywords",
                  `meta_description` text COMMENT "Category Meta Description",
@@ -72,6 +71,7 @@ class Migration1663321745CreateBlogCategoryTable extends MigrationStep
                  `created_at` DATETIME(3) NOT NULL COMMENT "Category Translation Created At",
                  `updated_at` DATETIME(3) NULL COMMENT "Category Translation Updated At", 
                  PRIMARY KEY (`magefanblog_category_id`, `language_id`),
+                 KEY `MAGEFANBLOG_POST_IDENTIFIER` (`identifier`),
                  FULLTEXT KEY `FTI_A31A6CE1BAE9596AD2A53A8D37C22351` (`title`,`meta_keywords`,`meta_description`,`content`)
                 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3 COMMENT="Magefan Blog Category Table Translation";
             '

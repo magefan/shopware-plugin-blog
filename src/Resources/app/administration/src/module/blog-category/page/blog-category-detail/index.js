@@ -107,6 +107,11 @@ Component.register('blog-category-detail', {
     },
 
     watch: {
+        'category.title': function (value) {
+            if (typeof value !== 'undefined') {
+
+            }
+        },
         id() {
             this.createdComponent();
         },
