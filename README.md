@@ -59,9 +59,9 @@ To get feedback and keep a dialogue with your customers you need blog comments. 
 ## Documentation
 
 **General**
-* [How to install Shopware Blog Extension](https://magefan.com/shopware/extensions/blog/documentation/installation)
-* [How to update Shopware Blog Extension](https://magefan.com/shopware/extensions/blog/documentation/updating)
-* [How to uninstall Shopware Blog Extension](https://magefan.com/shopware/extensions/blog/documentation/uninstalling)
+* [How to install Shopware Blog Extension?](https://magefan.com/shopware/extensions/blog/documentation/installation)
+* [How to update Shopware Blog Extension?](https://magefan.com/shopware/extensions/blog/documentation/updating)
+* [How to uninstall Shopware Blog Extension?](https://magefan.com/shopware/extensions/blog/documentation/uninstalling)
 
 **Configuration**
 * [Shopware Blog Access Control List](https://magefan.com/shopware/extensions/blog/access-control-list)
