@@ -37,7 +37,7 @@ Responsiveness is a second important thing you have to pay attention to when set
 </p>
 
 ### Create Unlimited Posts, Categories and Tags
-Depending on your niche, you might have a lot of topics to cover. Since there is no limit to the number of blog posts, categories, tags or authors you can keep these topics organized and structured. 
+Depending on your niche, you might have a lot of topics to cover. Since there is no limit to the number of blog posts, categories, tags or authors in our Shopware Blog Extension you can keep these topics organized and structured. 
 
 <p align="center">
   <img width="853" height="425" src="https://cm.magefan.com/catalog/manage-blog-on-shopware.png">
@@ -54,7 +54,7 @@ Enable blog search, categories tree, recent blog posts, archive, tags cloud and 
 </p>
 
 ### Enable Blog Comments
-To get feedback and keep a dialogue with your customers you need blog comments. They help you to learn about the topics your readers like and what they think of your blog in general. This contributes greatly to your content strategy and helps to establish trust and authority. 
+To get feedback and keep a dialogue with your customers you need blog comments. They help you to learn about the topics your readers like and what they think of your Shopware blog in general. This contributes greatly to your content strategy and helps to establish trust and authority. 
 
 ## Documentation
 
