@@ -73,11 +73,11 @@ class Subscriber implements EventSubscriberInterface
     {
         return [
             'magefanblog_post.written' => 'onBlogEntriesUpdated',
-            'magefanblog_post.deleted' => 'onBlogPostDeleted',
+            /*'magefanblog_post.deleted' => 'onBlogPostDeleted',*/
             'magefanblog_category.written' => 'onBlogEntriesUpdated',
-            'magefanblog_category.deleted' => 'onBlogPostDeleted',
+            /*'magefanblog_category.deleted' => 'onBlogPostDeleted',*/
             'magefanblog_tag.written' => 'onBlogEntriesUpdated',
-            'magefanblog_tag.deleted' => 'onBlogPostDeleted',
+            /*'magefanblog_tag.deleted' => 'onBlogPostDeleted',*/
             'system_config.written' => 'onSaveConfig',
         ];
     }

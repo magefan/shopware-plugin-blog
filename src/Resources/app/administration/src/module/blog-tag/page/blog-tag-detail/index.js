@@ -96,6 +96,8 @@ Component.register('blog-tag-detail', {
     watch: {
         'tag.title': function (value) {
             if (typeof value !== 'undefined') {
+                let postIdentifier = slug(this.tag.title, '-');
+                this.buildIdentifier(postIdentifier, 1)
             }
         },
         id() {
@@ -139,16 +141,6 @@ Component.register('blog-tag-detail', {
             this.isLoading = true;
 
             return new Promise((resolve) => {
-                let identifier = this.tag.identifier
-                if (this.tag.title){
-                    if (identifier !== undefined && !this.isUrlValid(identifier)) {
-                        identifier = slug(identifier, '-');
-                    } else {
-                        identifier = slug(this.tag.title, '-');
-                    }
-                }
-
-                this.tag.identifier = identifier;
                 this.tagRepository.save(this.tag).then(() => {
                     this.isLoading = false;
                     this.isSaveSuccessful = true;
@@ -174,10 +166,18 @@ Component.register('blog-tag-detail', {
             this.$router.push({name: 'blog.tag.index'});
         },
 
-        isUrlValid(str) { return /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/.test(str); },
-
-        prepareIdentifier(str) {
-            return str.replace(/ +/g, '-').toLowerCase();
-        }
+        buildIdentifier(finalIdentifier, number) {
+            let numberItem = (number > 1 ? '-' + number : '');
+            const criteria = new Criteria();
+            criteria.addFilter(Criteria.equals('identifier', finalIdentifier + numberItem));
+            return this.tagRepository.search(criteria, Shopware.Context.api).then((result) => {
+                if (result.length === 0) {
+                    return this.tag.identifier = slug(finalIdentifier + numberItem, '-');
+                } else {
+                    number++;
+                    this.buildIdentifier(finalIdentifier, number);
+                }
+            });
+        },
     },
 });

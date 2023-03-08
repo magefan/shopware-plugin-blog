@@ -120,6 +120,12 @@ Component.register('blog-post-detail', {
     },
 
     watch: {
+        'post.title': function (value) {
+            if (typeof value !== 'undefined') {
+                let postIdentifier = slug(this.post.title, '-');
+                this.buildIdentifier(postIdentifier, 1)
+            }
+        },
         id() {
             this.loadEntityData();
         },
@@ -178,16 +184,6 @@ Component.register('blog-post-detail', {
             this.isLoading = true;
 
             return new Promise((resolve) => {
-                let identifier = this.post.identifier
-                if (this.post.title) {
-                    if (identifier !== undefined && !this.isUrlValid(identifier)) {
-                        identifier = slug(identifier, '-');
-                    } else {
-                        identifier = slug(this.post.title, '-');
-                    }
-                    this.post.identifier = identifier;
-                }
-
                 this.updateCategories();
                 this.updateTags();
                 this.postRepository.save(this.post, Context.api).then(() => {
@@ -283,10 +279,6 @@ Component.register('blog-post-detail', {
             this.$router.push({name: 'blog.post.index'});
         },
 
-        isUrlValid(str) {
-            return /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/.test(str);
-        },
-
         checkCategoryExists(category) {
             const criteria = new Criteria();
             criteria.addFilter(Criteria.equals('categoryId', category));
@@ -304,6 +296,20 @@ Component.register('blog-post-detail', {
 
             return this.postTagRepository.search(criteria, this.context).then((response) => {
                 return this.existTag = (response.total === 0);
+            });
+        },
+
+        buildIdentifier(finalIdentifier, number){
+            let numberItem = (number > 1 ? '-' + number : '');
+            const criteria = new Criteria();
+            criteria.addFilter(Criteria.equals('identifier', finalIdentifier + numberItem));
+            return this.postRepository.search(criteria, Shopware.Context.api).then((result) => {
+                if(result.length === 0){
+                    return this.post.identifier = slug(finalIdentifier + numberItem, '-');
+                }else {
+                    number++;
+                    this.buildIdentifier(finalIdentifier, number);
+                }
             });
         },
     },
