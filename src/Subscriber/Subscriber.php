@@ -77,12 +77,30 @@ class Subscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            'magefanblog_post.written' => 'onBlogEntriesUpdated',
-            'magefanblog_post.deleted' => 'onBlogPostDeleted',
-            'magefanblog_category.written' => 'onBlogEntriesUpdated',
-            'magefanblog_category.deleted' => 'onBlogPostDeleted',
-            'magefanblog_tag.written' => 'onBlogEntriesUpdated',
-            'magefanblog_tag.deleted' => 'onBlogPostDeleted',
+            'magefanblog_post.written' => [
+                ['onBlogEntriesUpdated', 10],
+                ['onUpdateInvalidateCache', 11],
+            ],
+            'magefanblog_post.deleted' => [
+                ['onBlogEntriesDeleted', 10],
+                ['onDeleteInvalidateCache', 11],
+            ],
+            'magefanblog_category.written' => [
+                ['onBlogEntriesUpdated', 10],
+                ['onUpdateInvalidateCache', 11],
+            ],
+            'magefanblog_category.deleted' => [
+                ['onBlogEntriesDeleted', 10],
+                ['onDeleteInvalidateCache', 11],
+            ],
+            'magefanblog_tag.written' => [
+                ['onBlogEntriesUpdated', 10],
+                ['onUpdateInvalidateCache', 11],
+            ],
+            'magefanblog_tag.deleted' => [
+                ['onBlogEntriesDeleted', 10],
+                ['onDeleteInvalidateCache', 11],
+            ],
             'system_config.written' => 'onSaveConfig',
             SeoEvents::SEO_URL_TEMPLATE_WRITTEN_EVENT => [
                 ['updateSeoUrlForAllArticles', 10],
@@ -119,10 +137,28 @@ class Subscriber implements EventSubscriberInterface
      */
     public function updateSeoUrlForAllArticles(): void
     {
-        foreach (self::ROUTES as $route){
+        foreach (self::ROUTES as $route) {
             $this->seoUrlUpdater->update($route::ROUTE_NAME, []);
         }
     }
+
+    /**
+     * @param EntityWrittenEvent $event
+     * @return void
+     */
+    public function onUpdateInvalidateCache(EntityWrittenEvent $event): void
+    {
+
+    }
+
+    /**
+     * @param EntityDeletedEvent $event
+     * @return void
+     */
+    public function onDeleteInvalidateCache(EntityDeletedEvent $event): void
+    {
+    }
+
 
     /**
      * @param EntityWrittenEvent $entityWrittenEvent

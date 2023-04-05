@@ -48,10 +48,6 @@ class BlogPageSeoUrlRoute implements SeoUrlRouteInterface
      */
     public function prepareCriteria(Criteria $criteria): void
     {
-        /*        $criteria->addAssociations([
-                    'blogCategories',
-                    'blogAuthor',
-                ]);*/
     }
 
     /**
