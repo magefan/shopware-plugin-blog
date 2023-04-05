@@ -40,6 +40,7 @@ Component.register('blog-category-detail', {
             isLoading: false,
             isSaveSuccessful: false,
             isChangedLanguage: Shopware.Context.api.languageId,
+            isNew: true,
         };
     },
 
@@ -141,6 +142,7 @@ Component.register('blog-category-detail', {
         },
 
         loadEntityData() {
+            this.isNew = false;
             this.categoryRepository.get(this.id).then((category) => {
                 this.isLoading = false;
                 this.category = category;

@@ -6,7 +6,6 @@
 
 namespace Magefan\Blog\Subscriber;
 
-use Magefan\Blog\Storefront\Framework\Seo\SeoUrlRoute\BlogPostPageSeoUrlRoute;
 use Shopware\Core\Content\Seo\Event\SeoEvents;
 use Shopware\Core\Content\Seo\SeoUrlUpdater;
 use Shopware\Core\Framework\Context;
@@ -25,6 +24,12 @@ class Subscriber implements EventSubscriberInterface
         'MagefanBlog.config.DisplayBlogLink',
         'MagefanBlog.config.LinkText',
         'MagefanBlog.config.IncludeBlogCategories'
+    ];
+
+    const ROUTES = [
+        '\Magefan\Blog\Storefront\Framework\Seo\SeoUrlRoute\BlogCategoryPageSeoUrlRoute',
+        '\Magefan\Blog\Storefront\Framework\Seo\SeoUrlRoute\BlogPostPageSeoUrlRoute',
+        '\Magefan\Blog\Storefront\Framework\Seo\SeoUrlRoute\BlogTagPageSeoUrlRoute'
     ];
 
     /**
@@ -73,12 +78,15 @@ class Subscriber implements EventSubscriberInterface
     {
         return [
             'magefanblog_post.written' => 'onBlogEntriesUpdated',
-            /*'magefanblog_post.deleted' => 'onBlogPostDeleted',*/
+            'magefanblog_post.deleted' => 'onBlogPostDeleted',
             'magefanblog_category.written' => 'onBlogEntriesUpdated',
-            /*'magefanblog_category.deleted' => 'onBlogPostDeleted',*/
+            'magefanblog_category.deleted' => 'onBlogPostDeleted',
             'magefanblog_tag.written' => 'onBlogEntriesUpdated',
-            /*'magefanblog_tag.deleted' => 'onBlogPostDeleted',*/
+            'magefanblog_tag.deleted' => 'onBlogPostDeleted',
             'system_config.written' => 'onSaveConfig',
+            SeoEvents::SEO_URL_TEMPLATE_WRITTEN_EVENT => [
+                ['updateSeoUrlForAllArticles', 10],
+            ],
         ];
     }
 
@@ -104,6 +112,16 @@ class Subscriber implements EventSubscriberInterface
         $className = '\Magefan\Blog\Storefront\Framework\Seo\SeoUrlRoute\Blog' . $name . 'PageSeoUrlRoute';
 
         $this->seoUrlUpdater->update($className::ROUTE_NAME, $event->getIds());
+    }
+
+    /**
+     * @return void
+     */
+    public function updateSeoUrlForAllArticles(): void
+    {
+        foreach (self::ROUTES as $route){
+            $this->seoUrlUpdater->update($route::ROUTE_NAME, []);
+        }
     }
 
     /**

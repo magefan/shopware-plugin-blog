@@ -6,7 +6,7 @@
 import template from './blog-comment-detail.html.twig';
 import errorConfig from './error-config.json';
 
-const { Component, Mixin, Data: { Criteria } } = Shopware;
+const { Component, Context, Mixin, Data: { Criteria } } = Shopware;
 
 const { mapPageErrors, mapPropertyErrors } = Shopware.Component.getComponentHelper();
 

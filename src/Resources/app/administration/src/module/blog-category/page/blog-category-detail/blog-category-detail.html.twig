@@ -46,7 +46,7 @@
         {% block blog_category_detail_language_switch %}
             <template slot="language-switch">
                 <sw-language-switch
-                        :disabled="category._isNew"
+                        :disabled="isNew"
                         @on-change="onChangeLanguage"
                 />
             </template>

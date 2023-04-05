@@ -13,6 +13,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityTranslationDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\AllowHtml;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\LongTextField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
@@ -63,8 +64,8 @@ class PostTranslationDefinition extends EntityTranslationDefinition
             (new StringField('meta_title', 'metaTitle'))->addFlags(new ApiAware()),
             (new StringField('meta_keywords', 'metaKeywords'))->addFlags(new ApiAware()),
             (new StringField('meta_description', 'metaDescription'))->addFlags(new ApiAware()),
-            (new StringField('content_heading', 'contentHeading'))->addFlags(new ApiAware(), new AllowHtml()),
-            (new StringField('content', 'content'))->addFlags(new ApiAware(), new AllowHtml()),
+            (new LongTextField('content_heading', 'contentHeading'))->addFlags(new ApiAware(), new AllowHtml()),
+            (new LongTextField('content', 'content'))->addFlags(new ApiAware(), new AllowHtml()),
             (new StringField('featured_img', 'featuredImg'))->addFlags(new ApiAware()),
             (new StringField('featured_img_alt', 'featuredImgAlt'))->addFlags(new ApiAware()),
             (new StringField('og_title', 'ogTitle'))->addFlags(new ApiAware()),
