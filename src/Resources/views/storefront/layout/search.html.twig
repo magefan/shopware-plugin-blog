@@ -1,20 +1,18 @@
 {#
- * Copyright © Magefan (support@magefan.com). All rights reserved.
- * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+* Copyright © Magefan (support@magefan.com). All rights reserved.
+* Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
 #}
 
 {% sw_extends '@Storefront/storefront/base.html.twig' %}
 
-{% set template = config('MagefanBlog.config.blogIndexTemplate') %}
-
 {% block base_content %}
-    <h1 class="blog-page__title"> {{ config('MagefanBlog.config.title') }} </h1>
+    <h1 class="blog-page__title">{{ "Search"|trans }}  "{{ query }}" </h1>
 
     <div class="main-wrapper">
 
         {# Main Content #}
         <div class="main-content">
-            <div class="blog-articles article-list {% if template == "grid" %} article-grid {% endif %}">
+            <div class="blog-articles article-grid">
                 {% if posts|length > 0  %}
                     {% for post in posts %}
                         {% block article %}

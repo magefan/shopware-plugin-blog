@@ -31,6 +31,9 @@
     color: var(--primary-color);
     margin: 10px 0 16px 0;
     text-transform: capitalize;
+    @media (max-width: 767px) {
+      font-size: var(--block-title-font-size-mobile);
+    }
   }
   .blog-articles {
     .article-post__info {
@@ -75,7 +78,8 @@
           .article-post__author {
             text-decoration: none;
             font-family: sans-serif;
-            color: #222;
+            //color: #222;
+            color: var(--primary-color);
             font-weight: 600;
             .divider {
               vertical-align: text-top;
@@ -200,6 +204,16 @@
 
 
 // Block Search
+.block_search {
+  form {
+    width: 100%;
+
+    input {
+      width: 100%;
+    }
+  }
+}
+
 /* Field */
 .field {
   position: relative;

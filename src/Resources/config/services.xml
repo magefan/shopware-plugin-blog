@@ -93,6 +93,22 @@
                 <argument type="service" id="service_container"/>
             </call>
         </service>
+        <service id="Magefan\Blog\Storefront\Controller\MagefanBlogSearchController" public="true">
+            <tag name="controller.service_arguments"/>
+            <argument id="magefanblog_post.repository" type="service"/>
+            <argument id="magefanblog_tag.repository" type="service"/>
+            <argument id="magefanblog_category.repository" type="service"/>
+            <argument id="magefanblog_author.repository" type="service"/>
+            <argument id="magefanblog_comment.repository" type="service"/>
+            <argument id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogAbstractResolver" type="service"/>
+            <argument id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogSidebarResolver" type="service"/>
+            <argument id="Shopware\Storefront\Page\GenericPageLoader" type="service"/>
+            <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
+            <argument id="Symfony\Component\Routing\RouterInterface" type="service"/>
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
         <service id="Magefan\Blog\Storefront\Controller\MagefanBlogController" public="true">
             <tag name="controller.service_arguments"/>
             <argument id="magefanblog_post.repository" type="service"/>

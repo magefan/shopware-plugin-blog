@@ -96,6 +96,7 @@ class BlogCategoryResolver extends BlogAbstractResolver
             ->addAssociation('postCategories')
             ->addAssociation('blogCategories')
             ->addAssociation('postTags')
+            ->addAssociation('postAuthor')
             ->addSorting(new FieldSorting('postTags'. '.' . $sortBy, $sorting))
             ->addFilter(new EqualsFilter('postCategories.id', $category->getId()))
             ->setLimit((bool)$category->getPostsPerPage() ? $category->getPostsPerPage() : $limit)

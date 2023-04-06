@@ -13,21 +13,23 @@
             <div class="post-list-content">
                 <p>{{ tag.content }}</p>
             </div>
-            {% if tagPosts|length > 0 %}
-                {% for post in tagPosts %}
-                    {% block article %}
-                        {% sw_include '@Storefront/storefront/layout/article.html.twig' with {
-                            context: context,
-                            post: post,
-                            author: author,
-                            categories: categories,
-                            sidebar: false
-                        } only %}
-                    {% endblock %}
-                {% endfor %}
-            {% else %}
-                <span>{{ "Unfortunately we can`t find any article"|trans }}</span>
-            {% endif %}
+            <div class="blog-articles article-list article-grid">
+	            {% if tagPosts|length > 0 %}
+	                {% for post in tagPosts %}
+	                    {% block article %}
+	                        {% sw_include '@Storefront/storefront/layout/article.html.twig' with {
+	                            context: context,
+	                            post: post,
+	                            author: author,
+	                            categories: categories,
+	                            sidebar: false
+	                        } only %}
+	                    {% endblock %}
+	                {% endfor %}
+	            {% else %}
+	                <span>{{ "Unfortunately we can`t find any article"|trans }}</span>
+	            {% endif %}
+            </div>
         </div>
         {# END Main Content #}
 
