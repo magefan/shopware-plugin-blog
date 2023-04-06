@@ -29,72 +29,25 @@
                             {% for category in post.postCategories %}
                                 <a
                                         class="blog-post__category-name"
-                                        href="{{ app.request.basePath ~ '/blog/category/' ~ category.identifier }}"
-                                        title="{{ category.title }}">
-                                    {{ category.title }}
+                                        href="{{ seoUrl('frontend.blog.category', {'identifier':  category.id}) }}"
+                                        title="{{ category.translated.title }}">
+                                    {{ category.translated.title }}
                                 </a>
                             {% endfor %}
                         </div>
                     {% endif %}
-                    {# END Category #}
-
-                        {# Category #}
-                        {% if post.postCategories %}
-                            <div class="blog-post__category">
-                                {% for category in post.postCategories %}
-                                    <a
-                                            class="blog-post__category-name"
-                                            href="{{ seoUrl('frontend.blog.category', {'identifier':  category.id}) }}"
-                                            title="{{ category.translated.title }}">
-                                        {{ category.translated.title }}
-                                    </a>
-                                {% endfor %}
-                            </div>
                     {# Author and Data #}
                     <div class="blog-post__data-wrap">
                         {% if displayAuthorInformation and author %}
                             <span class="blog-post__author">
                                     <span>{{ author.firstname ~ ' ' ~  author.lastname }}</span>&nbsp;
                                     <span class="divider">-</span>
+                            </span>
                         {% endif %}
                         <span class="blog-post__data">{{ post.createdAt|date("M d,Y") }}</span>
                     </div>
-                    {# Author and Data #}
                 </div>
 
-                    <div class="post-content">
-                        {# Image #}
-                        <div class="post-featured-image">
-                            {% if post.media.url %}
-                                <img src="{{ post.media.url }}"
-                                     width="{{ post.media.metaData.width }}"
-                                     height="{{ post.media.metaData.height }}"
-                                     alt="{{ post.featuredImgAlt }}">
-                            {% endif %}
-                        </div>
-                        {# END Image #}
-
-                        {# Tags #}
-                        {% if post.postTags.elements %}
-                            <div class="post-tag">
-                                <div class="post-tags">
-                                    <div class="post-tag-title">{{ "Tags"|trans }}</div>
-                                    {% for tag in post.postTags.elements %}
-                                        <a title="{{ tag.translated.title }}"
-                                           href="{{ seoUrl('frontend.blog.tag', {'identifier':  tag.id}) }}">
-                                            {{ tag.translated.title }}
-                                        </a>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        {% endif %}
-                        {# END Tags #}
-
-                        {# Description #}
-                        <div class="post-description">
-                            {{ post.translated.content|raw }}
-                        </div>
-                        {# Description #}
                 <div class="post-content">
                     {# Image #}
                     <div class="post-featured-image">
@@ -113,9 +66,9 @@
                             <div class="post-tags">
                                 <div class="post-tag-title">{{ "Tags"|trans }}</div>
                                 {% for tag in post.postTags.elements %}
-                                    <a title="{{ tag.title }}"
-                                       href="{{ app.request.basePath ~ '/blog/tag/' ~ tag.identifier }}">
-                                        {{ tag.title }}
+                                    <a title="{{ tag.translated.title }}"
+                                       href="{{ seoUrl('frontend.blog.tag', {'identifier':  tag.id}) }}">
+                                        {{ tag.translated.title }}
                                     </a>
                                 {% endfor %}
                             </div>
@@ -123,65 +76,51 @@
                     {% endif %}
                     {# END Tags #}
 
-                    {# Description #}
-                    <div class="post-description">
-                        {{ post.content|raw }}
-                    </div>
-                    {# Description #}
-                </div>
-                <div class="post-footer">
-                    {% set addThisEnabled = config('MagefanBlog.config.addThisEnabled') %}
-                    {% if addThisEnabled %}
-                        {# Sharing #}
-                        <div class="post-sharing-bottom">
-                            <div class="addthis_inline_share_toolbox"></div>
+                    <div class="post-content">
+                        {# Image #}
+                        <div class="post-featured-image">
+                            {% if post.media.url %}
+                                <img src="{{ post.media.url }}"
+                                     width="{{ post.media.metaData.width }}"
+                                     height="{{ post.media.metaData.height }}"
+                                     alt="{{ post.featuredImgAlt }}">
+                            {% endif %}
                         </div>
-                        {# END Sharing #}
-                    {% endif %}
-                    {# Next Prev #}
-                    {% if prevNextStyle === 'default' %}
-                        {% if (prevnext.prev.identifier or prevnext.next.identifier) and displayPrevNext %}
-                            <div class="post-nextprev row-cols-2">
-                                {% if prevnext.prev.identifier %}
-                                    <div class="post-prev">
-                                        <a class="nextprev-link prev-link float-left"
-                                           href="{{ app.request.basePath ~ '/blog/post/' ~ prevnext.prev.identifier }}"
-                                           title="">
-                                            <span class="text-left">{{ "Previous"|trans }}</span>
-                                            {{ prevnext.prev.title }}
-                                        </a>
-                                    </div>
-                                {% endif %}
-                                {% if prevnext.next.identifier %}
-                                    <div class="post-next">
-                                        <a class="nextprev-link next-link float-right"
-                                           href="{{ app.request.basePath ~ '/blog/post/' ~ prevnext.next.identifier }}"
-                                           title="">
-                                            <span class="text-right">{{ "Next"|trans }}</span>
-                                            {{ prevnext.next.title }}
-                                        </a>
-                                    </div>
-                                {% endif %}
+                        {# END Image #}
+
+                        {# Description #}
+                        <div class="post-description">
+                            {{ post.translated.content|raw }}
+                        </div>
+                        {# Description #}
+                    </div>
+                    <div class="post-footer">
+                        {% set addThisEnabled = config('MagefanBlog.config.addThisEnabled') %}
+                        {% if addThisEnabled %}
+                            {# Sharing #}
+                            <div class="post-sharing-bottom">
+                                <div class="addthis_inline_share_toolbox"></div>
                             </div>
+                            {# END Sharing #}
                         {% endif %}
                         {# Next Prev #}
                         {% if prevNextStyle === 'default' %}
-                            {% if (prevnext.prev.id or prevnext.next.id) and displayPrevNext %}
+                            {% if (prevnext.prev.identifier or prevnext.next.identifier) and displayPrevNext %}
                                 <div class="post-nextprev row-cols-2">
-                                    {% if prevnext.prev.id %}
+                                    {% if prevnext.prev.identifier %}
                                         <div class="post-prev">
                                             <a class="nextprev-link prev-link float-left"
-                                               href="{{ seoUrl('frontend.blog.post', {'identifier':  post.id}) }}"
+                                               href="{{ app.request.basePath ~ '/blog/post/' ~ prevnext.prev.identifier }}"
                                                title="">
                                                 <span class="text-left">{{ "Previous"|trans }}</span>
                                                 {{ prevnext.prev.title }}
                                             </a>
                                         </div>
                                     {% endif %}
-                                    {% if prevnext.next.id %}
+                                    {% if prevnext.next.identifier %}
                                         <div class="post-next">
                                             <a class="nextprev-link next-link float-right"
-                                               href="{{ seoUrl('frontend.blog.post', {'identifier':  prevnext.next.id}) }}"
+                                               href="{{ app.request.basePath ~ '/blog/post/' ~ prevnext.next.identifier }}"
                                                title="">
                                                 <span class="text-right">{{ "Next"|trans }}</span>
                                                 {{ prevnext.next.title }}
@@ -194,44 +133,41 @@
                             {# Modern style button #}
                         {% endif %}
                         {# END Next Prev #}
-                    {% else %}
-                        {# Modern style button #}
-                    {% endif %}
-                    {# END Next Prev #}
 
-                    {% if relatedPostEnabled %}
-                        {# Related Post #}
-                        {# Related Post #}
-                    {% endif %}
+                        {% if relatedPostEnabled %}
+                            {# Related Post #}
+                            {# Related Post #}
+                        {% endif %}
 
-                    {% if displayRelatedProducts %}
-                        {# Related Products #}
-                        {# END Related Products #}
-                    {% endif %}
+                        {% if displayRelatedProducts %}
+                            {# Related Products #}
+                            {# END Related Products #}
+                        {% endif %}
 
-                    {# Comments #}
-                    {% if commentType == 'magefan' %}
-                        {% block magefan_blog_post_comment %}
-                            {% sw_include '@Storefront/storefront/layout/comment.html.twig' with {
-                                context: context,
-                                comments: post|getPostComments(post),
-                                post: post,
-                                cardTitle: post|getPostComments(post)|length ~ ' ' ~ 'Comment(s)'
-                            } only %}
-                        {% endblock %}
-                    {% endif %}
-                    {# END Comments #}
+                        {# Comments #}
+                        {% if commentType == 'magefan' %}
+                            {% block magefan_blog_post_comment %}
+                                {% sw_include '@Storefront/storefront/layout/comment.html.twig' with {
+                                    context: context,
+                                    comments: post|getPostComments(post),
+                                    post: post,
+                                    cardTitle: post|getPostComments(post)|length ~ ' ' ~ 'Comment(s)'
+                                } only %}
+                            {% endblock %}
+                        {% endif %}
+                        {# END Comments #}
+                    </div>
                 </div>
-            </div>
 
-            {# Sidebar #}
-            {% block base_sidebar %}
-                {% sw_include '@Storefront/storefront/layout/sidebar.html.twig' with {
-                    context: context,
-                    sidebar: sidebar
-                } only %}
-            {% endblock %}
-            {# End sidebar #}
+                {# Sidebar #}
+                {% block base_sidebar %}
+                    {% sw_include '@Storefront/storefront/layout/sidebar.html.twig' with {
+                        context: context,
+                        sidebar: sidebar
+                    } only %}
+                {% endblock %}
+                {# End sidebar #}
+            </div>
         </div>
     </section>
     {# END Blog Post #}
