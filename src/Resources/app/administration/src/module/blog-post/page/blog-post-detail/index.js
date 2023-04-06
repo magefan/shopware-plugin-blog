@@ -121,7 +121,7 @@ Component.register('blog-post-detail', {
 
     watch: {
         'post.title': function (value) {
-            if (typeof value !== 'undefined') {
+            if (value) {
                 let postIdentifier = slug(this.post.title, '-');
                 this.buildIdentifier(postIdentifier, 1)
             }

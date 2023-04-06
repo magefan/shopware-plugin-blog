@@ -31,7 +31,7 @@
                     {% for category in sidebarItem['categories'].elements %}
                         <li>
                             <a href="{{ seoUrl('frontend.blog.category', {'identifier':  category.id}) }}">
-                                <span class="block-category-name">{{ category.title }}</span>
+                                <span class="block-category-name">{{ category.translated.title }}</span>
                                 <span class="block-category-count" {{ categoryChildCout }}>
                                 {% if displayNumberOfPosts %}
                                     ({{ category.blogPosts.elements|length }})
@@ -90,7 +90,7 @@
                             {% for title, tag in sidebarItem['tags'] %}
                                 <span class="{{ tag.class }}">
                                   <a href="{{ seoUrl('frontend.blog.tag', {'identifier':  tag.tag.id}) }}"
-                                     title="travel">{{ tag.tag.title }}</a>
+                                     title="travel">{{ tag.tag.translated.title }}</a>
                                 </span>
                             {% endfor %}
                         </div>

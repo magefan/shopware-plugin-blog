@@ -32,8 +32,8 @@
                                     <a
                                             class="blog-post__category-name"
                                             href="{{ seoUrl('frontend.blog.category', {'identifier':  category.id}) }}"
-                                            title="{{ category.title }}">
-                                        {{ category.title }}
+                                            title="{{ category.translated.title }}">
+                                        {{ category.translated.title }}
                                     </a>
                                 {% endfor %}
                             </div>
@@ -71,9 +71,9 @@
                                 <div class="post-tags">
                                     <div class="post-tag-title">{{ "Tags"|trans }}</div>
                                     {% for tag in post.postTags.elements %}
-                                        <a title="{{ tag.title }}"
+                                        <a title="{{ tag.translated.title }}"
                                            href="{{ seoUrl('frontend.blog.tag', {'identifier':  tag.id}) }}">
-                                            {{ tag.title }}
+                                            {{ tag.translated.title }}
                                         </a>
                                     {% endfor %}
                                 </div>
@@ -83,7 +83,7 @@
 
                         {# Description #}
                         <div class="post-description">
-                            {{ post.content|raw }}
+                            {{ post.translated.content|raw }}
                         </div>
                         {# Description #}
                     </div>

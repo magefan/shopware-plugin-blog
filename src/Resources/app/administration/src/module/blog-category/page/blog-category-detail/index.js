@@ -109,7 +109,7 @@ Component.register('blog-category-detail', {
 
     watch: {
         'category.title': function (value) {
-            if (typeof value !== 'undefined') {
+            if (value) {
                 let postIdentifier = slug(this.category.title, '-');
                 this.buildIdentifier(postIdentifier, 1)
             }

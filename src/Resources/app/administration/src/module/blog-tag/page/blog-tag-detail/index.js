@@ -95,7 +95,7 @@ Component.register('blog-tag-detail', {
 
     watch: {
         'tag.title': function (value) {
-            if (typeof value !== 'undefined') {
+            if (value) {
                 let postIdentifier = slug(this.tag.title, '-');
                 this.buildIdentifier(postIdentifier, 1)
             }
