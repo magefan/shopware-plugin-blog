@@ -30,8 +30,6 @@ Component.register('blog-tag-list', {
             sortDirection: 'DESC',
             naturalSorting: false,
             total: 0,
-            limit: 10,
-            page: 1,
             searchConfigEntity: 'magefanblog_tag',
         };
     },

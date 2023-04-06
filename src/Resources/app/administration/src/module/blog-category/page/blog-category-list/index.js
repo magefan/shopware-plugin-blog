@@ -30,8 +30,6 @@ Component.register('blog-category-list', {
             sortDirection: 'DESC',
             naturalSorting: false,
             total: 0,
-            limit: 10,
-            page: 1,
             showDeleteModal: false,
             searchConfigEntity: 'magefanblog_category',
         };
