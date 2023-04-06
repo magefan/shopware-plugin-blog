@@ -103,7 +103,7 @@ class Subscriber implements EventSubscriberInterface
             ],
             'system_config.written' => 'onSaveConfig',
             SeoEvents::SEO_URL_TEMPLATE_WRITTEN_EVENT => [
-                ['updateSeoUrlForAllArticles', 10],
+                ['updateSeoUrlForAllPosts', 10],
             ],
         ];
     }
@@ -135,7 +135,7 @@ class Subscriber implements EventSubscriberInterface
     /**
      * @return void
      */
-    public function updateSeoUrlForAllArticles(): void
+    public function updateSeoUrlForAllPosts(): void
     {
         foreach (self::ROUTES as $route) {
             $this->seoUrlUpdater->update($route::ROUTE_NAME, []);
