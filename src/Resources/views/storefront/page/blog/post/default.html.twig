@@ -101,7 +101,7 @@
                                 {% if prevnext.prev.identifier %}
                                     <div class="post-prev">
                                         <a class="nextprev-link prev-link float-left"
-                                           href="{{ app.request.basePath ~ '/blog/post/' ~ prevnext.prev.identifier }}"
+                                           href="{{ seoUrl('frontend.blog.post', {'identifier': prevnext.prev.id}) }}"
                                            title="">
                                             <span class="text-left">{{ "Previous"|trans }}</span>
                                             {{ prevnext.prev.title }}
@@ -111,7 +111,7 @@
                                 {% if prevnext.next.identifier %}
                                     <div class="post-next">
                                         <a class="nextprev-link next-link float-right"
-                                           href="{{ app.request.basePath ~ '/blog/post/' ~ prevnext.next.identifier }}"
+                                           href="{{ seoUrl('frontend.blog.post', {'identifier': prevnext.next.id}) }}"
                                            title="">
                                             <span class="text-right">{{ "Next"|trans }}</span>
                                             {{ prevnext.next.title }}

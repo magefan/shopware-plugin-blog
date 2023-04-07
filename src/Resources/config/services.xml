@@ -26,8 +26,10 @@
             <argument type="service" id="magefanblog_tag.repository"/>
             <argument type="service" id="magefanblog_category.repository"/>
             <argument id="magefanblog_comment.repository" type="service"/>
+            <argument type="service" id="seo_url.repository"/>
             <argument id="Shopware\Core\Content\Seo\SeoUrlPlaceholderHandlerInterface" type="service"/>
             <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
+            <argument type="service" id="translator" />
             <tag name="twig.runtime"/>
         </service>
         <service id="Magefan\Blog\Twig\Extension\BlogExtension">
