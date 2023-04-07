@@ -19,6 +19,7 @@ final class BlogExtension extends AbstractExtension
         return [
             new TwigFilter('get_child', [BlogRuntime::class, 'getChild']),
             new TwigFilter('getPostComments', [BlogRuntime::class, 'getPostComments']),
+            new TwigFilter('getBreadcrumbsData', [BlogRuntime::class, 'getBreadcrumbsData']),
         ];
     }
 }

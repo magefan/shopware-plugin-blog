@@ -21,15 +21,13 @@
             <argument type="service" id="Magefan\Blog\Core\Content\Blog\Tag\TagDefinition"/>
             <tag name="shopware.seo_url.route"/>
         </service>
-<!--        <service id="Magefan\Blog\Core\Content\Blog\Post\BlogEntitiesIndexer">
-            <argument type="service" id="Symfony\Contracts\EventDispatcher\EventDispatcherInterface"/>
-            <argument type="service" id="Shopware\Core\Framework\DataAbstractionLayer\Dbal\Common\IteratorFactory"/>
-            <argument type="service" id="magefanblog_post.repository"/>
-            <tag name="shopware.entity_indexer"/>
-        </service>-->
         <service id="Magefan\Blog\Twig\Extension\BlogRuntime">
+            <argument type="service" id="magefanblog_post.repository"/>
+            <argument type="service" id="magefanblog_tag.repository"/>
+            <argument type="service" id="magefanblog_category.repository"/>
             <argument id="magefanblog_comment.repository" type="service"/>
-            <argument id="Shopware\Core\Content\Seo\SeoUrlRoute\SeoUrlRouteRegistry" type="service"/>
+            <argument id="Shopware\Core\Content\Seo\SeoUrlPlaceholderHandlerInterface" type="service"/>
+            <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
             <tag name="twig.runtime"/>
         </service>
         <service id="Magefan\Blog\Twig\Extension\BlogExtension">
