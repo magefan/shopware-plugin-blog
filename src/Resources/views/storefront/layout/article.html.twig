@@ -65,7 +65,7 @@
                 </div>
                 <div class="article-post__content">
                     {% if post.contentHeading|length > shortContentLength %}
-                        {{ post.contentHeading|raw }}
+                        {{ post.contentHeading[0:shortContentLength] ~ shortContentEndCharacters }}
                     {% else %}
                         {{ post.contentHeading|raw }}
                     {% endif %}
