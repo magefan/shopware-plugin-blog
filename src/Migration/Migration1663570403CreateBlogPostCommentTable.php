@@ -49,8 +49,7 @@ class Migration1663570403CreateBlogPostCommentTable extends MigrationStep
                  KEY `MAGEFAN_BLOG_COMMENT_POST_ID` (`id`),
                  KEY `MAGEFAN_BLOG_COMMENT_CUSTOMER_ID` (`customer_id`),
                  KEY `MAGEFAN_BLOG_COMMENT_ADMIN_ID` (`admin_id`),
-                 KEY `MAGEFAN_BLOG_COMMENT_STATUS` (`status`),
-                 CONSTRAINT `MAGEFANBLOG_COMMENT_POST_ID_MAGEFAN_BLOG_POST_POST_ID` FOREIGN KEY (`post_id`) REFERENCES `magefanblog_post` (`id`) ON DELETE CASCADE
+                 KEY `MAGEFAN_BLOG_COMMENT_STATUS` (`status`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT="magefanblog_comment"
             '
         );

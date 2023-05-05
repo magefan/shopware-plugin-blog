@@ -35,12 +35,10 @@ class Migration1663658563CreateBlogPostTagTable extends MigrationStep
                  `id` binary(16) NOT NULL COMMENT "Depend ID",
                  `post_id` binary(16) NOT NULL COMMENT "Post ID",
                  `tag_id` binary(16) NOT NULL COMMENT "Tag ID",
-                 `created_at` DATETIME(3) NOT NULL,
-                 `updated_at` DATETIME(3) NULL,
+                 `created_at` DATETIME(3) NOT NULL COMMENT "Depend Created At",
+                 `updated_at` DATETIME(3) NULL COMMENT "Depend Updated At",
                  PRIMARY KEY (`id`),
-                 KEY `MAGEFANBLOG_POST_TAG_TAG_ID` (`tag_id`),
-                 CONSTRAINT `MAGEFANBLOG_POST_TAG_POST_ID_MAGEFAN_BLOG_POST_POST_ID` FOREIGN KEY (`post_id`) REFERENCES `magefanblog_post` (`id`) ON DELETE CASCADE,
-                 CONSTRAINT `MAGEFANBLOG_POST_TAG_TAG_ID_MAGEFAN_BLOG_TAG_TAG_ID` FOREIGN KEY (`tag_id`) REFERENCES `magefanblog_tag` (`id`) ON DELETE CASCADE
+                 KEY `MAGEFANBLOG_POST_TAG_TAG_ID` (`tag_id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT="Magefan Blog Post To Category Linkage Table"
             '
         );

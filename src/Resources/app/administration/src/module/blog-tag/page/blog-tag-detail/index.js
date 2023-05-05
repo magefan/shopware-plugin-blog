@@ -7,7 +7,7 @@ import template from './blog-tag-detail.html.twig';
 import slug from "slug";
 
 const {Component, Mixin} = Shopware;
-const {Criteria} = Shopware.Data;
+const {Context, Data: {Criteria}} = Shopware;
 
 Component.register('blog-tag-detail', {
     template,
@@ -33,7 +33,7 @@ Component.register('blog-tag-detail', {
     },
 
     props: {
-        tagId: {
+        id: {
             type: String,
             default: null,
         },
@@ -45,6 +45,7 @@ Component.register('blog-tag-detail', {
             isLoading: false,
             isSaveSuccessful: false,
             customFieldSets: null,
+            isChangedLanguage: Shopware.Context.api.languageId,
         };
     },
 
@@ -93,7 +94,13 @@ Component.register('blog-tag-detail', {
     },
 
     watch: {
-        tagId() {
+        'tag.title': function (value) {
+            if (value) {
+                let postIdentifier = slug(this.tag.title, '-');
+                this.buildIdentifier(postIdentifier, 1)
+            }
+        },
+        id() {
             this.loadEntityData();
         },
     },
@@ -110,7 +117,7 @@ Component.register('blog-tag-detail', {
         loadEntityData() {
             this.isLoading = true;
 
-            this.tagRepository.get(this.$attrs.id, Shopware.Context.api, this.defaultCriteria)
+            this.tagRepository.get(this.id, Shopware.Context.api, this.defaultCriteria)
                 .then((currentTag) => {
                     this.tag = currentTag;
                     this.isLoading = false;
@@ -118,6 +125,14 @@ Component.register('blog-tag-detail', {
                 this.isLoading = false;
             });
         },
+
+        onChangeLanguage(languageId) {
+
+            Shopware.State.commit('context/setApiLanguageId', languageId);
+
+            this.loadEntityData();
+        },
+
         saveFinish() {
             this.isSaveSuccessful = false;
         },
@@ -126,16 +141,6 @@ Component.register('blog-tag-detail', {
             this.isLoading = true;
 
             return new Promise((resolve) => {
-                let identifier = this.tag.identifier
-                if (this.tag.title){
-                    if (identifier !== undefined && !this.isUrlValid(identifier)) {
-                        identifier = slug(identifier, '-');
-                    } else {
-                        identifier = slug(this.tag.title, '-');
-                    }
-                }
-
-                this.tag.identifier = identifier;
                 this.tagRepository.save(this.tag).then(() => {
                     this.isLoading = false;
                     this.isSaveSuccessful = true;
@@ -161,10 +166,18 @@ Component.register('blog-tag-detail', {
             this.$router.push({name: 'blog.tag.index'});
         },
 
-        isUrlValid(str) { return /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/.test(str); },
-
-        prepareIdentifier(str) {
-            return str.replace(/ +/g, '-').toLowerCase();
-        }
+        buildIdentifier(finalIdentifier, number) {
+            let numberItem = (number > 1 ? '-' + number : '');
+            const criteria = new Criteria();
+            criteria.addFilter(Criteria.equals('identifier', finalIdentifier + numberItem));
+            return this.tagRepository.search(criteria, Shopware.Context.api).then((result) => {
+                if (result.length === 0) {
+                    return this.tag.identifier = slug(finalIdentifier + numberItem, '-');
+                } else {
+                    number++;
+                    this.buildIdentifier(finalIdentifier, number);
+                }
+            });
+        },
     },
 });

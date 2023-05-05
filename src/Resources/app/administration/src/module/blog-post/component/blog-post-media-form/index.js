@@ -123,7 +123,7 @@ Component.register('blog-post-media-form', {
         loadEntityData() {
             this.isLoading = true;
 
-            this.postRepository.get(this.postId).then((post) => {
+            this.postRepository.get(this.postId, Shopware.Context.api).then((post) => {
                 this.isLoading = false;
                 this.post = post;
             });
@@ -156,7 +156,7 @@ Component.register('blog-post-media-form', {
 
             this.isLoading = true;
 
-            this.postRepository.save(this.post).then(() => {
+            this.postRepository.save(this.post, Context.api).then(() => {
                 this.isLoading = false;
                 this.isSaveSuccessful = true;
                 if (this.postId === null) {

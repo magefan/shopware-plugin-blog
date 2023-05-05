@@ -19,7 +19,6 @@ use Shopware\Storefront\Page\GenericPageLoaderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Shopware\Core\Framework\Event\EventData\ObjectType;
 
 /**
  * @RouteScope(scopes={"storefront"})
@@ -128,7 +127,7 @@ class MagefanBlogPostController extends StorefrontController
             $metaDescription = $this->systemConfigService->get('MagefanBlog.config.metaDescription');
             $metaKeywords = $this->systemConfigService->get('MagefanBlog.config.metaKeywords');
 
-            $metaInformation->setMetaTitle($post->getMetaTitle() ?: $post->getTitle());
+            $metaInformation->setMetaTitle($post->getMetaTitle() ?: $post->getTitle() ?: '');
             $metaInformation->setMetaKeywords($post->getMetaKeywords() ?: $metaKeywords ?: '');
             $metaInformation->setMetaDescription($post->getMetaDescription() ?: $metaDescription ?: '');
 

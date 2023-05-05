@@ -16,8 +16,8 @@
         v-model="post.identifier"
         type="text"
         :label="$tc('blog-post.detail.labelIdentifier')"
-        :disabled="!acl.can('blog_post.editor')"
         :placeholder="$tc('blog-post.detail.placeholderUrlKey')"
+        :disabled="true"
     />
     {% endblock %}
 

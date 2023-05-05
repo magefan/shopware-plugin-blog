@@ -10,11 +10,16 @@ namespace Magefan\Blog\Core\Content\Blog\Tag;
 
 use Magefan\Blog\Core\Content\Blog\Post\PostDefinition;
 use Magefan\Blog\Core\Content\Blog\PostTag\PostTagDefinition;
+use Magefan\Blog\Core\Content\Blog\Tag\TagTranslation\TagTranslationDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\DateField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Inherited;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IntField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\LongTextField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToManyAssociationField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslatedField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslationsAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\BoolField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
@@ -57,16 +62,18 @@ class TagDefinition extends EntityDefinition
     {
         return new FieldCollection([
             (new IdField('id', 'id'))->addFlags(new Required(), new PrimaryKey()),
-            (new StringField('title', 'title'))->addFlags(new Required()),
-            (new StringField('meta_robots', 'metaRobots')),
-            (new StringField('meta_description', 'metaDescription')),
-            (new StringField('meta_keywords', 'metaKeywords')),
-            (new StringField('meta_title', 'metaTitle')),
-            (new LongTextField('content', 'content')),
-            (new StringField('identifier', 'identifier')),
+
+            //translations
+            (new TranslatedField('title'))->addFlags(new ApiAware(), new Inherited()),
+            (new TranslatedField('metaRobots'))->addFlags(new ApiAware(), new Inherited()),
+            (new TranslatedField('metaDescription'))->addFlags(new ApiAware(), new Inherited()),
+            (new TranslatedField('metaKeywords'))->addFlags(new ApiAware(), new Inherited()),
+            (new TranslatedField('metaTitle'))->addFlags(new ApiAware(), new Inherited()),
+            (new TranslatedField('content'))->addFlags(new ApiAware(), new Inherited()),
+            (new TranslatedField('identifier'))->addFlags(new ApiAware(), new Inherited()),
+
             (new StringField('page_layout', 'pageLayout')),
             (new BoolField('is_active', 'isActive')),
-            (new StringField('content', 'content')),
             (new StringField('layout_update_xml', 'layoutUpdateXml')),
             (new StringField('custom_theme', 'customTheme')),
             (new StringField('custom_layout', 'customLayout')),
@@ -77,6 +84,8 @@ class TagDefinition extends EntityDefinition
             (new StringField('posts_list_template', 'postsListTemplate')),
             (new DateField('created_at', 'createdAt')),
             (new DateField('updated_at', 'updatedAt')),
+
+            // associations
             new ManyToManyAssociationField(
                 'postTags',
                 PostDefinition::class,
@@ -84,6 +93,10 @@ class TagDefinition extends EntityDefinition
                 'tag_id',
                 'post_id'
             ),
+            (new TranslationsAssociationField(
+                TagTranslationDefinition::class,
+                'magefanblog_tag_id')
+            )->addFlags(new ApiAware(), new Required())
         ]);
     }
 }

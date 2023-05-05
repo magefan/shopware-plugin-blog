@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace Magefan\Blog\Core\Content\Blog\Author;
 
+use Magefan\Blog\Core\Content\Blog\Author\AuthorTranslation\AuthorTranslationDefinition;
 use Magefan\Blog\Core\Content\Blog\Post\PostDefinition;
 use Shopware\Core\Content\Media\MediaDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
@@ -61,11 +62,10 @@ class AuthorDefinition extends EntityDefinition
         return new FieldCollection([
             (new IdField('id', 'id'))->addFlags(new Required(), new PrimaryKey()),
             (new IdField('admin_user_id', 'adminUserId'))->addFlags(new Required()),
-            (new BoolField('is_active', 'isActive')),
+            new FkField('media_id', 'mediaId', MediaDefinition::class),
+
             (new StringField('firstname', 'firstname')),
             (new StringField('lastname', 'lastname')),
-            (new StringField('email', 'email')),
-            (new StringField('role', 'role')),
             (new StringField('facebook_page_url', 'facebookPageUrl')),
             (new StringField('twitter_page_url', 'twitterPageUrl')),
             (new StringField('instagram_page_url', 'instagramPageUrl')),
@@ -79,6 +79,9 @@ class AuthorDefinition extends EntityDefinition
             (new LongTextField('content', 'content')),
             (new LongTextField('short_content', 'short_content')),
             (new StringField('featured_img', 'featuredImg')),
+            (new BoolField('is_active', 'isActive')),
+            (new StringField('email', 'email')),
+            (new StringField('role', 'role')),
             (new StringField('page_layout', 'pageLayout')),
             (new StringField('layout_update_xml', 'layoutUpdateXml')),
             (new StringField('custom_theme', 'customTheme')),
@@ -91,7 +94,8 @@ class AuthorDefinition extends EntityDefinition
             (new IdField('media_id', 'mediaId')),
             (new StringField('created_at', 'createdAt')),
             (new StringField('updated_at', 'updatedAt')),
-            new FkField('media_id', 'mediaId', MediaDefinition::class),
+
+            // associations
             new OneToManyAssociationField('authorPosts', PostDefinition::class, 'author_id'),
             (new OneToOneAssociationField('media', 'media_id', 'id', MediaDefinition::class, true))->addFlags(new ApiAware()),
         ]);
