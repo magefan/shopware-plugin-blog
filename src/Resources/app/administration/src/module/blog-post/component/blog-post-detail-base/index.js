@@ -26,6 +26,10 @@ Component.register('blog-post-detail-base', {
                 return {};
             },
         },
+        isChangedLanguage: {
+            type: String,
+            default: false,
+        },
         isLoading: {
             type: Boolean,
             default: false,
@@ -43,6 +47,12 @@ Component.register('blog-post-detail-base', {
             categoriesSelected: [],
             activeDefault: 1,
         };
+    },
+
+    watch: {
+        isChangedLanguage () {
+            this.initValues();
+        }
     },
 
     computed: {
@@ -72,7 +82,7 @@ Component.register('blog-post-detail-base', {
 
         getAllCategories() {
             const criteria = new Criteria();
-            this.categoryRepository.search(criteria).then((categories) => {
+            this.categoryRepository.search(criteria, Shopware.Context.api).then((categories) => {
                 const preparedCategories = [];
                 for (let category of categories) {
                     preparedCategories.push({value: category.id, label: category.title})

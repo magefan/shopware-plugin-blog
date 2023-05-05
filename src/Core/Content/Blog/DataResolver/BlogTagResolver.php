@@ -52,7 +52,7 @@ class BlogTagResolver extends BlogAbstractResolver
     {
         $criteria = (new Criteria([]))
             ->addFilter(new EqualsFilter('isActive', 1))
-            ->addFilter(new EqualsFilter('identifier', $tagId))
+            ->addFilter(new EqualsFilter('id', $tagId))
             ->addAssociation('postTags');
 
         $author = $this->blogTagRepository->search($criteria, $context->getContext())->getEntities()->first();

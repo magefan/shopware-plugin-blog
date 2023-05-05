@@ -102,6 +102,12 @@
     }
   },
 
+  "sw-seo-url-template-card": {
+    "routeNames": {
+      "frontend-blog-post": "Magefan Blog Post"
+    }
+  },
+
   "sw-privileges": {
     "permissions": {
       "blog_post": {

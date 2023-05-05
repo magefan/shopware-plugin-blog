@@ -18,15 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BlogListResolver
 {
-    /**
-     * @var EntityRepositoryInterface
-     */
-    private EntityRepositoryInterface $blogAuthorRepository;
-
-    /**
-     * @var EntityRepositoryInterface
-     */
-    private EntityRepositoryInterface $blogCategoryRepository;
 
     /**
      * @var SystemConfigService

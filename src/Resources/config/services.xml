@@ -9,8 +9,27 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
+        <service id="Magefan\Blog\Storefront\Framework\Seo\SeoUrlRoute\BlogPostPageSeoUrlRoute">
+            <argument type="service" id="Magefan\Blog\Core\Content\Blog\Post\PostDefinition"/>
+            <tag name="shopware.seo_url.route"/>
+        </service>
+        <service id="Magefan\Blog\Storefront\Framework\Seo\SeoUrlRoute\BlogCategoryPageSeoUrlRoute">
+            <argument type="service" id="Magefan\Blog\Core\Content\Blog\Category\CategoryDefinition"/>
+            <tag name="shopware.seo_url.route"/>
+        </service>
+        <service id="Magefan\Blog\Storefront\Framework\Seo\SeoUrlRoute\BlogTagPageSeoUrlRoute">
+            <argument type="service" id="Magefan\Blog\Core\Content\Blog\Tag\TagDefinition"/>
+            <tag name="shopware.seo_url.route"/>
+        </service>
+<!--        <service id="Magefan\Blog\Core\Content\Blog\Post\BlogEntitiesIndexer">
+            <argument type="service" id="Symfony\Contracts\EventDispatcher\EventDispatcherInterface"/>
+            <argument type="service" id="Shopware\Core\Framework\DataAbstractionLayer\Dbal\Common\IteratorFactory"/>
+            <argument type="service" id="magefanblog_post.repository"/>
+            <tag name="shopware.entity_indexer"/>
+        </service>-->
         <service id="Magefan\Blog\Twig\Extension\BlogRuntime">
             <argument id="magefanblog_comment.repository" type="service"/>
+            <argument id="Shopware\Core\Content\Seo\SeoUrlRoute\SeoUrlRouteRegistry" type="service"/>
             <tag name="twig.runtime"/>
         </service>
         <service id="Magefan\Blog\Twig\Extension\BlogExtension">
@@ -63,6 +82,7 @@
             <argument id="magefanblog_post.repository" type="service"/>
         </service>
         <service id="Magefan\Blog\Subscriber\Subscriber">
+            <argument id="Shopware\Core\Content\Seo\SeoUrlUpdater" type="service"/>
             <argument id="magefanblog_category.repository" type="service"/>
             <argument id="category.repository" type="service"/>
             <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
@@ -167,6 +187,15 @@
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>
+        </service>
+        <service id="Magefan\Blog\Core\Content\Blog\Category\CategoryTranslation\CategoryTranslationDefinition">
+            <tag name="shopware.entity.definition" entity="magefanblog_category_translation"/>
+        </service>
+        <service id="Magefan\Blog\Core\Content\Blog\Post\PostTranslation\PostTranslationDefinition">
+            <tag name="shopware.entity.definition" entity="magefanblog_post_translation"/>
+        </service>
+        <service id="Magefan\Blog\Core\Content\Blog\Tag\TagTranslation\TagTranslationDefinition">
+            <tag name="shopware.entity.definition" entity="magefanblog_tag_translation"/>
         </service>
         <service id="Magefan\Blog\Core\Content\Blog\Post\PostDefinition">
             <tag name="shopware.entity.definition" entity="magefanblog_post"/>

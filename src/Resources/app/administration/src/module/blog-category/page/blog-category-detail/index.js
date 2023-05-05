@@ -5,9 +5,8 @@
 
 import template from './blog-category-detail.html.twig';
 import slug from "slug";
-import path from "path";
 
-const {Component, Mixin, Data: {Criteria}} = Shopware;
+const {Component, Context, Mixin, Data: {Criteria}} = Shopware;
 
 const {mapPropertyErrors} = Shopware.Component.getComponentHelper();
 
@@ -40,6 +39,8 @@ Component.register('blog-category-detail', {
             rootCategoryBlog: {},
             isLoading: false,
             isSaveSuccessful: false,
+            isChangedLanguage: Shopware.Context.api.languageId,
+            isNew: true,
         };
     },
 
@@ -107,6 +108,12 @@ Component.register('blog-category-detail', {
     },
 
     watch: {
+        'category.title': function (value) {
+            if (value) {
+                let postIdentifier = slug(this.category.title, '-');
+                this.buildIdentifier(postIdentifier, 1)
+            }
+        },
         id() {
             this.createdComponent();
         },
@@ -123,10 +130,19 @@ Component.register('blog-category-detail', {
                 return;
             }
 
+            if (Shopware.Context.api.languageId !== Shopware.Context.api.systemLanguageId) {
+                Shopware.State.commit('context/setApiLanguageId', Shopware.Context.api.languageId)
+            }
+
+            if (!Shopware.State.getters['context/isSystemDefaultLanguage']) {
+                Shopware.State.commit('context/resetLanguageToDefault');
+            }
+
             this.category = this.categoryRepository.create();
         },
 
         loadEntityData() {
+            this.isNew = false;
             this.categoryRepository.get(this.id).then((category) => {
                 this.isLoading = false;
                 this.category = category;
@@ -167,18 +183,18 @@ Component.register('blog-category-detail', {
                         category.parentId = rootCategory[0].id;
                         category.name = this.category.title
                         category.linkType = 'external';
-                        category.externalLink = rootCategory[0].externalLink + '/category/' + this.category.identifier;
+                        category.externalLink = rootCategory[0].externalLink + '/category/' + this.category.id;
                         category.level = 3;
                         category.active = Boolean(this.category.isActive && this.category.includeInMenu);
-                        this.categoryMenuRepository.save(category);
+                        this.categoryMenuRepository.save(category, Context.api);
                     } else if(rootCategory[0].id && category) {
                         this.categoryMenuRepository.get(this.category.id).then((category) => {
                             category.id = this.category.id;
                             category.name = this.category.title
-                            category.externalLink = rootCategory[0].externalLink + '/category/' + this.category.identifier;
+                            category.externalLink = rootCategory[0].externalLink + '/category/' + this.category.id;
                             category.level = 3;
                             category.active = Boolean(this.category.isActive && this.category.includeInMenu);
-                            this.categoryMenuRepository.save(category);
+                            this.categoryMenuRepository.save(category, Context.api);
                         });
                     }
                 })
@@ -196,18 +212,7 @@ Component.register('blog-category-detail', {
 
         onSave() {
             this.isLoading = true;
-
-            let identifier = this.category.identifier
-            if (this.category.title) {
-                if (identifier !== undefined && !this.isUrlValid(identifier)) {
-                    identifier = slug(identifier, '-');
-                } else {
-                    identifier = slug(this.category.title, '-');
-                }
-            }
-
-            this.category.identifier = identifier;
-            this.categoryRepository.save(this.category).then(() => {
+            this.categoryRepository.save(this.category, Context.api).then(() => {
                 this.updateCategoryMenu()
                 this.isLoading = false;
                 this.isSaveSuccessful = true;
@@ -227,16 +232,30 @@ Component.register('blog-category-detail', {
                 });
         },
 
+        onChangeLanguage(languageId) {
+
+            Shopware.State.commit('context/setApiLanguageId', languageId);
+
+            this.isChangedLanguage = languageId;
+            this.loadEntityData();
+        },
+
         onCancel() {
             this.$router.push({name: 'blog.category.list'});
         },
 
-        isUrlValid(str) {
-            return /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/.test(str);
+        buildIdentifier(finalIdentifier, number){
+            let numberItem = (number > 1 ? '-' + number : '');
+            const criteria = new Criteria();
+            criteria.addFilter(Criteria.equals('identifier', finalIdentifier + numberItem));
+            return this.categoryRepository.search(criteria, Shopware.Context.api).then((result) => {
+                if(result.length === 0){
+                    return this.category.identifier = slug(finalIdentifier + numberItem, '-');
+                }else {
+                    number++;
+                    this.buildIdentifier(finalIdentifier, number);
+                }
+            });
         },
-
-        prepareIdentifier(str) {
-            return str.replace(/ +/g, '-').toLowerCase();
-        }
     }
 });

@@ -63,7 +63,7 @@ Component.register('blog-post-clone-modal', {
                 },
             };
 
-            await this.repository.save(this.post);
+            await this.repository.save(this.post, Context.api);
             const clone = await this.repository.clone(this.post.id, Shopware.Context.api, behavior);
 
             return { id: clone.id };

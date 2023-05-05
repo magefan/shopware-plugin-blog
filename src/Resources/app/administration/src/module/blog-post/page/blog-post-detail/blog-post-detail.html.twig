@@ -45,6 +45,22 @@
             </template>
         {% endblock %}
 
+        {% block blog_post_detail_language_switch %}
+                <template #language-switch>
+                    <sw-language-switch
+                            @on-change="onChangeLanguage"
+                            :disabled="post._isNew"
+                            v-if="post">
+                    </sw-language-switch>
+                </template>
+        {% endblock %}
+
+        {% block blog_post_detail_language_info %}
+            <sw-language-info
+                    :entity-description="placeholder(post, 'title', $tc('blog-post.detail.textHeadline'))"
+            />
+        {% endblock %}
+
         {% block blog_post_detail_content %}
             <sw-card-view slot="content">
                 <template v-if="isLoading">
@@ -58,6 +74,7 @@
                         <blog-post-detail-base
                                 v-if="post"
                                 :post="post"
+                                :isChangedLanguage="isChangedLanguage"
                                 @categories="getCategories"
                                 :allow-edit="acl.can('blog_post.editor')"
                         />
@@ -75,6 +92,7 @@
                         <blog-post-display-setting
                                 v-if="post"
                                 :post="post"
+                                :isChangedLanguage="isChangedLanguage"
                                 @tags="getTags"
                                 :allow-edit="acl.can('blog_post.editor')"
                         />
