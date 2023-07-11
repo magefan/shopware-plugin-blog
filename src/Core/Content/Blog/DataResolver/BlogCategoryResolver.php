@@ -12,7 +12,7 @@ use Magefan\Blog\Model\Config\Source\PostsSortBy;
 use Magento\Framework\Api\SortOrder;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Doctrine\DBAL\Connection;
@@ -27,26 +27,26 @@ class BlogCategoryResolver extends BlogAbstractResolver
     private Connection $connection;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogCategoryRepository;
+    private EntityRepository $blogCategoryRepository;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogPostRepository;
+    private EntityRepository $blogPostRepository;
 
     /**
      * @param SystemConfigService $systemConfigService
      * @param Connection $connection
-     * @param EntityRepositoryInterface $blogCategoryRepository
-     * @param EntityRepositoryInterface $blogPostRepository
+     * @param EntityRepository $blogCategoryRepository
+     * @param EntityRepository $blogPostRepository
      */
     public function __construct(
         SystemConfigService       $systemConfigService,
         Connection                $connection,
-        EntityRepositoryInterface $blogCategoryRepository,
-        EntityRepositoryInterface $blogPostRepository
+        EntityRepository $blogCategoryRepository,
+        EntityRepository $blogPostRepository
     )
     {
         $this->connection = $connection;
@@ -62,7 +62,7 @@ class BlogCategoryResolver extends BlogAbstractResolver
      */
     public function getCategory($identifier, $context)
     {
-        $criteria = (new Criteria([]))
+        $criteria = (new Criteria())
             ->addFilter(new EqualsFilter('identifier', $identifier))
             ->addFilter(new EqualsFilter('isActive', 1))
             ->addAssociation('blogCategories')
@@ -89,7 +89,7 @@ class BlogCategoryResolver extends BlogAbstractResolver
             $sorting = FieldSorting::ASCENDING;
         }
 
-        $postsCriteria = (new Criteria([]))
+        $postsCriteria = (new Criteria())
             ->addAssociation('media')
             ->addAssociation('postCategories')
             ->addAssociation('blogPosts')
@@ -116,7 +116,7 @@ class BlogCategoryResolver extends BlogAbstractResolver
      */
     public function getCategories(): EntityCollection
     {
-        $criteria = (new Criteria([]))
+        $criteria = (new Criteria())
             ->addFilter(new EqualsFilter('isActive', 1))
             ->addFilter(new EqualsFilter('includeInMenu', 1))
             ->addSorting(new FieldSorting('position', FieldSorting::ASCENDING));

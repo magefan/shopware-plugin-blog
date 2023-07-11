@@ -10,7 +10,7 @@ namespace Magefan\Blog\Util;
 
 use Doctrine\DBAL\Connection;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\Uuid\Uuid;
@@ -20,9 +20,9 @@ class LifeCycle
 {
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $entityRepository;
+    private EntityRepository $entityRepository;
 
     /**
      * @var RequestStack
@@ -36,12 +36,12 @@ class LifeCycle
 
 
     /**
-     * @param EntityRepositoryInterface $entityRepository
+     * @param EntityRepository $entityRepository
      * @param RequestStack $requestStack
      * @param Connection $connection
      */
     public function __construct(
-        EntityRepositoryInterface $entityRepository,
+        EntityRepository $entityRepository,
         RequestStack              $requestStack,
         Connection                $connection
     )
@@ -107,7 +107,7 @@ class LifeCycle
      */
     private function getRootCategory($context)
     {
-        $categoryRootCriteria = (new Criteria([]))
+        $categoryRootCriteria = (new Criteria())
             ->addFilter(new EqualsFilter('active', 1))
             ->addFilter(new EqualsFilter('parentId', null));
 
@@ -120,7 +120,7 @@ class LifeCycle
      */
     private function getLastCategory($context)
     {
-        $categoryCriteria = (new Criteria([]))->addFilter(new EqualsFilter('active', 1));
+        $categoryCriteria = (new Criteria())->addFilter(new EqualsFilter('active', 1));
 
         return $this->entityRepository->search($categoryCriteria, $context)->getEntities()->last();
     }
@@ -130,7 +130,7 @@ class LifeCycle
      */
     private function checkIfBlogCategoryExist(): array
     {
-        return $this->connection->fetchAll(
+        return $this->connection->fetchAllKeyValue(
             'SELECT category_id, link_type, name FROM category_translation
                  WHERE name = :name AND link_type = :link_type',
             ['name' => 'Blog', 'link_type' => 'external']

@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace Magefan\Blog\Core\Content\Blog\DataResolver;
 
 use Shopware\Core\Defaults;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\RangeFilter;
@@ -22,15 +22,15 @@ class BlogPostResolver
     protected $_nextPost;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogPostRepository;
+    private EntityRepository $blogPostRepository;
 
     /**
-     * @param EntityRepositoryInterface $blogPostRepository
+     * @param EntityRepository $blogPostRepository
      */
     public function __construct(
-        EntityRepositoryInterface $blogPostRepository
+        EntityRepository $blogPostRepository
     ) {
         $this->blogPostRepository = $blogPostRepository;
     }
@@ -42,7 +42,7 @@ class BlogPostResolver
      */
     public function getPost($identifier, $context)
     {
-        $postCriteria = (new Criteria([]))
+        $postCriteria = (new Criteria())
             ->addFilter(new EqualsFilter('identifier', $identifier))
             ->addFilter(new EqualsFilter('isActive', 1))
             ->addAssociation('postCategories')
@@ -79,7 +79,7 @@ class BlogPostResolver
         if ($this->_prevPost === null) {
             $this->_prevPost = false;
 
-            $postCriteria = (new Criteria([]))
+            $postCriteria = (new Criteria())
                 ->addFilter(new EqualsFilter('isActive', 1))
                 ->addSorting(new FieldSorting('createdAt', FieldSorting::DESCENDING))
                 ->addFilter(
@@ -108,7 +108,7 @@ class BlogPostResolver
         if ($this->_nextPost === null) {
             $this->_nextPost = false;
 
-            $postCriteria = (new Criteria([]))
+            $postCriteria = (new Criteria())
                 ->addFilter(new EqualsFilter('isActive', 1))
                 ->addSorting(new FieldSorting('createdAt', FieldSorting::ASCENDING))
                 ->addFilter(

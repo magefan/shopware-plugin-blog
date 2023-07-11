@@ -10,7 +10,7 @@ namespace Magefan\Blog\Core\Content\Blog\DataResolver;
 
 use Doctrine\DBAL\Exception;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Sorting\FieldSorting;
@@ -19,24 +19,24 @@ use Shopware\Core\System\SystemConfig\SystemConfigService;
 class BlogTagResolver extends BlogAbstractResolver
 {
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogTagRepository;
+    private EntityRepository $blogTagRepository;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogPostRepository;
+    private EntityRepository $blogPostRepository;
 
     /**
      * @param SystemConfigService $systemConfigService
-     * @param EntityRepositoryInterface $blogTagRepository
-     * @param EntityRepositoryInterface $blogPostRepository
+     * @param EntityRepository $blogTagRepository
+     * @param EntityRepository $blogPostRepository
      */
     public function __construct(
         SystemConfigService       $systemConfigService,
-        EntityRepositoryInterface $blogTagRepository,
-        EntityRepositoryInterface $blogPostRepository
+        EntityRepository $blogTagRepository,
+        EntityRepository $blogPostRepository
     ) {
         $this->blogTagRepository = $blogTagRepository;
         $this->blogPostRepository = $blogPostRepository;
@@ -50,7 +50,7 @@ class BlogTagResolver extends BlogAbstractResolver
      */
     public function getTag($tagId, $context)
     {
-        $criteria = (new Criteria([]))
+        $criteria = (new Criteria())
             ->addFilter(new EqualsFilter('isActive', 1))
             ->addFilter(new EqualsFilter('identifier', $tagId))
             ->addAssociation('postTags');
@@ -79,7 +79,7 @@ class BlogTagResolver extends BlogAbstractResolver
 
         $pageNumber = $this->getPage($request);
         $pageOffset = ($pageNumber - 1) * $limit;
-        $postsCriteria = (new Criteria([]))
+        $postsCriteria = (new Criteria())
             ->addFilter(new EqualsFilter('isActive', 1))
             ->addAssociation('postTags')
             ->addSorting(new FieldSorting($sortBy, $sorting))

@@ -16,7 +16,7 @@ use Shopware\Core\Content\Sitemap\Struct\Url;
 use Shopware\Core\Content\Sitemap\Struct\UrlResult;
 use Shopware\Core\Defaults;
 use Shopware\Core\Framework\DataAbstractionLayer\Doctrine\FetchModeHelper;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\RangeFilter;
@@ -35,9 +35,9 @@ class BlogUrlProvider extends AbstractUrlProvider
     public const PRIORITY = 1.0;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogCategoryRepository;
+    private EntityRepository $blogCategoryRepository;
 
     /**
      * @var RouterInterface
@@ -50,19 +50,19 @@ class BlogUrlProvider extends AbstractUrlProvider
     private SystemConfigService $systemConfigService;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogPostRepository;
+    private EntityRepository $blogPostRepository;
 
     /**
-     * @param EntityRepositoryInterface $blogPostRepository
-     * @param EntityRepositoryInterface $blogCategoryRepository
+     * @param EntityRepository $blogPostRepository
+     * @param EntityRepository $blogCategoryRepository
      * @param SystemConfigService $systemConfigService
      * @param RouterInterface $router
      */
     public function __construct(
-        EntityRepositoryInterface $blogPostRepository,
-        EntityRepositoryInterface $blogCategoryRepository,
+        EntityRepository $blogPostRepository,
+        EntityRepository $blogCategoryRepository,
         SystemConfigService       $systemConfigService,
         RouterInterface           $router
     )

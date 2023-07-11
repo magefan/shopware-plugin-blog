@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace Magefan\Blog\Core\Content\Blog\DataResolver;
 
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\RangeFilter;
@@ -18,17 +18,17 @@ use Shopware\Core\System\SystemConfig\SystemConfigService;
 class BlogArchiveResolver extends BlogAbstractResolver
 {
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogPostRepository;
+    private EntityRepository $blogPostRepository;
 
     /**
      * @param SystemConfigService $systemConfigService
-     * @param EntityRepositoryInterface $blogPostRepository
+     * @param EntityRepository $blogPostRepository
      */
     public function __construct(
         SystemConfigService       $systemConfigService,
-        EntityRepositoryInterface $blogPostRepository
+        EntityRepository $blogPostRepository
     ) {
         $this->blogPostRepository = $blogPostRepository;
         parent::__construct($systemConfigService);
@@ -58,7 +58,7 @@ class BlogArchiveResolver extends BlogAbstractResolver
         $limit = (int)$this->systemConfigService->get('MagefanBlog.config.postsPerPagePostList');
         $pageNumber = $this->getPage($request);
         $pageOffset = ($pageNumber - 1) * $limit;
-        $criteria = (new Criteria([]))
+        $criteria = (new Criteria())
             ->addFilter(new EqualsFilter('isActive', 1))
             ->addFilter(new RangeFilter(
                 'createdAt',
@@ -85,7 +85,7 @@ class BlogArchiveResolver extends BlogAbstractResolver
      */
     public function getAllPosts($context): EntityCollection
     {
-        $criteria = (new Criteria([]))
+        $criteria = (new Criteria())
             ->addFilter(new EqualsFilter('isActive', 1));
         return$this->blogPostRepository->search($criteria, $context->getContext())->getEntities();
     }

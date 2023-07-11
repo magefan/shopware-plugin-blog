@@ -10,7 +10,7 @@ use Magefan\Blog\Core\Content\Blog\DataResolver\BlogPostResolver;
 use Magefan\Blog\Core\Content\Blog\DataResolver\BlogSidebarResolver;
 use Shopware\Core\Content\Cms\Exception\PageNotFoundException;
 use Shopware\Core\Content\Seo\SeoUrlPlaceholderHandlerInterface;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Shopware\Core\Framework\Event\EventData\ObjectType;
 
 /**
- * @RouteScope(scopes={"storefront"})
+ * @Route(defaults={"_routeScope"={"storefront"}})
  */
 class MagefanBlogPostController extends StorefrontController
 {
@@ -32,24 +32,24 @@ class MagefanBlogPostController extends StorefrontController
     private SystemConfigService $systemConfigService;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogPostRepository;
+    private EntityRepository $blogPostRepository;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogAuthorRepository;
+    private EntityRepository $blogAuthorRepository;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogTagRepository;
+    private EntityRepository $blogTagRepository;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogCategoryRepository;
+    private EntityRepository $blogCategoryRepository;
 
     /**
      * @var GenericPageLoaderInterface
@@ -72,10 +72,10 @@ class MagefanBlogPostController extends StorefrontController
     private SeoUrlPlaceholderHandlerInterface $seoUrlReplacer;
 
     /**
-     * @param EntityRepositoryInterface $blogPostRepository
-     * @param EntityRepositoryInterface $blogAuthorRepository
-     * @param EntityRepositoryInterface $blogTagRepository
-     * @param EntityRepositoryInterface $blogCategoryRepository
+     * @param EntityRepository $blogPostRepository
+     * @param EntityRepository $blogAuthorRepository
+     * @param EntityRepository $blogTagRepository
+     * @param EntityRepository $blogCategoryRepository
      * @param GenericPageLoaderInterface $genericPageLoader
      * @param BlogPostResolver $blogPostResolver
      * @param BlogSidebarResolver $blogSidebarResolver
@@ -83,10 +83,10 @@ class MagefanBlogPostController extends StorefrontController
      * @param SeoUrlPlaceholderHandlerInterface $seoUrlReplacer
      */
     public function __construct(
-        EntityRepositoryInterface  $blogPostRepository,
-        EntityRepositoryInterface  $blogAuthorRepository,
-        EntityRepositoryInterface  $blogTagRepository,
-        EntityRepositoryInterface  $blogCategoryRepository,
+        EntityRepository  $blogPostRepository,
+        EntityRepository  $blogAuthorRepository,
+        EntityRepository  $blogTagRepository,
+        EntityRepository  $blogCategoryRepository,
         GenericPageLoaderInterface $genericPageLoader,
         BlogPostResolver           $blogPostResolver,
         BlogSidebarResolver $blogSidebarResolver,

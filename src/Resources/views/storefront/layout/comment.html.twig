@@ -29,10 +29,6 @@
                             data-form-ajax-submit="true"
                             data-form-ajax-submit-options='{{ formAjaxSubmitOptions|json_encode }}'
                     >
-                        {% block magefan_blog_layout_add_comment_form_csrf %}
-                            {{ sw_csrf('frontend.blog.addcomment') }}
-                        {% endblock %}
-
                         {% block magefan_blog_layout_add_comment_form_hidden_inputs %}
                             <input type="hidden" name="post_id" value="{{ post.id }}">
                             <input type="hidden" name="parent_id" value="">
@@ -189,9 +185,6 @@
                     data-form-ajax-submit="true"
                     data-form-ajax-submit-options='{{ formAjaxSubmitOptions|json_encode }}'
             >
-                {% block magefan_blog_layout_add_comment_reply_form_csrf %}
-                    {{ sw_csrf('frontend.blog.addcomment') }}
-                {% endblock %}
 
                 {% block magefan_blog_layout_add_comment_reply_form_hidden_inputs %}
                     <input type="hidden" name="post_id" value="{{ post.id }}">

@@ -7,7 +7,7 @@
 namespace Magefan\Blog\Subscriber;
 
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
@@ -24,14 +24,14 @@ class Subscriber implements EventSubscriberInterface
     ];
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogCategoryRepository;
+    private EntityRepository $blogCategoryRepository;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $categoryRepository;
+    private EntityRepository $categoryRepository;
 
     /**
      * @var SystemConfigService
@@ -39,12 +39,12 @@ class Subscriber implements EventSubscriberInterface
     private SystemConfigService $systemConfigService;
 
     /**
-     * @param EntityRepositoryInterface $blogCategoryRepository
-     * @param EntityRepositoryInterface $categoryRepository
+     * @param EntityRepository $blogCategoryRepository
+     * @param EntityRepository $categoryRepository
      */
     public function __construct(
-        EntityRepositoryInterface $blogCategoryRepository,
-        EntityRepositoryInterface $categoryRepository,
+        EntityRepository $blogCategoryRepository,
+        EntityRepository $categoryRepository,
         SystemConfigService       $systemConfigService
 
     )
@@ -74,10 +74,10 @@ class Subscriber implements EventSubscriberInterface
                 $displayBlogLink = (bool)$this->systemConfigService->get('MagefanBlog.config.DisplayBlogLink');
                 $mainBlogCategoryText = $this->systemConfigService->get('MagefanBlog.config.LinkText');
 
-                $blogCategories = $this->blogCategoryRepository->search((new Criteria([])), $context)->getEntities();
+                $blogCategories = $this->blogCategoryRepository->search((new Criteria()), $context)->getEntities();
 
                 if (!count($blogCategories)) {
-                    $criteria = (new Criteria([]))
+                    $criteria = (new Criteria())
                         ->addFilter(new EqualsFilter('linkType', 'external'))
                         ->addFilter(new EqualsFilter('externalLink', '/blog'));
 
