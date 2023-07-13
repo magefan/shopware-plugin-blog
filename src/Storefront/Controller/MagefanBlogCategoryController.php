@@ -11,7 +11,7 @@ use Magefan\Blog\Core\Content\Blog\DataResolver\BlogCategoryResolver;
 use Magefan\Blog\Core\Content\Blog\DataResolver\BlogSidebarResolver;
 use Shopware\Core\Content\Cms\Exception\PageNotFoundException;
 use Shopware\Core\Content\Seo\SeoUrlPlaceholderHandlerInterface;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Symfony\Component\Routing\Annotation\Route;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
@@ -22,14 +22,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @RouteScope(scopes={"storefront"})
+ * @Route(defaults={"_routeScope"={"storefront"}})
  */
 class MagefanBlogCategoryController extends StorefrontController
 {
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogRepository;
+    private EntityRepository $blogRepository;
 
     /**
      * @var GenericPageLoaderInterface
@@ -37,9 +37,9 @@ class MagefanBlogCategoryController extends StorefrontController
     private GenericPageLoaderInterface $genericPageLoader;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogCategoryRepository;
+    private EntityRepository $blogCategoryRepository;
 
     /**
      * @var BlogSidebarResolver
@@ -67,7 +67,7 @@ class MagefanBlogCategoryController extends StorefrontController
     private BlogAbstractResolver $abstractResolver;
 
     /**
-     * @param EntityRepositoryInterface $blogCategoryRepository
+     * @param EntityRepository $blogCategoryRepository
      * @param GenericPageLoaderInterface $genericPageLoader
      * @param BlogSidebarResolver $blogSidebarResolver
      * @param BlogCategoryResolver $blogCategoryResolver
@@ -76,7 +76,7 @@ class MagefanBlogCategoryController extends StorefrontController
      * @param BlogAbstractResolver $abstractResolver
      */
     public function __construct(
-        EntityRepositoryInterface  $blogCategoryRepository,
+        EntityRepository  $blogCategoryRepository,
         GenericPageLoaderInterface $genericPageLoader,
         BlogSidebarResolver        $blogSidebarResolver,
         BlogCategoryResolver       $blogCategoryResolver,

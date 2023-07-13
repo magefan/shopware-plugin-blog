@@ -29,10 +29,6 @@
                             data-form-ajax-submit="true"
                             data-form-ajax-submit-options='{{ formAjaxSubmitOptions|json_encode }}'
                     >
-                        {% block magefan_blog_layout_add_comment_form_csrf %}
-                            {{ sw_csrf('frontend.blog.addcomment') }}
-                        {% endblock %}
-
                         {% block magefan_blog_layout_add_comment_form_hidden_inputs %}
                             <input type="hidden" name="post_id" value="{{ post.id }}">
                             <input type="hidden" name="parent_id" value="">
@@ -121,7 +117,13 @@
                                 {% if config('MagefanBlog.config.privacyPolicyCheckbox') == 1 %}
                                     <div class="form-text privacy-notice">
                                         <div class="{{ formCheckboxWrapperClass }} data-protection-information">
-                                            {{ block('component_privacy_dpi_checkbox') }}
+                                            <input type="checkbox"
+                                                   class="{{ formCheckInputClass }} {% if formViolations.getViolations('/acceptedDataProtection') is not empty %} is-invalid{% endif %}"
+                                                   name="acceptedDataProtection"
+                                                   required="required"
+                                                   value="1"
+                                                   id="acceptedDataProtection"
+                                                   {% if data.get('acceptedDataProtection') %}checked="checked"{% endif %}>
                                             <label class="custom-control-label no-validation"
                                                    for="acceptedDataProtection">
                                                 {{ "general.privacyNotice"|trans({
@@ -189,9 +191,6 @@
                     data-form-ajax-submit="true"
                     data-form-ajax-submit-options='{{ formAjaxSubmitOptions|json_encode }}'
             >
-                {% block magefan_blog_layout_add_comment_reply_form_csrf %}
-                    {{ sw_csrf('frontend.blog.addcomment') }}
-                {% endblock %}
 
                 {% block magefan_blog_layout_add_comment_reply_form_hidden_inputs %}
                     <input type="hidden" name="post_id" value="{{ post.id }}">
@@ -279,7 +278,13 @@
                         {% if config('MagefanBlog.config.privacyPolicyCheckbox') == 1 %}
                             <div class="form-text privacy-notice">
                                 <div class="{{ formCheckboxWrapperClass }} data-protection-information">
-                                    {{ block('component_privacy_dpi_checkbox_reply') }}
+                                    <input type="checkbox"
+                                           class="{{ formCheckInputClass }} {% if formViolations.getViolations('/acceptedDataProtection') is not empty %} is-invalid{% endif %}"
+                                           name="acceptedDataProtection"
+                                           required="required"
+                                           value="1"
+                                           id="acceptedDataProtectionReply"
+                                           {% if data.get('acceptedDataProtection') %}checked="checked"{% endif %}>
                                     <label class="custom-control-label no-validation"
                                            for="acceptedDataProtectionReply">
                                         {{ "general.privacyNotice"|trans({
@@ -310,26 +315,5 @@
                 </div>
             </form>
         </div>
-    {% endblock %}
-    {% block component_post_privacy %}
-        {% block component_privacy_dpi_checkbox %}
-            <input type="checkbox"
-                   class="{{ formCheckInputClass }} {% if formViolations.getViolations('/acceptedDataProtection') is not empty %} is-invalid{% endif %}"
-                   name="acceptedDataProtection"
-                   required="required"
-                   value="1"
-                   id="acceptedDataProtection"
-                   {% if data.get('acceptedDataProtection') %}checked="checked"{% endif %}>
-        {% endblock %}
-
-        {% block component_privacy_dpi_checkbox_reply %}
-            <input type="checkbox"
-                   class="{{ formCheckInputClass }} {% if formViolations.getViolations('/acceptedDataProtection') is not empty %} is-invalid{% endif %}"
-                   name="acceptedDataProtection"
-                   required="required"
-                   value="1"
-                   id="acceptedDataProtectionReply"
-                   {% if data.get('acceptedDataProtection') %}checked="checked"{% endif %}>
-        {% endblock %}
     {% endblock %}
 {% endblock %}

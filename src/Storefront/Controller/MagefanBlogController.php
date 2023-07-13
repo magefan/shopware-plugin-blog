@@ -9,7 +9,7 @@ namespace Magefan\Blog\Storefront\Controller;
 use Magefan\Blog\Core\Content\Blog\DataResolver\BlogListResolver;
 use Magefan\Blog\Core\Content\Blog\DataResolver\BlogSidebarResolver;
 use Shopware\Core\Content\Seo\SeoUrlPlaceholderHandlerInterface;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @RouteScope(scopes={"storefront"})
+ * @Route(defaults={"_routeScope"={"storefront"}})
  */
 class MagefanBlogController extends StorefrontController
 {
@@ -35,9 +35,9 @@ class MagefanBlogController extends StorefrontController
     private GenericPageLoaderInterface $genericPageLoader;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogPostRepository;
+    private EntityRepository $blogPostRepository;
 
     /**
      * @var BlogListResolver
@@ -55,7 +55,7 @@ class MagefanBlogController extends StorefrontController
     private SeoUrlPlaceholderHandlerInterface $seoUrlReplacer;
 
     /**
-     * @param EntityRepositoryInterface $blogPostRepository
+     * @param EntityRepository $blogPostRepository
      * @param SystemConfigService $systemConfigService
      * @param GenericPageLoaderInterface $genericPageLoader
      * @param BlogListResolver $blogListResolver
@@ -63,7 +63,7 @@ class MagefanBlogController extends StorefrontController
      * @param SeoUrlPlaceholderHandlerInterface $seoUrlReplacer
      */
     public function __construct(
-        EntityRepositoryInterface         $blogPostRepository,
+        EntityRepository         $blogPostRepository,
         SystemConfigService               $systemConfigService,
         GenericPageLoaderInterface        $genericPageLoader,
         BlogListResolver                  $blogListResolver,

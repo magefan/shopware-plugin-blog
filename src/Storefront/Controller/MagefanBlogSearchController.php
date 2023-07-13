@@ -10,7 +10,7 @@ namespace Magefan\Blog\Storefront\Controller;
 
 use Magefan\Blog\Core\Content\Blog\DataResolver\BlogAbstractResolver;
 use Magefan\Blog\Core\Content\Blog\DataResolver\BlogSidebarResolver;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\Routing\Exception\MissingRequestParameterException;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
@@ -25,7 +25,7 @@ use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * @RouteScope(scopes={"storefront"})
+ * @Route(defaults={"_routeScope"={"storefront"}})
  */
 class MagefanBlogSearchController extends StorefrontController
 {
@@ -38,9 +38,9 @@ class MagefanBlogSearchController extends StorefrontController
     ];
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogPostRepository;
+    private EntityRepository $blogPostRepository;
 
     /**
      * @var GenericPageLoaderInterface
@@ -48,24 +48,24 @@ class MagefanBlogSearchController extends StorefrontController
     private GenericPageLoaderInterface $genericPageLoader;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogTagRepository;
+    private EntityRepository $blogTagRepository;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogCategoryRepository;
+    private EntityRepository $blogCategoryRepository;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogAuthorRepository;
+    private EntityRepository $blogAuthorRepository;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogCommentRepository;
+    private EntityRepository $blogCommentRepository;
 
     /**
      * @var BlogAbstractResolver
@@ -85,11 +85,11 @@ class MagefanBlogSearchController extends StorefrontController
     private BlogSidebarResolver $blogSidebarResolver;
 
     /**
-     * @param EntityRepositoryInterface $blogPostRepository
-     * @param EntityRepositoryInterface $blogTagRepository
-     * @param EntityRepositoryInterface $blogCategoryRepository
-     * @param EntityRepositoryInterface $blogAuthorRepository
-     * @param EntityRepositoryInterface $blogCommentRepository
+     * @param EntityRepository $blogPostRepository
+     * @param EntityRepository $blogTagRepository
+     * @param EntityRepository $blogCategoryRepository
+     * @param EntityRepository $blogAuthorRepository
+     * @param EntityRepository $blogCommentRepository
      * @param BlogAbstractResolver $abstractResolver
      * @param BlogSidebarResolver $blogSidebarResolver
      * @param GenericPageLoaderInterface $genericPageLoader
@@ -97,11 +97,11 @@ class MagefanBlogSearchController extends StorefrontController
      * @param RouterInterface $router
      */
     public function __construct(
-        EntityRepositoryInterface  $blogPostRepository,
-        EntityRepositoryInterface  $blogTagRepository,
-        EntityRepositoryInterface  $blogCategoryRepository,
-        EntityRepositoryInterface  $blogAuthorRepository,
-        EntityRepositoryInterface  $blogCommentRepository,
+        EntityRepository  $blogPostRepository,
+        EntityRepository  $blogTagRepository,
+        EntityRepository  $blogCategoryRepository,
+        EntityRepository  $blogAuthorRepository,
+        EntityRepository  $blogCommentRepository,
         BlogAbstractResolver       $abstractResolver,
         BlogSidebarResolver        $blogSidebarResolver,
         GenericPageLoaderInterface $genericPageLoader,
@@ -153,7 +153,7 @@ class MagefanBlogSearchController extends StorefrontController
         $sidebar = $this->blogSidebarResolver->getSidebar($context);
 
         foreach (self::SEARCHED_FIELDS as $entityName => $associationName) {
-            $criteria = (new Criteria([]));
+            $criteria = (new Criteria());
             $repository = 'blog' . $entityName . 'Repository';
 
             if ($associationName) {

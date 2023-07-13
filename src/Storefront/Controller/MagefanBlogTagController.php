@@ -13,7 +13,7 @@ use Magefan\Blog\Core\Content\Blog\DataResolver\BlogSidebarResolver;
 use Magefan\Blog\Core\Content\Blog\DataResolver\BlogTagResolver;
 use Shopware\Core\Content\Cms\Exception\PageNotFoundException;
 use Shopware\Core\Content\Seo\SeoUrlPlaceholderHandlerInterface;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @RouteScope(scopes={"storefront"})
+ * @Route(defaults={"_routeScope"={"storefront"}})
  */
 class MagefanBlogTagController extends StorefrontController
 {
@@ -34,9 +34,9 @@ class MagefanBlogTagController extends StorefrontController
     private SystemConfigService $systemConfigService;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogTagRepository;
+    private EntityRepository $blogTagRepository;
 
     /**
      * @var GenericPageLoaderInterface

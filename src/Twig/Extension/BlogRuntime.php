@@ -8,7 +8,7 @@ namespace Magefan\Blog\Twig\Extension;
 
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Twig\Extension\RuntimeExtensionInterface;
@@ -16,15 +16,15 @@ use Twig\Extension\RuntimeExtensionInterface;
 class BlogRuntime implements RuntimeExtensionInterface
 {
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogCommentRepository;
+    private EntityRepository $blogCommentRepository;
 
     /**
-     * @param EntityRepositoryInterface $blogCommentRepository
+     * @param EntityRepository $blogCommentRepository
      */
     public function __construct(
-        EntityRepositoryInterface $blogCommentRepository
+        EntityRepository $blogCommentRepository
     )
     {
         $this->blogCommentRepository = $blogCommentRepository;
@@ -36,7 +36,7 @@ class BlogRuntime implements RuntimeExtensionInterface
      */
     public function getChild($parentTag): EntityCollection
     {
-        $criteria = (new Criteria([]))
+        $criteria = (new Criteria())
             ->addFilter(new EqualsFilter('status', 1))
             ->addFilter(new EqualsFilter('parentId', $parentTag->getId()));
 
@@ -49,7 +49,7 @@ class BlogRuntime implements RuntimeExtensionInterface
      */
     public function getPostComments($post): EntityCollection
     {
-        $criteria = (new Criteria([]))
+        $criteria = (new Criteria())
             ->addFilter(new EqualsFilter('status', 1))
             ->addFilter(new EqualsFilter('parentId', null))
             ->addFilter(new EqualsFilter('postId', $post->getId()));

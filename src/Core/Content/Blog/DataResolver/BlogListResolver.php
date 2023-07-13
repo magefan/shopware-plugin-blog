@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace Magefan\Blog\Core\Content\Blog\DataResolver;
 
 use Doctrine\DBAL\Exception;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Sorting\FieldSorting;
@@ -19,14 +19,14 @@ use Symfony\Component\HttpFoundation\Request;
 class BlogListResolver
 {
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogAuthorRepository;
+    private EntityRepository $blogAuthorRepository;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogCategoryRepository;
+    private EntityRepository $blogCategoryRepository;
 
     /**
      * @var SystemConfigService
@@ -34,16 +34,16 @@ class BlogListResolver
     private SystemConfigService $systemConfigService;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogPostRepository;
+    private EntityRepository $blogPostRepository;
 
     /**
-     * @param EntityRepositoryInterface $blogPostRepository
+     * @param EntityRepository $blogPostRepository
      * @param SystemConfigService $systemConfigService
      */
     public function __construct(
-        EntityRepositoryInterface $blogPostRepository,
+        EntityRepository $blogPostRepository,
         SystemConfigService       $systemConfigService
     ) {
         $this->blogPostRepository = $blogPostRepository;
@@ -71,7 +71,7 @@ class BlogListResolver
         $pageNumber = $this->getPage($request);
         $pageOffset = ($pageNumber - 1) * $limit;
 
-        $postsCriteria = (new Criteria([]))
+        $postsCriteria = (new Criteria())
             ->addFilter(new EqualsFilter('isActive', 1))
             ->addSorting(new FieldSorting($sortBy, $sorting))
             ->setLimit($limit)
@@ -116,7 +116,7 @@ class BlogListResolver
     public function getPagination($context): array
     {
         $displayMode = $this->systemConfigService->get('MagefanBlog.config.displayMode');
-        $criteria = (new Criteria([]))->addFilter(new EqualsFilter('isActive', 1));
+        $criteria = (new Criteria())->addFilter(new EqualsFilter('isActive', 1));
 
         if ((int)$displayMode == 0) {
             $criteria->addFilter(new EqualsFilter('includeInRecent', true));

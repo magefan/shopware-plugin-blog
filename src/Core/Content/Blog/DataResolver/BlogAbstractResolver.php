@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Magefan\Blog\Core\Content\Blog\DataResolver;
 
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,9 +20,9 @@ class BlogAbstractResolver
     protected SystemConfigService $systemConfigService;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogAuthorRepository;
+    private EntityRepository $blogAuthorRepository;
 
     /**
      * @param SystemConfigService $systemConfigService

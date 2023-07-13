@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Magefan\Blog\Core\Content\Blog\DataResolver;
 
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Sorting\FieldSorting;
@@ -17,14 +17,14 @@ use Shopware\Core\System\SystemConfig\SystemConfigService;
 class BlogSidebarResolver
 {
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogCategoryRepository;
+    private EntityRepository $blogCategoryRepository;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogPostRepository;
+    private EntityRepository $blogPostRepository;
 
     /**
      * @var
@@ -42,20 +42,20 @@ class BlogSidebarResolver
     private SystemConfigService $systemConfigService;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogTagRepository;
+    private EntityRepository $blogTagRepository;
 
     /**
-     * @param EntityRepositoryInterface $blogPostRepository
-     * @param EntityRepositoryInterface $blogCategoryRepository
-     * @param EntityRepositoryInterface $blogTagRepository
+     * @param EntityRepository $blogPostRepository
+     * @param EntityRepository $blogCategoryRepository
+     * @param EntityRepository $blogTagRepository
      * @param SystemConfigService $systemConfigService
      */
     public function __construct(
-        EntityRepositoryInterface $blogPostRepository,
-        EntityRepositoryInterface $blogCategoryRepository,
-        EntityRepositoryInterface $blogTagRepository,
+        EntityRepository $blogPostRepository,
+        EntityRepository $blogCategoryRepository,
+        EntityRepository $blogTagRepository,
         SystemConfigService       $systemConfigService
     ) {
         $this->blogPostRepository = $blogPostRepository;
@@ -100,7 +100,7 @@ class BlogSidebarResolver
         if (null === $this->months && $archiveWidgetEnabled) {
             $recentPostNumbers = (int)$this->systemConfigService->get('MagefanBlog.config.recentPostNumbers');
 
-            $criteria = (new Criteria([]))->addFilter(new EqualsFilter('isActive', 1))
+            $criteria = (new Criteria())->addFilter(new EqualsFilter('isActive', 1))
                 ->addSorting(new FieldSorting('createdAt', FieldSorting::DESCENDING))
                 ->setLimit($recentPostNumbers);
 
@@ -126,7 +126,7 @@ class BlogSidebarResolver
             return $categories;
         }
 
-        $criteria = (new Criteria([]))->addFilter(new EqualsFilter('isActive', 1))
+        $criteria = (new Criteria())->addFilter(new EqualsFilter('isActive', 1))
             ->addSorting(new FieldSorting('position', FieldSorting::DESCENDING))
             ->addAssociation('blogPosts');
 
@@ -150,7 +150,7 @@ class BlogSidebarResolver
 
         $recentPostNumbers = (int)$this->systemConfigService->get('MagefanBlog.config.recentPostNumbers');
 
-        $criteria = (new Criteria([]))
+        $criteria = (new Criteria())
             ->addFilter(new EqualsFilter('isActive', 1))
             ->addFilter(new EqualsFilter('includeInRecent', true))
             ->addSorting(new FieldSorting('createdAt', FieldSorting::DESCENDING))
@@ -179,7 +179,7 @@ class BlogSidebarResolver
 
         $tagsNumber = (int)$this->systemConfigService->get('MagefanBlog.config.tagsNumber');
 
-        $criteria = (new Criteria([]))->addFilter(new EqualsFilter('isActive', 1))
+        $criteria = (new Criteria())->addFilter(new EqualsFilter('isActive', 1))
             ->addSorting(new FieldSorting('createdAt', FieldSorting::DESCENDING))
             ->setLimit($tagsNumber)
             ->addAssociation('postTags');

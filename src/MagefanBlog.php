@@ -16,7 +16,7 @@ use Shopware\Core\Framework\Uuid\Uuid;
 use Magefan\Blog\Util\LifeCycle;
 use Shopware\Core\Content\Media\Aggregate\MediaThumbnailSize\MediaThumbnailSizeEntity;
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
@@ -84,7 +84,7 @@ class MagefanBlog extends Plugin
         $context = Context::createDefaultContext();
         $connection = Kernel::getConnection();
 
-        $criteria = (new Criteria([]))
+        $criteria = (new Criteria())
             ->addFilter(new EqualsFilter('linkType', 'external'))
             ->addFilter(new SuffixFilter('externalLink', '/blog'))
             ->addAssociation('children');
@@ -125,10 +125,10 @@ class MagefanBlog extends Plugin
 
         $context = Context::createDefaultContext();
 
-        $blogCategories = $blogCategoryRepository->search((new Criteria([])), $context)->getEntities();
+        $blogCategories = $blogCategoryRepository->search((new Criteria()), $context)->getEntities();
 
         if (!count($blogCategories)) {
-            $criteria = (new Criteria([]))
+            $criteria = (new Criteria())
                 ->addFilter(new EqualsFilter('linkType', 'external'))
                 ->addFilter(new EqualsFilter('externalLink', '/blog'));
 
@@ -159,7 +159,7 @@ class MagefanBlog extends Plugin
         $this->deleteDefaultMediaFolder($context);
         $thumbnailSizes = $this->getThumbnailSizes($context);
 
-        /** @var EntityRepositoryInterface $mediaFolderRepository */
+        /** @var EntityRepository $mediaFolderRepository */
         $mediaFolderRepository = $this->container->get('media_default_folder.repository');
 
         $data = [
@@ -191,7 +191,7 @@ class MagefanBlog extends Plugin
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsAnyFilter('entity', [PostDefinition::ENTITY_NAME]));
 
-        /** @var EntityRepositoryInterface $mediaFolderRepository */
+        /** @var EntityRepository $mediaFolderRepository */
         $mediaFolderRepository = $this->container->get('media_default_folder.repository');
 
         $mediaFolderIds = $mediaFolderRepository->searchIds($criteria, $context)->getIds();
@@ -215,7 +215,7 @@ class MagefanBlog extends Plugin
             new EqualsFilter('name', 'Magefan Blog Images')
         );
 
-        /** @var EntityRepositoryInterface $mediaFolderRepository */
+        /** @var EntityRepository $mediaFolderRepository */
         $mediaFolderRepository = $this->container->get('media_folder.repository');
 
         $mediaFolderRepository->search($criteria, $context);
@@ -258,7 +258,7 @@ class MagefanBlog extends Plugin
 
         $criteria = new Criteria();
 
-        /** @var EntityRepositoryInterface $thumbnailSizeRepository */
+        /** @var EntityRepository $thumbnailSizeRepository */
         $thumbnailSizeRepository = $this->container->get('media_thumbnail_size.repository');
 
         $thumbnailSizes = $thumbnailSizeRepository->search($criteria, $context)->getEntities();

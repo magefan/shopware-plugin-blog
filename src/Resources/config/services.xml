@@ -72,6 +72,9 @@
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>
+            <call method="setTwig">
+                <argument type="service" id="twig"/>
+            </call>
         </service>
         <service id="Magefan\Blog\Storefront\Controller\MagefanBlogSearchController" public="true">
             <tag name="controller.service_arguments"/>
@@ -88,6 +91,9 @@
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>
+            <call method="setTwig">
+                <argument type="service" id="twig"/>
+            </call>
         </service>
         <service id="Magefan\Blog\Storefront\Controller\MagefanBlogController" public="true">
             <tag name="controller.service_arguments"/>
@@ -99,6 +105,9 @@
             <argument id="Shopware\Core\Content\Seo\SeoUrlPlaceholderHandlerInterface" type="service"/>
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
+            </call>
+            <call method="setTwig">
+                <argument type="service" id="twig"/>
             </call>
         </service>
         <service id="Magefan\Blog\Storefront\Controller\MagefanBlogPostController" public="true">
@@ -114,6 +123,9 @@
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>
+            <call method="setTwig">
+                <argument type="service" id="twig"/>
+            </call>
         </service>
         <service id="Magefan\Blog\Storefront\Controller\MagefanBlogTagController" public="true">
             <argument id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogTagResolver" type="service"/>
@@ -124,6 +136,9 @@
             <argument id="Magefan\Blog\Core\Content\Blog\DataResolver\BlogAbstractResolver" type="service"/>
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
+            </call>
+            <call method="setTwig">
+                <argument type="service" id="twig"/>
             </call>
         </service>
         <service id="Magefan\Blog\Storefront\Controller\MagefanBlogCategoryController" public="true">
@@ -137,6 +152,9 @@
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>
+            <call method="setTwig">
+                <argument type="service" id="twig"/>
+            </call>
         </service>
         <service id="Magefan\Blog\Storefront\Controller\MagefanBlogArchiveController" public="true">
             <tag name="controller.service_arguments"/>
@@ -149,6 +167,9 @@
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>
+            <call method="setTwig">
+                <argument type="service" id="twig"/>
+            </call>
         </service>
         <service id="Magefan\Blog\Storefront\Controller\MagefanBlogRssFeedController" public="true">
             <tag name="controller.service_arguments"/>
@@ -159,6 +180,9 @@
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>
+            <call method="setTwig">
+                <argument type="service" id="twig"/>
+            </call>
         </service>
         <service id="Magefan\Blog\Storefront\Controller\MagefanBlogCommentController" public="true">
             <argument id="magefanblog_post.repository" type="service"/>
@@ -166,6 +190,9 @@
             <argument id="Shopware\Core\System\SystemConfig\SystemConfigService" type="service"/>
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
+            </call>
+            <call method="setTwig">
+                <argument type="service" id="twig"/>
             </call>
         </service>
         <service id="Magefan\Blog\Core\Content\Blog\Post\PostDefinition">
