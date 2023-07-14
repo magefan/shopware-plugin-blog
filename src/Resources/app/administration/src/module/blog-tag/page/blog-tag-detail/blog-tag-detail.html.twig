@@ -45,6 +45,21 @@
             </template>
         {% endblock %}
 
+        {% block blog_tag_detail_language_switch %}
+            <template slot="language-switch">
+                <sw-language-switch
+                        :disabled="!id"
+                        @on-change="onChangeLanguage"
+                />
+            </template>
+        {% endblock %}
+
+        {% block blog_tag_detail_language_info %}
+            <sw-language-info
+                    :entity-description="placeholder(tag, 'title', $tc('blog-post.detail.textHeadline'))"
+            />
+        {% endblock %}
+
         {% block blog_tag_detail_content %}
             <sw-card-view slot="content">
                 <template v-if="isLoading">

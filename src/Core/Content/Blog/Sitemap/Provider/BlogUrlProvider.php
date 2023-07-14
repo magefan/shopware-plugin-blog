@@ -169,7 +169,7 @@ class BlogUrlProvider extends AbstractUrlProvider
             $blogCategoryUrl->setIdentifier($blogCategoryEntity->getId());
             $blogCategoryUrl->setLoc(
                 $this->router->generate('frontend.blog.category',
-                    ['identifier' => $blogCategoryEntity->getIdentifier()],
+                    ['id' => $blogCategoryEntity->getId()],
                     UrlGeneratorInterface::ABSOLUTE_PATH)
             );
 

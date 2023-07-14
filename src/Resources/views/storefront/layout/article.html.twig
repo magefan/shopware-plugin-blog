@@ -16,7 +16,7 @@
             {# Image #}
             <div class="article-post__image-container animation-type--zoom">
                 {% if recentDisplayPostImage or not sidebar %}
-                    <a href="{{ app.request.basePath ~ '/blog/post/' ~ post.identifier }}" class="
+                    <a href="{{ seoUrl('frontend.blog.post', {'identifier':  post.id}) }}" class="
                     article-post__image-wrapper
                     media
                     media--landscape
@@ -29,7 +29,7 @@
                         {% else %}
                             <img class=""
                                  src="{{ asset('bundles/magefanblog/administration/images/samples/' ~ random(1, 8) ~ '.jpeg') }}"
-                                 alt="{{ post.title }}">
+                                 alt="{{ post.translated.title }}">
                         {% endif %}
                     </a>
                 {% endif %}
@@ -37,9 +37,9 @@
                     <div class="article-post__category">
                         {% for category in post.postCategories.elements %}
                             <a class="article-post__category-name"
-                               href="{{ app.request.basePath ~ '/blog/category/' ~ category.identifier }}"
-                               title="{{ category.title }}">
-                                {{ category.title }}
+                               href="{{ seoUrl('frontend.blog.category', {'identifier':  category.id}) }}"
+                               title="{{ category.translated.title }}">
+                                {{ category.translated.title }}
                             </a>
                         {% endfor %}
                     </div>
@@ -51,7 +51,7 @@
             <div class="article-post__info">
                 <div class="article-post__header">
                     <h2 class="article-post__title">
-                        <a href="{{ app.request.basePath ~ '/blog/post/' ~ post.identifier }}">{{ post.title }}</a>
+                        <a href="{{ seoUrl('frontend.blog.post', {'identifier':  post.id}) }}">{{ post.translated.title }}</a>
                     </h2>
                     <div class="article-post__data-wrap">
                         {% if displayAuthorInformation and post.postAuthor and (post.postAuthor.firstname or post.postAuthor.lastname) %}
@@ -63,11 +63,12 @@
                         <span class="article-post__data">{{ post.createdAt|date("M d, Y") }}</span>
                     </div>
                 </div>
-                <div class="article-post__content">
-                    {% if post.contentHeading|length > shortContentLength %}
-                        {{ post.contentHeading[0:shortContentLength] ~ shortContentEndCharacters }}
+                <div class="article-post__content"
+                    {% if post.translated.contentHeading|length > shortContentLength %}
+                        {% set shortContent = post.translated.contentHeading|raw[0:shortContentLength] ~ shortContentEndCharacters %}
+                        {{ shortContent|raw }}
                     {% else %}
-                        {{ post.contentHeading|raw }}
+                        {{ post.translated.contentHeading|raw }}
                     {% endif %}
                 </div>
                 <div class="article-post__footer"></div>

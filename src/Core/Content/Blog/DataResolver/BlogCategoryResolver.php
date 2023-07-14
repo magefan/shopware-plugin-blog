@@ -62,8 +62,8 @@ class BlogCategoryResolver extends BlogAbstractResolver
      */
     public function getCategory($identifier, $context)
     {
-        $criteria = (new Criteria())
-            ->addFilter(new EqualsFilter('identifier', $identifier))
+        $criteria = (new Criteria([]))
+            ->addFilter(new EqualsFilter('id', $identifier))
             ->addFilter(new EqualsFilter('isActive', 1))
             ->addAssociation('blogCategories')
             ->addAssociation('blogPosts');
@@ -98,7 +98,7 @@ class BlogCategoryResolver extends BlogAbstractResolver
             ->addAssociation('postTags')
             ->addAssociation('postAuthor')
             ->addSorting(new FieldSorting('postTags'. '.' . $sortBy, $sorting))
-            ->addFilter(new EqualsFilter('postCategories.identifier', $category->getIdentifier()))
+            ->addFilter(new EqualsFilter('postCategories.id', $category->getId()))
             ->setLimit((bool)$category->getPostsPerPage() ? $category->getPostsPerPage() : $limit)
             ->setOffset($pageOffset);
 

@@ -19,7 +19,7 @@ Component.extend('blog-post-create', 'blog-post-detail', {
     methods: {
         createdComponent() {
 
-            this.post = this.postRepository.create();
+            this.post = this.postRepository.create(Shopware.Context.api);
             this.newId = this.post.id;
 
             this.isLoading = false;

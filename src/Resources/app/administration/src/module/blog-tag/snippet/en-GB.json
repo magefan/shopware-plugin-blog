@@ -64,6 +64,12 @@
     }
   },
 
+  "sw-seo-url-template-card": {
+    "routeNames": {
+      "frontend-blog-tag": "Magefan Blog Tag"
+    }
+  },
+
   "sw-privileges": {
     "permissions": {
       "blog_tag": {

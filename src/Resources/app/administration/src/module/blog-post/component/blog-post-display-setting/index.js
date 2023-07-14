@@ -26,6 +26,10 @@ Component.register('blog-post-display-setting', {
                 return {};
             },
         },
+        isChangedLanguage: {
+            type: String,
+            default: false,
+        },
         isLoading: {
             type: Boolean,
             default: false,
@@ -35,6 +39,12 @@ Component.register('blog-post-display-setting', {
             required: false,
             default: true,
         },
+    },
+
+    watch: {
+        isChangedLanguage () {
+            this.initValues();
+        }
     },
 
     created() {
@@ -83,7 +93,7 @@ Component.register('blog-post-display-setting', {
 
         getAllTags() {
             const criteria = new Criteria();
-            this.tagRepository.search(criteria).then((tags) => {
+            this.tagRepository.search(criteria, Shopware.Context.api).then((tags) => {
                 const preparedTags = [];
                 for (let tag of tags) {
                     preparedTags.push({value: tag.id, label: tag.title})
@@ -119,11 +129,11 @@ Component.register('blog-post-display-setting', {
             criteria.addFilter(Criteria.equals('adminUserId', this.getAdminUser.id));
             this.authorRepository.search(criteria, Shopware.Context.api).then((author) => {
                 if (author.total === 0 && !this.post.authorId){
-                    this.authorItem = this.authorRepository.create();
+                    this.authorItem = this.authorRepository.create(Shopware.Context.api);
                     this.authorItem.firstname = this.getAdminUser.firstName;
                     this.authorItem.lastname = this.getAdminUser.lastName;
                     this.authorItem.adminUserId = this.getAdminUser.id;
-                    this.authorRepository.save(this.authorItem).then((result) => {
+                    this.authorRepository.save(this.authorItem, Context.api).then((result) => {
                         const author = JSON.parse(result.config.data);
                         if (author.id){
                             this.post.authorId = author.id;

@@ -42,6 +42,12 @@
             </template>
         {% endblock %}
 
+        {% block blog_category_list_language_switch %}
+            <template #language-switch>
+                <sw-language-switch @on-change="onChangeLanguage" />
+            </template>
+        {% endblock %}
+
         <template #content>
             {% block blog_category_list_content %}
                 <div class="blog-category-list__content">

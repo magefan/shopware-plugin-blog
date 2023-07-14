@@ -124,8 +124,8 @@ class MagefanBlogTagController extends StorefrontController
 
             $defaultRobots = $this->systemConfigService->get('MagefanBlog.config.defaultTagRobots');
             $formattedDefaultRobots = strtoupper(implode(', ',preg_split('/(?=[A-Z])/', $defaultRobots, -1, PREG_SPLIT_NO_EMPTY)));
-            $tagRobots = $tag->getMetaRobots();
-            $metaInformation->setRobots($tagRobots == 'config' ? $formattedDefaultRobots : $tagRobots);
+            $tagRobots = $tag->getMetaRobots() == 'config' ? $formattedDefaultRobots : $tag->getMetaRobots();
+            $metaInformation->setRobots($tagRobots ?: '');
 
             $page->setMetaInformation($metaInformation);
 
