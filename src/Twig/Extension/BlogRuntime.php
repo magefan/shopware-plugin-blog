@@ -29,19 +29,19 @@ class BlogRuntime implements RuntimeExtensionInterface
     private SeoUrlPlaceholderHandlerInterface $seoUrlReplacer;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogPostRepository;
+    private EntityRepository $blogPostRepository;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogTagRepository;
+    private EntityRepository $blogTagRepository;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $blogCategoryRepository;
+    private EntityRepository $blogCategoryRepository;
 
     /**
      * @var SystemConfigService
@@ -54,26 +54,26 @@ class BlogRuntime implements RuntimeExtensionInterface
     private TranslatorInterface $translator;
 
     /**
-     * @var EntityRepositoryInterface
+     * @var EntityRepository
      */
-    private EntityRepositoryInterface $seoUrlRepository;
+    private EntityRepository $seoUrlRepository;
 
     /**
-     * @param EntityRepositoryInterface $blogPostRepository
-     * @param EntityRepositoryInterface $blogTagRepository
-     * @param EntityRepositoryInterface $blogCategoryRepository
-     * @param EntityRepositoryInterface $blogCommentRepository
-     * @param EntityRepositoryInterface $seoUrlRepository
+     * @param EntityRepository $blogPostRepository
+     * @param EntityRepository $blogTagRepository
+     * @param EntityRepository $blogCategoryRepository
+     * @param EntityRepository $blogCommentRepository
+     * @param EntityRepository $seoUrlRepository
      * @param SeoUrlPlaceholderHandlerInterface $seoUrlReplacer
      * @param SystemConfigService $systemConfigService
      * @param TranslatorInterface $translator
      */
     public function __construct(
-        EntityRepositoryInterface         $blogPostRepository,
-        EntityRepositoryInterface         $blogTagRepository,
-        EntityRepositoryInterface         $blogCategoryRepository,
-        EntityRepositoryInterface         $blogCommentRepository,
-        EntityRepositoryInterface         $seoUrlRepository,
+        EntityRepository                  $blogPostRepository,
+        EntityRepository                  $blogTagRepository,
+        EntityRepository                  $blogCategoryRepository,
+        EntityRepository                  $blogCommentRepository,
+        EntityRepository                  $seoUrlRepository,
         SeoUrlPlaceholderHandlerInterface $seoUrlReplacer,
         SystemConfigService               $systemConfigService,
         TranslatorInterface               $translator
@@ -146,16 +146,16 @@ class BlogRuntime implements RuntimeExtensionInterface
                     if (isset($_SERVER['HTTP_REFERER']) && false !== strpos($_SERVER['HTTP_REFERER'], '/blog/')) {
                         $prevUrl = $_SERVER['HTTP_REFERER'];
                         $seoPath = substr($prevUrl, strpos($prevUrl, '/blog/') + 1);
-                        $seoUrlCriteria = (new Criteria([]))->addFilter(new EqualsFilter('seoPathInfo',$seoPath));
+                        $seoUrlCriteria = (new Criteria([]))->addFilter(new EqualsFilter('seoPathInfo', $seoPath));
                         $seoUrl = $this->seoUrlRepository->search($seoUrlCriteria, $context)->getEntities()->first();
-                        if($seoUrl && $seoUrl->getId()){
+                        if ($seoUrl && $seoUrl->getId()) {
                             $fromCategory = $this->blogCategoryRepository->search((new Criteria([$seoUrl->getForeignKey()])), $context)->getEntities()->first();
                         }
                     }
 
                     $category = $fromCategory ?: $category;
 
-                    if ($category && $category->getId()){
+                    if ($category && $category->getId()) {
                         $link = $this->seoUrlReplacer->generate('frontend.blog.category', ['identifier' => $category->getId(), 'page' => null]);
                         $path[] = ['name' => $category->getTitle(), 'link' => $link];
                     }

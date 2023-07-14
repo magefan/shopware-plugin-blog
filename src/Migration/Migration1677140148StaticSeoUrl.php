@@ -83,7 +83,7 @@ class Migration1677140148StaticSeoUrl extends MigrationStep
             WHERE type_id = :typeId
         SQL;
         $salesChannelId = $connection->fetchOne($sql, [
-            ':typeId' => Uuid::fromHexToBytes(Defaults::SALES_CHANNEL_TYPE_STOREFRONT)
+            'typeId' => Uuid::fromHexToBytes(Defaults::SALES_CHANNEL_TYPE_STOREFRONT)
         ]);
 
         if (!$salesChannelId) {
