@@ -43,14 +43,6 @@ class BlogPageSeoUrlRoute implements SeoUrlRouteInterface
     }
 
     /**
-     * @param Criteria $criteria
-     * @return void
-     */
-    public function prepareCriteria(Criteria $criteria): void
-    {
-    }
-
-    /**
      * @param Entity $entry
      * @param SalesChannelEntity|null $salesChannel
      * @return SeoUrlMapping
@@ -58,5 +50,10 @@ class BlogPageSeoUrlRoute implements SeoUrlRouteInterface
     public function getMapping(Entity $entry, ?SalesChannelEntity $salesChannel): SeoUrlMapping
     {
         return new SeoUrlMapping($entry, [], []);
+    }
+
+    public function prepareCriteria(Criteria $criteria, SalesChannelEntity $salesChannel): void
+    {
+        // TODO: Implement prepareCriteria() method.
     }
 }

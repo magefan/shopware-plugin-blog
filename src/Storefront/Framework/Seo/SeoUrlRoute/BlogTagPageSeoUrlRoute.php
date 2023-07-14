@@ -43,18 +43,6 @@ class BlogTagPageSeoUrlRoute implements SeoUrlRouteInterface
     }
 
     /**
-     * @param Criteria $criteria
-     * @return void
-     */
-    public function prepareCriteria(Criteria $criteria): void
-    {
-/*        $criteria->addAssociations([
-            'blogCategories',
-            'blogAuthor',
-        ]);*/
-    }
-
-    /**
      * @param Entity $entry
      * @param SalesChannelEntity|null $salesChannel
      * @return SeoUrlMapping
@@ -72,5 +60,10 @@ class BlogTagPageSeoUrlRoute implements SeoUrlRouteInterface
                 'tag' => $entry,
             ]
         );
+    }
+
+    public function prepareCriteria(Criteria $criteria, SalesChannelEntity $salesChannel): void
+    {
+        // TODO: Implement prepareCriteria() method.
     }
 }
