@@ -146,7 +146,7 @@ class BlogRuntime implements RuntimeExtensionInterface
                     if (isset($_SERVER['HTTP_REFERER']) && false !== strpos($_SERVER['HTTP_REFERER'], '/blog/')) {
                         $prevUrl = $_SERVER['HTTP_REFERER'];
                         $seoPath = substr($prevUrl, strpos($prevUrl, '/blog/') + 1);
-                        $seoUrlCriteria = (new Criteria([]))->addFilter(new EqualsFilter('seoPathInfo', $seoPath));
+                        $seoUrlCriteria = (new Criteria())->addFilter(new EqualsFilter('seoPathInfo', $seoPath));
                         $seoUrl = $this->seoUrlRepository->search($seoUrlCriteria, $context)->getEntities()->first();
                         if ($seoUrl && $seoUrl->getId()) {
                             $fromCategory = $this->blogCategoryRepository->search((new Criteria([$seoUrl->getForeignKey()])), $context)->getEntities()->first();

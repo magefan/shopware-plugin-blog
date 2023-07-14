@@ -62,7 +62,7 @@ class BlogCategoryResolver extends BlogAbstractResolver
      */
     public function getCategory($identifier, $context)
     {
-        $criteria = (new Criteria([]))
+        $criteria = (new Criteria())
             ->addFilter(new EqualsFilter('id', $identifier))
             ->addFilter(new EqualsFilter('isActive', 1))
             ->addAssociation('blogCategories')
