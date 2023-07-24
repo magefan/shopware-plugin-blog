@@ -10,7 +10,6 @@ use Shopware\Core\Content\Seo\Event\SeoEvents;
 use Shopware\Core\Content\Seo\SeoUrlUpdater;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityDeletedEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityWrittenEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -55,14 +54,14 @@ class Subscriber implements EventSubscriberInterface
 
     /**
      * @param SeoUrlUpdater $seoUrlUpdater
-     * @param EntityRepositoryInterface $blogCategoryRepository
-     * @param EntityRepositoryInterface $categoryRepository
+     * @param EntityRepository $blogCategoryRepository
+     * @param EntityRepository $categoryRepository
      * @param SystemConfigService $systemConfigService
      */
     public function __construct(
         SeoUrlUpdater             $seoUrlUpdater,
-        EntityRepositoryInterface $blogCategoryRepository,
-        EntityRepositoryInterface $categoryRepository,
+        EntityRepository $blogCategoryRepository,
+        EntityRepository $categoryRepository,
         SystemConfigService       $systemConfigService
     )
     {
