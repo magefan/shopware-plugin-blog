@@ -52,7 +52,7 @@ class BlogPageSeoUrlRoute implements SeoUrlRouteInterface
         return new SeoUrlMapping($entry, [], []);
     }
 
-    public function prepareCriteria(Criteria $criteria, SalesChannelEntity $salesChannel): void
+    public function prepareCriteria(Criteria $criteria, SalesChannelEntity $salesChannel = null): void
     {
         // TODO: Implement prepareCriteria() method.
     }
