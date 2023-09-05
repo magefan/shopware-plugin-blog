@@ -12,7 +12,7 @@
 
 [Shopware Blog](https://magefan.com/shopware/extensions/blog) is an extension that facilitates blog management on Shopware and enables you to create multiple blog posts, categories, tags and authors. Create engaging content using user-friendly, SEO-optimized and easy-to-manage Blog Extensions for Shopware.
 
-<a href="https://magefan.com/shopware/extensions/blog"><img width="190" height="70" src="https://magefan.com/media/wysiwyg/download-now_1.png"></a>
+<a href="https://magefan.com/shopware/extensions/blog"><img width="190" height="70" src="https://cm.magefan.com/wysiwyg/products/download-magefan-extensions.png"></a><a href="https://magefan.com/shopware/extensions/blog#live-demo"><img width="190" height="70" src="https://cm.magefan.com/wysiwyg/products/magefan-live-demo.png"></a>
 
 ## Benefits
 
