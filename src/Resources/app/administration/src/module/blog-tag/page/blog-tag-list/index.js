@@ -4,7 +4,7 @@
  */
 
 const {Component, Mixin} = Shopware;
-const {Criteria} = Shopware.Data;
+const {Context, Data: { Criteria } } = Shopware;
 
 import template from './blog-tag-list.html.twig';
 
@@ -30,8 +30,6 @@ Component.register('blog-tag-list', {
             sortDirection: 'DESC',
             naturalSorting: false,
             total: 0,
-            limit: 10,
-            page: 1,
             searchConfigEntity: 'magefanblog_tag',
         };
     },
@@ -105,9 +103,17 @@ Component.register('blog-tag-list', {
             })
         },
 
+        onChangeLanguage(languageId) {
+
+            Shopware.State.commit('context/setApiLanguageId', languageId);
+
+            this.getList();
+        },
+
         updateTotal({total}) {
             this.total = total;
         },
+
         onDuplicate(referenceTag) {
             this.tag = referenceTag;
             this.cloning = true;

@@ -18,6 +18,10 @@ Component.extend('blog-tag-create', 'blog-tag-detail', {
 
     methods: {
         createdComponent() {
+            if (!Shopware.State.getters['context/isSystemDefaultLanguage']) {
+                Shopware.State.commit('context/resetLanguageToDefault');
+            }
+
             this.tag = this.tagRepository.create();
             this.newId = this.tag.id;
 

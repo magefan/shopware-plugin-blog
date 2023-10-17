@@ -6,8 +6,9 @@
 {% sw_extends '@Storefront/storefront/base.html.twig' %}
 
 {% set template = config('MagefanBlog.config.blogIndexTemplate') %}
-
 {% block base_content %}
+    {% sw_include '@Storefront/storefront/layout/breadcrumb.html.twig' with { isBlog:true,category: true } %}
+
     <h1 class="blog-page__title"> {{ config('MagefanBlog.config.title') }} </h1>
 
     <div class="main-wrapper">

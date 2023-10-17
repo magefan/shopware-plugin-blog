@@ -6,7 +6,7 @@
 import template from './blog-comment-detail.html.twig';
 import errorConfig from './error-config.json';
 
-const { Component, Mixin, Data: { Criteria } } = Shopware;
+const { Component, Context, Mixin, Data: { Criteria } } = Shopware;
 
 const { mapPageErrors, mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
@@ -129,7 +129,7 @@ Component.register('blog-comment-detail', {
         onSave() {
             this.isLoading = true;
 
-            return this.commentRepository.save(this.comment).then(() => {
+            return this.commentRepository.save(this.comment, Context.api).then(() => {
                 this.isLoading = false;
                 this.isSaveSuccessful = true;
             }).catch((exception) => {

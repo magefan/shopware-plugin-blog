@@ -63,13 +63,14 @@ class MagefanBlogController extends StorefrontController
      * @param SeoUrlPlaceholderHandlerInterface $seoUrlReplacer
      */
     public function __construct(
-        EntityRepository         $blogPostRepository,
+        EntityRepository                  $blogPostRepository,
         SystemConfigService               $systemConfigService,
         GenericPageLoaderInterface        $genericPageLoader,
         BlogListResolver                  $blogListResolver,
         BlogSidebarResolver               $blogSidebarResolver,
         SeoUrlPlaceholderHandlerInterface $seoUrlReplacer
-    ) {
+    )
+    {
         $this->blogPostRepository = $blogPostRepository;
         $this->systemConfigService = $systemConfigService;
         $this->genericPageLoader = $genericPageLoader;

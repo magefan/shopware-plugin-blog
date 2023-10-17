@@ -6,6 +6,8 @@
 {% sw_extends '@Storefront/storefront/base.html.twig' %}
 
 {% block base_content %}
+    {% sw_include '@Storefront/storefront/layout/breadcrumb.html.twig' with { isBlog:true,category: true } %}
+
     <h1 class="blog-page__title">{{ tag.title }}</h1>
     <div class="main-wrapper">
         {# Main Content #}

@@ -6,6 +6,7 @@
 {% sw_extends '@Storefront/storefront/base.html.twig' %}
 
 {% block base_content %}
+    {% sw_include '@Storefront/storefront/layout/breadcrumb.html.twig' with { isBlog:true,category: true } %}
     {% set prevNextStyle = config('MagefanBlog.config.postPrevNextButtonStyle') %}
     {% set displayPrevNext = config('MagefanBlog.config.displayPrevNext') %}
     {% set relatedPostEnabled = config('MagefanBlog.config.displayRelatedPostsPost') %}
@@ -15,7 +16,6 @@
     {% set displayAuthorInformation = config('MagefanBlog.config.displayAuthorInformation') %}
     {% set displayPostListByAuthor = config('MagefanBlog.config.displayPostListByAuthor') %}
     {% set author = post.postAuthor %}
-    {% set authorRoute = app.request.basePath ~ '/blog/author/' ~ author.firstname ~ '-' ~ author.lastname %}
     {% set commentType = config('MagefanBlog.config.type') %}
     {# Blog Post #}
     <section class="shopware-section shopware-section__blog-post">
@@ -30,9 +30,9 @@
                             {% for category in post.postCategories %}
                                 <a
                                         class="blog-post__category-name"
-                                        href="{{ app.request.basePath ~ '/blog/category/' ~ category.identifier }}"
-                                        title="{{ category.title }}">
-                                    {{ category.title }}
+                                        href="{{ seoUrl('frontend.blog.category', {'identifier':  category.id}) }}"
+                                        title="{{ category.translated.title }}">
+                                    {{ category.translated.title }}
                                 </a>
                             {% endfor %}
                         </div>
@@ -49,8 +49,23 @@
                         {% endif %}
                         <span class="blog-post__data">{{ post.createdAt|date("M d,Y") }}</span>
                     </div>
-                    {# Author and Data #}
                 </div>
+
+                {# Tags #}
+                {% if post.postTags.elements %}
+                    <div class="post-tag">
+                        <div class="post-tags">
+                            <div class="post-tag-title">{{ "Tags"|trans }}</div>
+                            {% for tag in post.postTags.elements %}
+                                <a title="{{ tag.translated.title }}"
+                                   href="{{ seoUrl('frontend.blog.tag', {'identifier':  tag.id}) }}">
+                                    {{ tag.translated.title }}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                {# END Tags #}
 
                 <div class="post-content">
                     {# Image #}
@@ -64,25 +79,9 @@
                     </div>
                     {# END Image #}
 
-                    {# Tags #}
-                    {% if post.postTags.elements %}
-                        <div class="post-tag">
-                            <div class="post-tags">
-                                <div class="post-tag-title">{{ "Tags"|trans }}</div>
-                                {% for tag in post.postTags.elements %}
-                                    <a title="{{ tag.title }}"
-                                       href="{{ app.request.basePath ~ '/blog/tag/' ~ tag.identifier }}">
-                                        {{ tag.title }}
-                                    </a>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
-                    {# END Tags #}
-
                     {# Description #}
                     <div class="post-description">
-                        {{ post.content|raw }}
+                        {{ post.translated.content|raw }}
                     </div>
                     {# Description #}
                 </div>
@@ -102,7 +101,7 @@
                                 {% if prevnext.prev.identifier %}
                                     <div class="post-prev">
                                         <a class="nextprev-link prev-link float-left"
-                                           href="{{ app.request.basePath ~ '/blog/post/' ~ prevnext.prev.identifier }}"
+                                           href="{{ seoUrl('frontend.blog.post', {'identifier': prevnext.prev.id}) }}"
                                            title="">
                                             <span class="text-left">{{ "Previous"|trans }}</span>
                                             {{ prevnext.prev.title }}
@@ -112,7 +111,7 @@
                                 {% if prevnext.next.identifier %}
                                     <div class="post-next">
                                         <a class="nextprev-link next-link float-right"
-                                           href="{{ app.request.basePath ~ '/blog/post/' ~ prevnext.next.identifier }}"
+                                           href="{{ seoUrl('frontend.blog.post', {'identifier': prevnext.next.id}) }}"
                                            title="">
                                             <span class="text-right">{{ "Next"|trans }}</span>
                                             {{ prevnext.next.title }}

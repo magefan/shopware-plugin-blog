@@ -62,11 +62,16 @@ class MagefanBlog extends Plugin
         $connection->executeStatement('SET FOREIGN_KEY_CHECKS=0;');
         $connection->executeStatement('DROP TABLE IF EXISTS `magefanblog_author`');
         $connection->executeStatement('DROP TABLE IF EXISTS `magefanblog_category`');
+        $connection->executeStatement('DROP TABLE IF EXISTS `magefanblog_category_translation`');
         $connection->executeStatement('DROP TABLE IF EXISTS `magefanblog_comment`');
         $connection->executeStatement('DROP TABLE IF EXISTS `magefanblog_post`');
+        $connection->executeStatement('DROP TABLE IF EXISTS `magefanblog_post_translation`');
         $connection->executeStatement('DROP TABLE IF EXISTS `magefanblog_post_category`');
         $connection->executeStatement('DROP TABLE IF EXISTS `magefanblog_post_tag`');
         $connection->executeStatement('DROP TABLE IF EXISTS `magefanblog_tag`');
+        $connection->executeStatement('DROP TABLE IF EXISTS `magefanblog_tag_translation`');
+        $connection->executeStatement("DELETE FROM seo_url_template WHERE entity_name LIKE 'magefanblog_%';");
+        $connection->executeStatement("DELETE FROM seo_url WHERE route_name LIKE 'frontend.blog%';");
         $connection->executeStatement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
@@ -102,10 +107,12 @@ class MagefanBlog extends Plugin
                             'SELECT HEX(id),`include_in_menu`,`is_active` FROM `magefanblog_category` WHERE id = :id',
                             ['id' => Uuid::fromHexToBytes($blogCategory->getId())]
                         )->fetchAll();
-                        $categoryRepository->update(
-                            [['id' => $blogCategory->getId(), 'active' => (bool)($status[0]['include_in_menu'] && $status[0]['is_active'])]]
-                            , $context
-                        );
+                        if (isset($status[0])) {
+                            $categoryRepository->update(
+                                [['id' => $blogCategory->getId(), 'active' => (bool)($status[0]['include_in_menu'] && $status[0]['is_active'])]]
+                                , $context
+                            );
+                        }
                     }
                 }
             }

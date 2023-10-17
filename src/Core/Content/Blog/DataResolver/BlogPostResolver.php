@@ -43,7 +43,7 @@ class BlogPostResolver
     public function getPost($identifier, $context)
     {
         $postCriteria = (new Criteria())
-            ->addFilter(new EqualsFilter('identifier', $identifier))
+            ->addFilter(new EqualsFilter('id', $identifier))
             ->addFilter(new EqualsFilter('isActive', 1))
             ->addAssociation('postCategories')
             ->addAssociation('postTags')
